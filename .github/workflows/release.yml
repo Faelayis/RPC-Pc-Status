@@ -10,6 +10,8 @@ on:
     paths-ignore:
       - '**.md'
       - '**.yml'
+      - '**.gif'
+      - '**.png'
   pull_request:
     branches:
       - master
