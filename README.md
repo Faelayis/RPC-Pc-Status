@@ -1,6 +1,7 @@
 # RPC-Pc-Status
-Rich Presence Pc Status for your discord
+Rich Presence Pc Status for your discord<br>
 
+![Previews](docs/img/Previews.gif)
 ## Manual Installation
 ### Download<br>
 <!--
