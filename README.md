@@ -13,4 +13,4 @@ Rich Presence Pc Status for your discord<br>
 [DownloadStable]: https://img.shields.io/badge/Stable-success?logo=SemanticWeb&style=for-the-badge
 [DownloadStablelink]: #
 [DownloadBate]: https://img.shields.io/badge/Bate-green?logo=HackTheBox&style=for-the-badge
-[Downloadlink]: https://github.com/Faelayis/RPC-Pc-Status/releases/download/v0.1.0-beta/RPC-Pc-Status-Setup-0.1.0-beta.exe
+[Downloadlink]: https://github.com/Faelayis/RPC-Pc-Status/releases/download/v0.1.2-beta/RPC-Pc-Status-Setup-0.1.2-beta.exe
