@@ -10,6 +10,7 @@ app.on('ready', function () {
 let DiscordPcStatus = new AutoLaunch({
   name: 'RPC-Pc-Status',
   path: app.getPath('exe'),
+  isHidden: true
 });
 
 if (isDev) {
