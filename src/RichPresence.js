@@ -29,6 +29,18 @@ si.cpu().then(data => (
     cpu = data.manufacturer + ' ' + data.brand
 ));
 
+function checkos() {
+    if (osdistro.match(/(Windows\s7)/g)) {
+        console.log('windows7')
+        oslogo = 'windows7'
+    } else if (osdistro.match(/(Windows\s8)/g)) {
+        oslogo = 'windows8'
+    } else if (osdistro.match(/(Windows\s10)/g)) {
+        oslogo = 'windows10'
+    } else if (osdistro.match(/(Windows\s11)/g)) {
+        oslogo = 'windows11'
+    }
+}
 // let Memoryfree, Memoryused;
 // setInterval(() => {
 //     si.mem().then(data => (Memoryfree = data.free, Memoryused = data.total));
@@ -36,6 +48,7 @@ si.cpu().then(data => (
 
 //Start Presence
 function StartPresence() {
+    checkos();
     Interval = setInterval(() => {
         si.currentLoad().then(data => (cpuload = data.currentLoad.toFixed(0)));
         formatBytes(os.freemem(), os.totalmem());
