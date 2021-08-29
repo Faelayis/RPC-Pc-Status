@@ -1,10 +1,25 @@
 const { app } = require('electron');
 const isDev = require('electron-is-dev');
 var AutoLaunch = require('auto-launch');
+const gotTheLock = app.requestSingleInstanceLock()
 
 app.on('ready', function () {
   console.log('App ready');
   require('./RichPresence');
+  let myWindow = null
+  if (!gotTheLock) {
+    app.quit()
+  } else {
+    app.on('second-instance', (event, commandLine, workingDirectory) => {
+      if (myWindow) {
+        if (myWindow.isMinimized()) myWindow.restore()
+        myWindow.focus()
+      }
+    })
+    app.whenReady().then(() => {
+      myWindow = null
+    })
+  }
 });
 
 let DiscordPcStatus = new AutoLaunch({
