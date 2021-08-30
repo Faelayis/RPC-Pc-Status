@@ -2,7 +2,8 @@ const RPC = require("discord-rpc"),
     os = require("os"),
     si = require('systeminformation'),
     clientId = '879327042498342962',
-    { tray } = require('./tray');
+    { tray } = require('./tray'),
+    store = require('./store');
 // startTimestamp = new Date();
 
 let Presence = new RPC.Client({
@@ -30,15 +31,21 @@ si.cpu().then(data => (
 ));
 
 function checkos() {
-    if (osdistro.match(/(Windows\s7)/g)) {
-        console.log('windows7')
-        oslogo = 'windows7'
-    } else if (osdistro.match(/(Windows\s8)/g)) {
-        oslogo = 'windows8'
-    } else if (osdistro.match(/(Windows\s10)/g)) {
-        oslogo = 'windows10'
-    } else if (osdistro.match(/(Windows\s11)/g)) {
-        oslogo = 'windows11'
+    switch (true) {
+        case /(Windows\s7)/g.test(osdistro):
+            oslogo = 'windows7'
+            break;
+        case /(Windows\s8)/g.test(osdistro):
+            oslogo = 'windows8'
+            break;
+        case /(Windows\s10)/g.test(osdistro):
+            oslogo = 'windows10'
+            break;
+        case /(Windows\s11)/g.test(osdistro):
+            oslogo = 'windows11'
+            break;
+        default:
+            break;
     }
 }
 // let Memoryfree, Memoryused;
@@ -77,7 +84,7 @@ async function setActivity() {
         details: `CPU ${cpuload} %`,
         state: `RAM ${ramusage} / ${ram}`,
         // startTimestamp,
-        largeImageKey: 'connected',
+        largeImageKey: `${store.largeImageKeyCustom}`,
         largeImageText: `${cpu}`,
         smallImageKey: `${oslogo}`,
         smallImageText: `${osdistro} ${osrelease}`,

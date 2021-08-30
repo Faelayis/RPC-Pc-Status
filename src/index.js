@@ -5,6 +5,7 @@ const gotTheLock = app.requestSingleInstanceLock()
 
 app.on('ready', function () {
   console.log('App ready');
+  require('./store');
   require('./RichPresence');
   let myWindow = null
   if (!gotTheLock) {
