@@ -3,7 +3,7 @@ Rich Presence Pc Status for your discord<br>
 
 ![Previews](docs/img/Previews.gif)
 ## Manual Installation
-### Download for Windows<br>
+### Download for Windows (Now Beta only)<br>
 [![](https://img.shields.io/badge/Stable-success?logo=SemanticWeb&style=for-the-badge)](https://github.com/Faelayis/RPC-Pc-Status/raw/install/Release/RPC%20Pc%20Status%20Setup%20Stable.exe)
 [![](https://img.shields.io/badge/Bate-green?logo=HackTheBox&style=for-the-badge)](https://github.com/Faelayis/RPC-Pc-Status/raw/install/Release/RPC%20Pc%20Status%20Setup%20Beta.exe)
 [![](https://img.shields.io/badge/Alpha-important?logo=dev.to&style=for-the-badge)](https://github.com/Faelayis/RPC-Pc-Status/raw/install/Release/RPC%20Pc%20Status%20Setup%20Alpha.exe)
