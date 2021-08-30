@@ -25,4 +25,4 @@ Rich Presence Pc Status for your discord<br>
 
 </details>
 
-[Recommend](https://github.com/Faelayis/Faelayis-launcher/releases/latest)<br>
+[Recommend](https://github.com/Faelayis/RPC-Pc-Status/releases/latest)<br>
