@@ -1,17 +1,15 @@
-const { nativeImage, dialog } = require('electron')
-const { autoUpdater } = require("electron-updater");
-const path = require('path');
-
-autoUpdater.currentChannel = autoUpdater.channel;
-autoUpdater.allowPrerelease = true;
-autoUpdater.allowDowngrade = true;
-autoUpdater.setFeedURL({
-    provider: "github",
-    owner: "Faelayis",
-    repo: "RPC-Pc-Status",
-});
-
 exports.Checkupdates = () => {
+    const { dialog } = require('electron')
+    const { autoUpdater } = require("electron-updater");
+    const path = require('path');
+    autoUpdater.currentChannel = autoUpdater.channel;
+    autoUpdater.allowPrerelease = true;
+    autoUpdater.allowDowngrade = true;
+    autoUpdater.setFeedURL({
+        provider: "github",
+        owner: "Faelayis",
+        repo: "RPC-Pc-Status",
+    });
     autoUpdater.checkForUpdates();
     autoUpdater.on('checking-for-update', () => {
         console.log('Checking for update...');
@@ -39,7 +37,7 @@ exports.Checkupdates = () => {
             title: `RPC Pc Status Update`,
             message: process.platform === 'win32' ? releaseNotes : releaseName,
             detail: `${event.releaseName} \nA new version has been downloaded. Restart the application to apply the updates.`,
-            icon: nativeImage.createFromPath(path.join(__dirname, 'assets/icon/connected.png')),
+            icon: path.join(__dirname, 'assets/icon/connected.png'),
         }
         dialog.showMessageBox(dialogOpts).then((returnValue) => {
             if (returnValue.response === 0) autoUpdater.quitAndInstall()
