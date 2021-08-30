@@ -11,7 +11,7 @@ win:
 
 # Config windows installer
 nsis:
-  artifactName: ${productName} Setup ${arch}.${ext}
+  artifactName: ${productName} Setup ${version} ${arch}.${ext}
   uninstallDisplayName: ${productName}
   oneClick: true
   perMachine: true
@@ -20,7 +20,7 @@ nsis:
   menuCategory: false
 
 nsisWeb:
- artifactName: ${productName} WebSetup.${ext}
+ artifactName: ${productName} WebSetup ${version}.${ext}
 
 directories:
   buildResources: build
