@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<script type="text/JavaScript" src="jquery.min.js"></script>
+<script>
+  const { ipcRenderer } = require('electron');
+</script>
+<html>
+
+<head>
+
+<body style="background-color:#b6fdc5;"></body>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="assets/css/main_loading.css" />
+<title>Faelayis Setup</title>
+<img draggable="false" onmousedown="return false;" src="install-spinner.gif"><br>
+<strong class="noselect" style="color:black" id="StatusToloading">Loading...</strong><span id="StatusToloading"></span>
+</p>
+<script>
+  ipcRenderer.on('ApplicationsendStatusToloading', (event, arg) => {
+    document.getElementById("StatusToloading").innerHTML = (arg);
+  })
+  ipcRenderer.send('ApplicationsendStatusToloading')
+
+  // Async message sender
+  ipcRenderer.send('ApplicationsendStatusToloading-async', 'done.')
+</script>
+<script>
+  window.onload = disableScroll();
+  function disableScroll() {
+    // Get the current page scroll position
+    scrollTop =
+      window.pageYOffset || document.documentElement.scrollTop;
+    scrollLeft =
+      window.pageXOffset || document.documentElement.scrollLeft,
+
+      // if any scroll is attempted,
+      // set this to the previous value
+      window.onscroll = function () {
+        window.scrollTo(scrollLeft, scrollTop);
+      };
+  }
+  function enableScroll() {
+    window.onscroll = function () { };
+  }
+</script>
+<script type="text/JavaScript">
+        function disableselect(e) {
+          return false
+        }
+        function reEnable() {
+          return false
+        }
+        document.onselectstart = new Function ("return false")
+        if (window.sidebar) {
+          document.onmousedown = disableselect
+          document.onclick = reEnable
+        }
+</script>
+<script type="text/JavaScript">
+  function disableselect(e) {
+    return false
+  }
+  function reEnable() {
+    return false
+  }
+  document.onselectstart = new Function ("return false")
+  if (window.sidebar) {
+    document.onmousedown = disableselect
+    document.onclick = reEnable
+  }
+</script>
+</body>
+
+</html>

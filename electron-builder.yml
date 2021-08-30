@@ -1,0 +1,32 @@
+productName: "RPC Pc Status"
+appId: "rpc-pc-status"
+asar: true
+files:
+  - "**/*"
+  - "!Release"
+
+# Windows configuration
+win:
+  target:
+    - "nsis"
+
+# Config windows installer
+nsis:
+  artifactName: ${productName} Setup ${version} ${arch}.${ext}
+  uninstallDisplayName: ${productName}
+  oneClick: true
+  perMachine: true
+  createDesktopShortcut: false
+  createStartMenuShortcut: true
+  menuCategory: false
+
+directories:
+  buildResources: build
+  output: Release
+
+# github publish
+publish:
+  provider: "github"
+  owner: "Faelayis"
+  repo: "RPC-Pc-Status"
+  releaseType: "prerelease"
