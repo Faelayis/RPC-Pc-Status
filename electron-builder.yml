@@ -7,7 +7,6 @@ win:
   target:
     - "nsis"
     - "nsis-Web"
-  publisherName: "Faelayis"
 
 # Config windows installer
 nsis:
