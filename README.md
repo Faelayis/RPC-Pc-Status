@@ -25,8 +25,6 @@ Rich Presence Pc Status for your discord<br>
 
 </details>
 
-[Recommend](https://github.com/Faelayis/RPC-Pc-Status/releases/latest)<br>
-
 ## Preview
 ![1](https://user-images.githubusercontent.com/48393914/131361164-bc25d4f4-ad7c-4937-993c-be50672a41b1.png)
 ![2](https://user-images.githubusercontent.com/48393914/131361195-df3f66cf-a60d-458e-ae44-a2823e1aac38.png)
