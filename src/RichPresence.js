@@ -110,15 +110,13 @@ function connectDiscord() {
 
   Presence.once("disconnected", () => {
     Presenceready = false;
-    user = undefined;
-    module.exports.user;
+    module.exports.user = user = undefined;
     connectDiscord();
     tray();
   });
   Presence.once("ready", () => {
     Presenceready = true;
-    user = Presence.user.username;
-    module.exports.user = user;
+    module.exports.user = user = Presence.user.username
     StartPresence();
     tray();
   });
