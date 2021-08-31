@@ -1,12 +1,13 @@
 {
   "name": "rpc-pc-status",
-  "version": "0.1.9-beta",
+  "version": "1.0.0",
   "description": "Rich Presence Pc Status for your discord",
   "main": "src/index.js",
   "scripts": {
     "start": "electron .",
-    "build": "electron-builder build --x64 --ia32 --publish never",
-    "publish": "electron-builder build --x64 --ia32 --publish always"
+    "build": "prettier --write . && electron-builder build --x64 --publish never",
+    "publish": "prettier --write . && electron-builder build --x64 --ia32 --publish always",
+    "prettier": "prettier --write ."
   },
   "keywords": [],
   "author": {
@@ -27,7 +28,9 @@
     "systeminformation": "^5.8.6"
   },
   "devDependencies": {
-    "electron": "13.2.3",
-    "electron-builder": "^22.11.7"
+    "electron": "14.0.0",
+    "electron-builder": "^22.11.7",
+    "eslint": "^7.32.0",
+    "prettier": "2.3.2"
   }
 }
