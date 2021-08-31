@@ -1,0 +1,8 @@
+# Ignore:
+.assets
+release
+build
+docs
+.eslintrc.js
+package-lock.json
+*.md
