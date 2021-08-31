@@ -4,14 +4,14 @@ on:
     branches:
       - master
     tags:
-      - '**-beta'
-      - '**-alpha'
-      - '**-stable'
+      - "**-beta"
+      - "**-alpha"
+      - "**-stable"
     paths-ignore:
-      - '**.md'
-      - '**.yml'
-      - '**.gif'
-      - '**.png'
+      - "**.md"
+      - "**.yml"
+      - "**.gif"
+      - "**.png"
   pull_request:
     branches:
       - master
@@ -19,13 +19,13 @@ jobs:
   publish_on_win:
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@master
-      with:
-        node-version: 16
-    - name: install dependencies
-      run: npm install
-    - name: publish
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: npm run publish
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@master
+        with:
+          node-version: 16
+      - name: install dependencies
+        run: npm install
+      - name: publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run publish
