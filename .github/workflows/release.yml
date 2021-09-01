@@ -1,20 +1,8 @@
 name: Build and Publish
 on:
-  push:
-    branches:
-      - master
-    tags:
-      - "**-beta"
-      - "**-alpha"
-      - "**-stable"
-    paths-ignore:
-      - "**.md"
-      - "**.yml"
-      - "**.gif"
-      - "**.png"
-  pull_request:
-    branches:
-      - master
+  release:
+    types:
+      - created
 jobs:
   publish_on_win:
     runs-on: windows-latest
