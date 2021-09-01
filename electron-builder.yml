@@ -32,9 +32,11 @@ nsis:
   createDesktopShortcut: false
   createStartMenuShortcut: true
   menuCategory: false
+  differentialPackage: false
 
 nsisWeb:
   artifactName: ${productName} WebSetup ${version}.${ext}
+  differentialPackage: false
 
 directories:
   buildResources: build
