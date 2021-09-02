@@ -98,6 +98,7 @@ connectDiscord();
 tray();
 function connectDiscord() {
   if (Presence) {
+    Presence.clearActivity();
     Presence.destroy();
     Presence = new RPC.Client({
       transport: "ipc",
