@@ -6,7 +6,7 @@ const gotTheLock = app.requestSingleInstanceLock();
 const log = require("electron-log");
 require("./log.js");
 require("./store");
-
+//test
 const RPC = new AutoLaunch({
   name: "RPC-Pc-Status",
   path: app.getPath("exe"),
