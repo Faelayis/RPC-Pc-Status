@@ -71,7 +71,9 @@ function formatBytes(freemem, totalmem, decimals = 2) {
   const dm = decimals < 0 ? 0 : decimals;
   const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
   const i = Math.floor(Math.log(freemem) / Math.log(k));
-  ramusage = `${parseFloat(((totalmem / k ** i)-(freemem / k ** i)).toFixed(dm))} `;
+  ramusage = `${parseFloat(
+    (totalmem / k ** i - freemem / k ** i).toFixed(dm)
+  )} `;
   ram = `${parseFloat((totalmem / k ** i).toFixed(dm))} ${sizes[i]}`;
 }
 
