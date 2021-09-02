@@ -6,8 +6,8 @@
   "module": "commonjs",
   "scripts": {
     "start": "electron .",
-    "build": "prettier --write . && electron-builder build --x64 --publish never",
-    "publish": "prettier --write . && electron-builder build --x64 --ia32 --publish always",
+    "build": "electron-builder build --x64 --publish never",
+    "publish": "electron-builder build --x64 --ia32 --publish always",
     "prettier": "prettier --write ."
   },
   "keywords": [],
