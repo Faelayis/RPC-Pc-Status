@@ -83,7 +83,7 @@ async function setActivity() {
   }
 
   Presence.setActivity({
-    details: `CPU ${cpuload} %`,
+    details: `CPU ${cpuload}`,
     state: `RAM ${ramusage} / ${ram}`,
     // StartTimestamp,
     largeImageKey: `${store.largeImageKeyCustom}`,
