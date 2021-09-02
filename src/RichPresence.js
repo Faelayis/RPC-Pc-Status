@@ -115,6 +115,7 @@ function connectDiscord() {
     module.exports.userid = Presence.user.id;
     module.exports.username = `${Presence.user.username}#${Presence.user.discriminator}`;
     module.exports.useravatar = `https://cdn.discordapp.com/avatars/${Presence.user.id}/${Presence.user.avatar}.png?size=1024`; //?size=1024
+    StartPresence();
     trayupdata();
   });
   setTimeout(() => {
