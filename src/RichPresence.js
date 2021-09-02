@@ -1,26 +1,25 @@
+/* eslint-disable no-unused-vars */
 const process = require("process");
 const RPC = require("discord-rpc");
 const os = require("os");
 const si = require("systeminformation");
-
 const clientId = "879327042498342962";
-const { tray } = require("./tray");
+const { tray, trayupdata } = require("./tray");
 const store = require("./store");
 // StartTimestamp = new Date();
 
 let Presence = new RPC.Client({
   transport: "ipc",
 });
-let user;
-let Interval;
-let Presenceready;
-let osdistro;
-let osrelease;
-let oslogo;
-let cpu;
-let cpuload;
-let ram;
-let ramusage;
+let Interval,
+  Presenceready,
+  osdistro,
+  osrelease,
+  oslogo,
+  cpu,
+  cpuload,
+  ram,
+  ramusage;
 
 // Check systeminformation
 si.osInfo().then(
@@ -34,12 +33,6 @@ si.cpu().then((data) => (cpu = `${data.manufacturer} ${data.brand}`));
 
 function checkos() {
   switch (true) {
-    case /(Windows\s7)/g.test(osdistro):
-      oslogo = "windows7";
-      break;
-    case /(Windows\s8)/g.test(osdistro):
-      oslogo = "windows8";
-      break;
     case /(Windows\s10)/g.test(osdistro):
       oslogo = "windows10";
       break;
@@ -50,6 +43,7 @@ function checkos() {
       break;
   }
 }
+
 // Let Memoryfree, Memoryused;
 // setInterval(() => {
 //     si.mem().then(data => (Memoryfree = data.free, Memoryused = data.total));
@@ -59,7 +53,9 @@ function checkos() {
 function StartPresence() {
   checkos();
   Interval = setInterval(() => {
-    si.currentLoad().then((data) => (cpuload = data.currentLoad.toFixed(0)));
+    si.currentLoad().then(
+      (data) => (cpuload = data.currentLoad.toFixed(0) + "%")
+    );
     formatBytes(os.freemem(), os.totalmem());
     setActivity();
   }, 3000); // 15e33
@@ -107,18 +103,19 @@ function connectDiscord() {
       transport: "ipc",
     });
   }
-
   Presence.once("disconnected", () => {
     Presenceready = false;
-    module.exports.user = user = undefined;
+    module.exports.user = undefined;
     connectDiscord();
-    tray();
+    trayupdata();
   });
   Presence.once("ready", () => {
     Presenceready = true;
-    module.exports.user = user = Presence.user.username
-    StartPresence();
-    tray();
+    module.exports.user = Presence.user.username;
+    module.exports.userid = Presence.user.id;
+    module.exports.username = `${Presence.user.username}#${Presence.user.discriminator}`;
+    module.exports.useravatar = `https://cdn.discordapp.com/avatars/${Presence.user.id}/${Presence.user.avatar}.png?size=1024`; //?size=1024
+    trayupdata();
   });
   setTimeout(() => {
     Presence.login({ clientId });
