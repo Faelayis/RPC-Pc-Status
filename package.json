@@ -3,6 +3,7 @@
   "version": "1.0.2",
   "description": "Rich Presence Pc Status for your discord",
   "main": "src/index.js",
+  "module": "commonjs",
   "scripts": {
     "start": "electron .",
     "build": "prettier --write . && electron-builder build --x64 --publish never",
