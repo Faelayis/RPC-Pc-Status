@@ -1,6 +1,7 @@
 # RPC-Pc-Status
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FFaelayis%2FRPC-Pc-Status.svg?type=small)](https://app.fossa.com/projects/git%2Bgithub.com%2FFaelayis%2FRPC-Pc-Status?ref=badge_small)
+<br>
 Rich Presence Pc Status for your discord<br>
-
 ![Previews](docs/img/Previews.gif)
 ## Manual Installation
 ### Download for Windows <br>
