@@ -98,6 +98,7 @@ async function setActivity() {
 
 connectDiscord();
 tray();
+trayupdata();
 function connectDiscord() {
   if (Presence) {
     Presence.clearActivity();
@@ -110,16 +111,17 @@ function connectDiscord() {
     Presenceready = false;
     module.exports.user = undefined;
     connectDiscord();
-    trayupdata();
+    trayupdata(`${Presence.user.username}`);
   });
   Presence.once("ready", () => {
     Presenceready = true;
+    module.exports.userinfo = [Presence.user.username, Presence.user.discriminator, Presence.user.id];
     module.exports.user = Presence.user.username;
     module.exports.userid = Presence.user.id;
     module.exports.username = `${Presence.user.username}#${Presence.user.discriminator}`;
     module.exports.useravatar = `https://cdn.discordapp.com/avatars/${Presence.user.id}/${Presence.user.avatar}.png?size=1024`; //?size=1024
     StartPresence();
-    trayupdata();
+    trayupdata(`${Presence.user.username}`);
   });
   setTimeout(() => {
     Presence.login({ clientId });

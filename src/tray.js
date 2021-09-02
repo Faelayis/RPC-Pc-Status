@@ -1,7 +1,6 @@
 /* eslint-disable no-undef */
 const { app, Menu, Tray, nativeImage } = require("electron");
 const path = require("path");
-const Presence = require("./RichPresence");
 const { Checkupdates } = require("./updata");
 const { seticon } = require("./store");
 // const { CreateWindow } = require("./BrowserWindow");
@@ -22,10 +21,10 @@ exports.tray = () => {
   // });
 };
 
-exports.trayupdata = () => {
+exports.trayupdata = (user) => {
   if (tray) {
     const iconPath =
-      Presence.user === undefined
+      user === undefined
         ? "assets/icon/notconnected.png"
         : "assets/icon/connected.png";
     tray.setImage(nativeImage.createFromPath(path.join(__dirname, iconPath)));
@@ -33,12 +32,12 @@ exports.trayupdata = () => {
   tray.setContextMenu(
     Menu.buildFromTemplate([
       {
-        label: `Status : ${Presence.user ? "Connected" : "Not connected"}`,
+        label: `Status : ${user ? "Connected" : "Not connected"}`,
         type: "normal",
         enabled: false,
       },
       {
-        label: `User : ${Presence.user ? Presence.user : "Not found"}`,
+        label: `User : ${user ? user : "Not found"}`,
         type: "normal",
         enabled: false,
       },
