@@ -4,7 +4,7 @@ const RPC = require("discord-rpc");
 const os = require("os");
 const si = require("systeminformation");
 const clientId = "879327042498342962";
-const { tray, trayupdata } = require("./tray");
+const { trayupdata } = require("./tray");
 const store = require("./store");
 // StartTimestamp = new Date();
 
@@ -54,7 +54,7 @@ function StartPresence() {
   checkos();
   Interval = setInterval(() => {
     si.currentLoad().then(
-      (data) => (cpuload = data.currentLoad.toFixed(0) + "%")
+      (data) => (cpuload = data.currentLoad.toFixed(0) + " %")
     );
     formatBytes(os.freemem(), os.totalmem());
     setActivity();
@@ -97,8 +97,7 @@ async function setActivity() {
 }
 
 connectDiscord();
-tray();
-trayupdata();
+trayupdata(false, undefined);
 function connectDiscord() {
   if (Presence) {
     Presence.clearActivity();
@@ -111,17 +110,17 @@ function connectDiscord() {
     Presenceready = false;
     module.exports.user = undefined;
     connectDiscord();
-    trayupdata(`${Presence.user.username}`);
+    trayupdata(false, undefined);
   });
   Presence.once("ready", () => {
     Presenceready = true;
-    module.exports.userinfo = [Presence.user.username, Presence.user.discriminator, Presence.user.id];
+    // module.exports.userinfo = [Presence.user.username, Presence.user.discriminator, Presence.user.id];
     module.exports.user = Presence.user.username;
     module.exports.userid = Presence.user.id;
     module.exports.username = `${Presence.user.username}#${Presence.user.discriminator}`;
     module.exports.useravatar = `https://cdn.discordapp.com/avatars/${Presence.user.id}/${Presence.user.avatar}.png?size=1024`; //?size=1024
     StartPresence();
-    trayupdata(`${Presence.user.username}`);
+    trayupdata(true, `${Presence.user.username}`);
   });
   setTimeout(() => {
     Presence.login({ clientId });
@@ -136,5 +135,5 @@ process.on("unhandledRejection", (err) => {
 
 exports.connectDiscord = () => {
   connectDiscord();
-  tray();
+  trayupdata();
 };

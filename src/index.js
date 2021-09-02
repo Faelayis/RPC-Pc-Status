@@ -4,6 +4,7 @@ const isDev = require("electron-is-dev");
 const AutoLaunch = require("auto-launch");
 const gotTheLock = app.requestSingleInstanceLock();
 const log = require("electron-log");
+const { tray } = require("./tray");
 require("./log.js");
 require("./store");
 
@@ -37,6 +38,7 @@ if (process.platform === "win32") {
 
 app.once("ready", () => {
   log.log("App ready");
+  tray();
   require("./RichPresence");
   let myWindow = null;
   if (!gotTheLock) {

@@ -21,7 +21,7 @@ exports.tray = () => {
   // });
 };
 
-exports.trayupdata = (user) => {
+exports.trayupdata = (allow, user) => {
   if (tray) {
     const iconPath =
       user === undefined
@@ -49,6 +49,7 @@ exports.trayupdata = (user) => {
       { type: "separator" },
       {
         label: "Theme",
+        enabled: allow,
         submenu: [
           {
             label: "large Image",
