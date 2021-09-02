@@ -36,9 +36,3 @@ Rich Presence Pc Status for your discord<br>
 ![6](https://user-images.githubusercontent.com/48393914/131361307-5d75c4f9-3748-4eb4-ac22-8fcb7d942946.png)
 ![7](https://user-images.githubusercontent.com/48393914/131361336-4c09d0d8-ea05-47bf-adbc-977bd8658285.png)
 ![8](https://user-images.githubusercontent.com/48393914/131361383-f63cfec7-23c4-4e8f-8ace-a3467183b62a.png)
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FFaelayis%2FRPC-Pc-Status.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FFaelayis%2FRPC-Pc-Status?ref=badge_shield)
-
-
-
-## License
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FFaelayis%2FRPC-Pc-Status.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FFaelayis%2FRPC-Pc-Status?ref=badge_large)
