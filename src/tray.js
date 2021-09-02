@@ -3,7 +3,6 @@ const { app, Menu, Tray, nativeImage } = require("electron");
 const path = require("path");
 const { Checkupdates } = require("./updata");
 const { seticon } = require("./store");
-// const { CreateWindow } = require("./BrowserWindow");
 let tray = null;
 
 exports.tray = () => {
@@ -17,6 +16,7 @@ exports.tray = () => {
   tray.setToolTip("Pc Status");
   tray.setIgnoreDoubleClickEvents(true);
   // tray.on("click", function () {
+  //   const { CreateWindow } = require("./BrowserWindow");
   //   CreateWindow();
   // });
 };
