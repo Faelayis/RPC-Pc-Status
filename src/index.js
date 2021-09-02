@@ -5,8 +5,9 @@ const AutoLaunch = require("auto-launch");
 const gotTheLock = app.requestSingleInstanceLock();
 const log = require("electron-log");
 require("./log.js");
+require("./store");
 
-const DiscordPcStatus = new AutoLaunch({
+const RPC = new AutoLaunch({
   name: "RPC-Pc-Status",
   path: app.getPath("exe"),
   isHidden: true,
@@ -14,16 +15,16 @@ const DiscordPcStatus = new AutoLaunch({
 
 if (isDev) {
   log.log(`Running in development ${app.getVersion()}`);
-  DiscordPcStatus.disable();
+  RPC.disable();
 } else {
   log.log(`Running in production ${app.getVersion()}`);
-  DiscordPcStatus.enable();
-  DiscordPcStatus.isEnabled()
+  RPC.enable();
+  RPC.isEnabled()
     .then((isEnabled) => {
       if (isEnabled) {
         return;
       }
-      DiscordPcStatus.enable();
+      RPC.enable();
     })
     .catch((err) => {
       log.error(`AutoLaunch error:${err}`);
@@ -34,15 +35,14 @@ if (process.platform === "win32") {
   app.setAppUserModelId(app.name);
 }
 
-app.on("ready", () => {
+app.once("ready", () => {
   log.log("App ready");
-  require("./store");
   require("./RichPresence");
   let myWindow = null;
   if (!gotTheLock) {
     app.quit();
   } else {
-    app.on("second-instance", () => {
+    app.once("second-instance", () => {
       if (myWindow) {
         if (myWindow.isMinimized()) {
           myWindow.restore();
