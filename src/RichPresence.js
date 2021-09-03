@@ -108,17 +108,18 @@ function connectDiscord() {
   }
   Presence.once("disconnected", () => {
     Presenceready = false;
-    module.exports.user = undefined;
+    module.exports.userinfo = []
     connectDiscord();
     trayupdata(false, undefined);
   });
   Presence.once("ready", () => {
     Presenceready = true;
-    // module.exports.userinfo = [Presence.user.username, Presence.user.discriminator, Presence.user.id];
-    module.exports.user = Presence.user.username;
-    module.exports.userid = Presence.user.id;
-    module.exports.username = `${Presence.user.username}#${Presence.user.discriminator}`;
-    module.exports.useravatar = `https://cdn.discordapp.com/avatars/${Presence.user.id}/${Presence.user.avatar}.png?size=1024`; //?size=1024
+    module.exports.userinfo = [
+      Presence.user.username,
+      Presence.user.discriminator,
+      Presence.user.id,
+      `https://cdn.discordapp.com/avatars/${Presence.user.id}/${Presence.user.avatar}.png?size=1024`,
+    ]; //?size=1024]
     StartPresence();
     trayupdata(true, `${Presence.user.username}`);
   });
