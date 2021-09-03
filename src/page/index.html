@@ -1,1 +1,178 @@
-// hello world
+<!DOCTYPE html>
+<script> 
+  const { ipcRenderer } = require("electron");
+  const store = require("../store");
+  const log = require("electron-log");
+</script>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css">
+    <title>Rich Presence</title>
+  </head>
+  <body style="background-color: #36393f">
+    <div class="container">
+      <main>
+        <div class="py-5 text-center">
+          <img
+            class="d-block mx-auto mb-4 rounded-circle"
+            src="../assets/icon/connected.png"
+            alt=""
+            width="200"
+            height="200"
+            id="imgprox"
+            style="border: 5px solid #FFF;"
+          />
+          <h2 class="mb-2 bg-gradient-dark text-white" id="namex">Lost Connection</h2>
+        </div>
+        <div class="d-flex justify-content-center">
+          <div class="col-md-7 col-lg-8">
+            <h4 class="mb-2 bg-gradient-secondary text-white">Custom</h4>
+            <form class="needs-validation" novalidate>
+              <div class="row g-3">
+                <div class="col-sm-6">
+                  <label
+                    for="Details"
+                    class="mb-2 bg-gradient-secondary text-white"
+                    >Details</label
+                  >
+                <input 
+                    style="background-color: #40444b; color: #FFF;"
+                    type="text"
+                    class="form-control"
+                    id="details"
+                    placeholder=""
+                    value=""
+                    required
+                  />
+                </div>
+
+                <div class="col-sm-6">
+                  <label
+                    for="State"
+                    class="mb-2 bg-gradient-secondary text-white"
+                    >State</label
+                  >
+                <input 
+                    style="background-color: #40444b; color: #FFF;"
+                    type="text"
+                    class="form-control"
+                    id="state"
+                    placeholder=""
+                    value=""
+                    required
+                  />
+                </div>
+
+                <div class="col-12">
+                    <label
+                      for="Button-label-1"
+                      class="mb-2 bg-gradient-secondary text-white"
+                      >Button</label
+                    >
+                  <input 
+                      style="background-color: #40444b; color: #FFF;"
+                      type="text"
+                      class="form-control"
+                      id="Button-label-1"
+                      placeholder="Hello World"
+                      required
+                    />
+                  </div>
+
+                <div class="col-12">
+                  <label
+                    for="button-url-1"
+                    class="mb-2 bg-gradient-secondary text-white"
+                    >Button url<span class="text-muted"> (Optional)</span></label
+                  >
+                <input 
+                    style="background-color: #40444b; color: #FFF;"
+                    type="button-url-1"
+                    class="form-control"
+                    id="button-url-1"
+                    placeholder="https://url@example.com"
+                  />
+                </div>
+
+                <div class="col-12">
+                    <label
+                      for="Button-label-2"
+                      class="mb-2 bg-gradient-secondary text-white"
+                      >Button</label
+                    >
+                  <input 
+                      style="background-color: #40444b; color: #FFF;"
+                      type="text"
+                      class="form-control"
+                      id="Button-label-2"
+                      placeholder="Hello World"
+                      required
+                    />
+                  </div>
+
+                <div class="col-12">
+                  <label
+                    for="button-url-2"
+                    class="mb-2 bg-gradient-secondary text-white"
+                    >Button url<span class="text-muted"> (Optional)</span></label
+                  >
+                <input 
+                    style="background-color: #40444b; color: #FFF;"
+                    type="button-url-1"
+                    class="form-control"
+                    id="button-url-2"
+                    placeholder="https://url@example.com"
+                  />
+                </div>
+                <button type="button" class="btn btn-primary" onclick="getInputValue();">Save</button>
+                <footer class="my-5 pt-5 text-muted text-center text-small">
+        <p class="mb-1">&copy; RPC-Pc-Status</p>
+      </footer>
+    </div>
+    <!-- Optional JavaScript; choose one of the two! -->
+    <script>
+        // log.log(store.largeImageKeyCustom);
+        let userinfo = ipcRenderer.sendSync("synchronous-userinfo");
+          document.getElementById("imgprox").src = `${userinfo[3]}`;
+          document.getElementById("namex").innerHTML = `${userinfo[0]+`#`+userinfo[1]}`;
+        function getInputValue(){
+            let inputVal = [];
+            inputVal[0] = document.getElementById("details").value;
+            inputVal[1] = document.getElementById("state").value;
+            inputVal[2] = document.getElementById("Button-label-1").value;
+            inputVal[3] = document.getElementById("button-url-1").value;
+            inputVal[4] = document.getElementById("Button-label-2").value;
+            inputVal[5] = document.getElementById("button-url-2").value;
+            console.log(inputVal);
+        }
+    </script>
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
+      integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js"
+      integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
+<!-- prettier --write .\src\page\index.html -->
