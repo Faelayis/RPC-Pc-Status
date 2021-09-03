@@ -6,3 +6,4 @@ docs
 .eslintrc.js
 package-lock.json
 *.md
+*.html
