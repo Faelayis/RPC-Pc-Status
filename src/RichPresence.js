@@ -10,8 +10,8 @@ const store = require("./store");
 
 let Presence = new RPC.Client({
   transport: "ipc",
-});
-let Interval,
+}),
+  Interval,
   Presenceready,
   osdistro,
   osrelease,

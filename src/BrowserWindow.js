@@ -7,7 +7,7 @@ const mainWindow = new BrowserWindow({
   resizable: false,
   webPreferences: {
     nodeIntegration: true,
-    nativeWindowOpen: true,
+    nativeWindowOpen: false,
     contextIsolation: false,
   },
 });
