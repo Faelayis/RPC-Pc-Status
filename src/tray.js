@@ -3,6 +3,9 @@ const { app, Menu, Tray, nativeImage } = require("electron");
 const path = require("path");
 const { Checkupdates } = require("./updata");
 const { seticon } = require("./store");
+const Package = require("../package.json");
+const open = require("open");
+
 let tray = null;
 
 exports.tray = () => {
@@ -15,7 +18,7 @@ exports.tray = () => {
   tray.setTitle("Pc Status");
   tray.setToolTip("Pc Status");
   tray.setIgnoreDoubleClickEvents(true);
-  // tray.on("click", function () {
+  // tray.on("click", () => {
   //   const { CreateWindow } = require("./BrowserWindow");
   //   CreateWindow();
   // });
@@ -115,6 +118,13 @@ exports.trayupdata = (allow, user) => {
         ],
       },
       { type: "separator" },
+      {
+        label: "Contributors",
+        type: "normal",
+        click: () => {
+          open(`${Package.repository.url}/graphs/contributors`);
+        },
+      },
       {
         label: "Check for updates..",
         type: "normal",
