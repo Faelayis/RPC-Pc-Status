@@ -25,12 +25,9 @@ exports.CreateWindow = () => {
   } else {
     mainWindow.show();
   }
-  const { username, useravatar } = require("./RichPresence");
-  ipcMain.on("synchronous-useravatars", (event) => {
-    event.returnValue = useravatar;
-  });
-  ipcMain.on("synchronous-username", (event) => {
-    event.returnValue = username;
+  const { userinfo } = require("./RichPresence");
+  ipcMain.on("synchronous-userinfo", (event) => {
+    event.returnValue = userinfo;
   });
 };
 mainWindow.on("minimize", function () {
