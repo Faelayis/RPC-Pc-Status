@@ -9,8 +9,8 @@ const store = require("./store");
 // StartTimestamp = new Date();
 
 let Presence = new RPC.Client({
-  transport: "ipc",
-}),
+    transport: "ipc",
+  }),
   Interval,
   Presenceready,
   osdistro,
@@ -108,7 +108,7 @@ function connectDiscord() {
   }
   Presence.once("disconnected", () => {
     Presenceready = false;
-    module.exports.userinfo = []
+    module.exports.userinfo = [];
     connectDiscord();
     trayupdata(false, undefined);
   });
