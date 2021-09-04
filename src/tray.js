@@ -134,7 +134,9 @@ exports.trayupdata = (allow, user) => {
         },
       },
       {
-        label: 'Channel Updata', type: 'submenu', submenu: [
+        label: "Channel Updata",
+        type: "submenu",
+        submenu: [
           {
             label: "latest",
             type: "radio",
@@ -159,7 +161,7 @@ exports.trayupdata = (allow, user) => {
               setupdaterchannel("alpha");
             },
           },
-        ]
+        ],
       },
       { type: "separator" },
       { label: "Quit Pc Status", type: "normal", click: () => app.quit() },

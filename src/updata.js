@@ -2,8 +2,10 @@ const log = require("electron-log");
 const { app, dialog, Notification, nativeImage } = require("electron");
 const path = require("path");
 const { updaterChannel } = require("./store");
-const { autoUpdater } = require("electron-updater");  // eslint-disable-next-line no-undef
-const iconpath = nativeImage.createFromPath(path.join(__dirname, "assets/icon/connected.png"));
+const { autoUpdater } = require("electron-updater"); // eslint-disable-next-line no-undef
+const iconpath = nativeImage.createFromPath(
+  path.join(__dirname, "assets/icon/connected.png")
+);
 autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = "info";
 let allow = true;
@@ -11,7 +13,7 @@ let allow = true;
 exports.Checkupdates = () => {
   if (allow === true) {
     allow = false;
-    autoUpdater.channel = updaterChannel
+    autoUpdater.channel = updaterChannel;
     autoUpdater.allowPrerelease = true;
     autoUpdater.allowDowngrade = true;
     autoUpdater.setFeedURL({

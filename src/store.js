@@ -1,8 +1,8 @@
 const Store = require("electron-store");
-const package = require("../package.json")
+const package = require("../package.json");
 const schema = {
   updaterChannel: {
-    type: 'string',
+    type: "string",
   },
   // detailsCustom: {
   //   type: 'string',
@@ -11,7 +11,7 @@ const schema = {
   //   type: 'string',
   // },
   largeImageKeyCustom: {
-    type: 'string',
+    type: "string",
   },
   // largeImageTextCustom: {
   //   type: 'string',
