@@ -2,7 +2,8 @@
 const { app, Menu, Tray, nativeImage } = require("electron");
 const path = require("path");
 const { Checkupdates } = require("./updata");
-const { seticon } = require("./store");
+const { seticonlargeImageKey, setupdaterchannel } = require("./store");
+const { updaterChannel } = require("./store");
 const Package = require("../package.json");
 const open = require("open");
 
@@ -61,56 +62,56 @@ exports.trayupdata = (allow, user) => {
                 label: "Dark",
                 type: "normal",
                 click: () => {
-                  seticon("icon_dark");
+                  seticonlargeImageKey("icon_dark");
                 },
               },
               {
                 label: "White",
                 type: "normal",
                 click: () => {
-                  seticon("icon_white");
+                  seticonlargeImageKey("icon_white");
                 },
               },
               {
                 label: "Red",
                 type: "normal",
                 click: () => {
-                  seticon("icon_red");
+                  seticonlargeImageKey("icon_red");
                 },
               },
               {
                 label: "Yellow",
                 type: "normal",
                 click: () => {
-                  seticon("icon_yellow");
+                  seticonlargeImageKey("icon_yellow");
                 },
               },
               {
                 label: "Lime",
                 type: "normal",
                 click: () => {
-                  seticon("icon_lime");
+                  seticonlargeImageKey("icon_lime");
                 },
               },
               {
                 label: "Aqua",
                 type: "normal",
                 click: () => {
-                  seticon("icon_aqua");
+                  seticonlargeImageKey("icon_aqua");
                 },
               },
               {
                 label: "Blue",
                 type: "normal",
                 click: () => {
-                  seticon("icon_blue");
+                  seticonlargeImageKey("icon_blue");
                 },
               },
               {
                 label: "Orange",
                 type: "normal",
                 click: () => {
-                  seticon("icon_orange");
+                  seticonlargeImageKey("icon_orange");
                 },
               },
             ],
@@ -126,11 +127,39 @@ exports.trayupdata = (allow, user) => {
         },
       },
       {
-        label: "Check for updates..",
+        label: `Check for ${updaterChannel} updates..`,
         type: "normal",
         click: () => {
           Checkupdates();
         },
+      },
+      {
+        label: 'Channel Updata', type: 'submenu', submenu: [
+          {
+            label: "latest",
+            type: "radio",
+            checked: updaterChannel === "latest" ? true : false,
+            click: () => {
+              setupdaterchannel("latest");
+            },
+          },
+          {
+            label: "beta",
+            type: "radio",
+            checked: updaterChannel === "beta" ? true : false,
+            click: () => {
+              setupdaterchannel("beta");
+            },
+          },
+          {
+            label: "alpha",
+            type: "radio",
+            checked: updaterChannel === "alpha" ? true : false,
+            click: () => {
+              setupdaterchannel("alpha");
+            },
+          },
+        ]
       },
       { type: "separator" },
       { label: "Quit Pc Status", type: "normal", click: () => app.quit() },

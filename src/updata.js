@@ -1,11 +1,9 @@
-const { app, dialog, Notification, nativeImage } = require("electron");
-const { autoUpdater } = require("electron-updater");
 const log = require("electron-log");
+const { app, dialog, Notification, nativeImage } = require("electron");
 const path = require("path");
-const iconpath = nativeImage.createFromPath(
-  // eslint-disable-next-line no-undef
-  path.join(__dirname, "assets/icon/connected.png")
-);
+const { updaterChannel } = require("./store");
+const { autoUpdater } = require("electron-updater");  // eslint-disable-next-line no-undef
+const iconpath = nativeImage.createFromPath(path.join(__dirname, "assets/icon/connected.png"));
 autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = "info";
 let allow = true;
@@ -13,9 +11,9 @@ let allow = true;
 exports.Checkupdates = () => {
   if (allow === true) {
     allow = false;
-    autoUpdater.currentChannel = autoUpdater.channel;
-    autoUpdater.allowPrerelease = false;
-    autoUpdater.allowDowngrade = false;
+    autoUpdater.channel = updaterChannel
+    autoUpdater.allowPrerelease = true;
+    autoUpdater.allowDowngrade = true;
     autoUpdater.setFeedURL({
       provider: "github",
       owner: "Faelayis",
@@ -23,7 +21,7 @@ exports.Checkupdates = () => {
     });
     autoUpdater.checkForUpdates();
     autoUpdater.once("checking-for-update", () => {
-      log.info("Checking for update...");
+      log.info(`Checking for ${updaterChannel} update...`);
     });
     autoUpdater.once("update-available", (UpdateInfo) => {
       log.info("Update available.");
