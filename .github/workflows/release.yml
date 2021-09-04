@@ -20,7 +20,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   publish_on_win:
-    needs: prettier
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
