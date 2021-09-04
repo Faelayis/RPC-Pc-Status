@@ -36,7 +36,10 @@ if (store.get("largeImageKeyCustom") === undefined) {
 
 exports.setupdaterchannel = (c) => {
   store.set("updaterChannel", c);
+  const { trayupdata } = require("./tray");
+  const { userinfo } = require("./RichPresence");
   module.exports.updaterChannel = store.get("updaterChannel");
+  trayupdata(true, userinfo[0]);
 };
 exports.seticonlargeImageKey = (icon) => {
   store.set("largeImageKeyCustom", icon);

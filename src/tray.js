@@ -3,7 +3,6 @@ const { app, Menu, Tray, nativeImage } = require("electron");
 const path = require("path");
 const { Checkupdates } = require("./updata");
 const { seticonlargeImageKey, setupdaterchannel } = require("./store");
-const { updaterChannel } = require("./store");
 const Package = require("../package.json");
 const open = require("open");
 
@@ -26,6 +25,7 @@ exports.tray = () => {
 };
 
 exports.trayupdata = (allow, user) => {
+  const { updaterChannel } = require("./store");
   if (tray) {
     const iconPath =
       user === undefined
