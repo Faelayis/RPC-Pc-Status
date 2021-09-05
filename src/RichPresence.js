@@ -9,8 +9,8 @@ const store = require("./store");
 // StartTimestamp = new Date();
 
 let Presence = new RPC.Client({
-    transport: "ipc",
-  }),
+  transport: "ipc",
+}),
   Interval,
   Presenceready,
   osdistro,
@@ -106,13 +106,13 @@ function connectDiscord() {
       transport: "ipc",
     });
   }
-  Presence.once("disconnected", () => {
+  Presence.once("disconnected", async () => {
     Presenceready = false;
     module.exports.userinfo = [];
-    connectDiscord();
-    trayupdata(false, undefined);
+    await trayupdata(false, undefined);
+    await connectDiscord();
   });
-  Presence.once("ready", () => {
+  Presence.once("ready", async () => {
     Presenceready = true;
     module.exports.userinfo = [
       Presence.user.username,
@@ -120,8 +120,8 @@ function connectDiscord() {
       Presence.user.id,
       `https://cdn.discordapp.com/avatars/${Presence.user.id}/${Presence.user.avatar}.png?size=1024`,
     ]; //?size=1024]
-    StartPresence();
-    trayupdata(true, `${Presence.user.username}`);
+    await StartPresence();
+    await trayupdata(true, `${Presence.user.username}`);
   });
   setTimeout(() => {
     Presence.login({ clientId });
@@ -134,7 +134,7 @@ process.on("unhandledRejection", (err) => {
   }
 });
 
-exports.connectDiscord = () => {
-  connectDiscord();
-  trayupdata();
+exports.connectDiscord = async () => {
+  await connectDiscord();
+  await trayupdata();
 };
