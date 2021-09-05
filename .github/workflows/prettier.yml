@@ -1,7 +1,6 @@
 name: Format
-on:
-  pull_request:
-    branches: [main]
+on: [push, pull_request]
+
 jobs:
   format:
     runs-on: ubuntu-latest
