@@ -1,11 +1,10 @@
 const process = require("process");
 const { app } = require("electron");
+const log = require("electron-log");
+require("./log");
 const isDev = require("electron-is-dev");
 const AutoLaunch = require("auto-launch");
-const log = require("electron-log");
-const { tray } = require("./tray");
 const gotTheLock = app.requestSingleInstanceLock();
-require("./log.js");
 
 const RPC = new AutoLaunch({
   name: "RPC-Pc-Status",
@@ -36,8 +35,9 @@ if (process.platform === "win32") {
 }
 
 app.on("ready", async () => {
-  log.log("App ready");
+  log.log("App Ready");
   await require("./store");
+  const { tray } = await require("./tray");
   await tray();
   await require("./RichPresence");
   let myWindow = null;

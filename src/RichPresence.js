@@ -6,21 +6,22 @@ const si = require("systeminformation");
 const clientId = "879327042498342962";
 const { trayupdata } = require("./tray");
 const store = require("./store");
-// StartTimestamp = new Date();
+const log = require("electron-log");
 
 let Presence = new RPC.Client({
-    transport: "ipc",
-  }),
+  transport: "ipc",
+}),
   Interval,
   Presenceready,
   osdistro,
   osrelease,
   oslogo,
   cpu,
-  cpuload,
+  cpuload = '0 %',
   ram,
   ramusage;
 
+// console.log(si.time().current);
 // Check systeminformation
 si.osInfo().then(
   (data) => (
@@ -98,21 +99,23 @@ async function setActivity() {
 
 connectDiscord();
 trayupdata(false, undefined);
-function connectDiscord() {
+async function connectDiscord() {
+  // log.log("Connect Discord: Try")
   if (Presence) {
-    Presence.clearActivity();
     Presence.destroy();
     Presence = new RPC.Client({
       transport: "ipc",
     });
   }
   Presence.once("disconnected", async () => {
+    log.log(`Connect Discord: Disconnected`)
     Presenceready = false;
     module.exports.userinfo = [];
     await trayupdata(false, undefined);
     await connectDiscord();
   });
   Presence.once("ready", async () => {
+    log.log(`Connect Discord: Ready`)
     Presenceready = true;
     module.exports.userinfo = [
       Presence.user.username,
@@ -130,6 +133,7 @@ function connectDiscord() {
 
 process.on("unhandledRejection", (err) => {
   if (err.message === "Could not connect") {
+    // log.log("Connect Discord: Could not connect")
     connectDiscord();
   }
 });

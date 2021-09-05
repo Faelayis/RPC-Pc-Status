@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 const { app, Menu, Tray, nativeImage } = require("electron");
+const log = require("electron-log");
 const path = require("path");
 const { Checkupdates } = require("./updata");
 const { seticonlargeImageKey, setupdaterchannel } = require("./store");
@@ -9,6 +10,7 @@ const open = require("open");
 let tray = null;
 
 exports.tray = () => {
+  log.log("Tray Start")
   const iconPath = "assets/icon/notconnected.png";
   if (tray) {
     tray.setImage(nativeImage.createFromPath(path.join(__dirname, iconPath)));
@@ -25,6 +27,7 @@ exports.tray = () => {
 };
 
 exports.trayupdata = (allow, user) => {
+  log.log(`Tray Updata: ${allow} ${user}`);
   const { updaterChannel } = require("./store");
   if (tray) {
     const iconPath =
