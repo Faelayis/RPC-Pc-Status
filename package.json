@@ -10,8 +10,7 @@
     "dev": "electromon .",
     "build": "electron-builder build --x64 --publish never",
     "publish": "prettier --write . && electron-builder build --x64 --ia32 --publish always",
-    "prettier": "prettier --write .",
-    "format": "prettier --write ."
+    "prettier": "prettier --write ."
   },
   "keywords": [],
   "author": {
