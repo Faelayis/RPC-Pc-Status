@@ -40,13 +40,13 @@ exports.setupdaterchannel = (c) => {
   const { trayupdata } = require("./tray");
   const { userinfo } = require("./RichPresence");
   module.exports.updaterChannel = store.get("updaterChannel");
-  log.log(`Set updaterchannel: ${c}`)
+  log.log(`Set updaterchannel: ${c}`);
   trayupdata(true, userinfo[0]);
 };
 exports.seticonlargeImageKey = (icon) => {
   store.set("largeImageKeyCustom", icon);
   module.exports.largeImageKeyCustom = store.get("largeImageKeyCustom");
-  log.log(`Set largeImageKeyCustom: ${icon}`)
+  log.log(`Set largeImageKeyCustom: ${icon}`);
 };
 
 module.exports.updaterChannel = store.get("updaterChannel");

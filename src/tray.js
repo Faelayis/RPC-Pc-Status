@@ -10,7 +10,7 @@ const open = require("open");
 let tray = null;
 
 exports.tray = () => {
-  log.log("Tray Start")
+  log.log("Tray Start");
   const iconPath = "assets/icon/notconnected.png";
   if (tray) {
     tray.setImage(nativeImage.createFromPath(path.join(__dirname, iconPath)));

@@ -9,15 +9,15 @@ const store = require("./store");
 const log = require("electron-log");
 
 let Presence = new RPC.Client({
-  transport: "ipc",
-}),
+    transport: "ipc",
+  }),
   Interval,
   Presenceready,
   osdistro,
   osrelease,
   oslogo,
   cpu,
-  cpuload = '0 %',
+  cpuload = "0 %",
   ram,
   ramusage;
 
@@ -108,14 +108,14 @@ async function connectDiscord() {
     });
   }
   Presence.once("disconnected", async () => {
-    log.log(`Connect Discord: Disconnected`)
+    log.log(`Connect Discord: Disconnected`);
     Presenceready = false;
     module.exports.userinfo = [];
     await trayupdata(false, undefined);
     await connectDiscord();
   });
   Presence.once("ready", async () => {
-    log.log(`Connect Discord: Ready`)
+    log.log(`Connect Discord: Ready`);
     Presenceready = true;
     module.exports.userinfo = [
       Presence.user.username,
