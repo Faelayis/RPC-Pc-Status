@@ -9,8 +9,8 @@ const store = require("./store");
 // StartTimestamp = new Date();
 
 let Presence = new RPC.Client({
-  transport: "ipc",
-}),
+    transport: "ipc",
+  }),
   Interval,
   Presenceready,
   osdistro,
