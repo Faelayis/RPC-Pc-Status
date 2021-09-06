@@ -10,8 +10,8 @@ const log = require("electron-log");
 // const { webupdate } = require("./BrowserWindow");
 
 let Presence = new RPC.Client({
-  transport: "ipc",
-}),
+    transport: "ipc",
+  }),
   // userinfo,
   Interval,
   Presenceready,
@@ -112,7 +112,12 @@ async function connectDiscord() {
   Presence.once("disconnected", async () => {
     log.log(`Connect Discord: Disconnected`);
     Presenceready = false;
-    module.exports.userinfo = ['Disconnected', undefined, undefined, `https://cdn.discordapp.com/embed/avatars/0.png?size=1024`];
+    module.exports.userinfo = [
+      "Disconnected",
+      undefined,
+      undefined,
+      `https://cdn.discordapp.com/embed/avatars/0.png?size=1024`,
+    ];
     await trayupdata(false, undefined);
     await connectDiscord();
     // await webupdate(userinfo);

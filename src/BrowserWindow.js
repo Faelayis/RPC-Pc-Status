@@ -1,7 +1,7 @@
 const { app, globalShortcut, BrowserWindow, ipcMain } = require("electron");
 const log = require("electron-log");
 // const path = require("path");
-app.on('browser-window-focus', function () {
+app.on("browser-window-focus", function () {
   globalShortcut.register("CommandOrControl+R", () => {
     // console.log("CommandOrControl+R is pressed: Shortcut Disabled");
   });
@@ -24,7 +24,12 @@ const mainWindow = new BrowserWindow({
 });
 mainWindow.loadFile("./src/page/index.html");
 ipcMain.once("synchronous-userinfo", (event) => {
-  event.returnValue = ['Not connected', '', undefined, `https://cdn.discordapp.com/embed/avatars/0.png?size=1024`];
+  event.returnValue = [
+    "Not connected",
+    "",
+    undefined,
+    `https://cdn.discordapp.com/embed/avatars/0.png?size=1024`,
+  ];
 });
 
 let isminimize = false;
@@ -50,11 +55,11 @@ mainWindow.on("close", function (event) {
 });
 
 exports.webupdate = (userinfo) => {
-  log.log('Web Update')
+  log.log("Web Update");
   ipcMain.once("synchronous-userinfo", (event) => {
     event.returnValue = userinfo;
   });
   mainWindow.loadFile("./src/page/index.html");
-}
+};
 
 log.log(`BrowserWindow Ready`);
