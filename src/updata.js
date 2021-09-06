@@ -2,8 +2,8 @@ const log = require("electron-log");
 const { app, dialog, Notification, nativeImage } = require("electron");
 const path = require("path");
 const { updaterChannel } = require("./store");
-const { autoUpdater } = require("electron-updater"); // eslint-disable-next-line no-undef
-const iconpath = nativeImage.createFromPath(
+const { autoUpdater } = require("electron-updater");
+const iconpath = nativeImage.createFromPath(// eslint-disable-next-line no-undef
   path.join(__dirname, "assets/icon/connected.png")
 );
 autoUpdater.logger = log;
