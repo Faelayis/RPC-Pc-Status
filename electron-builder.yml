@@ -26,18 +26,19 @@ win:
 
 # Config windows installer
 nsis:
-  artifactName: ${productName} Setup ${arch}.${ext}
-  uninstallDisplayName: ${productName}
   oneClick: true
   perMachine: true
-  createDesktopShortcut: false
-  createStartMenuShortcut: true
-  menuCategory: false
+  allowElevation: true
+  uninstallDisplayName: ${productName}
+  artifactName: ${productName} Setup ${arch}.${ext}
+  deleteAppDataOnUninstall: true
   differentialPackage: false
+  createDesktopShortcut: false
+  menuCategory: false
 
 nsisWeb:
-  artifactName: ${productName} WebSetup.${ext}
   differentialPackage: false
+  artifactName: ${productName} WebSetup.${ext}
 
 directories:
   buildResources: build
