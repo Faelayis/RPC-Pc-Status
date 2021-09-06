@@ -7,10 +7,12 @@ const clientId = "879327042498342962";
 const { trayupdata } = require("./tray");
 const store = require("./store");
 const log = require("electron-log");
+// const { webupdate } = require("./BrowserWindow");
 
 let Presence = new RPC.Client({
-    transport: "ipc",
-  }),
+  transport: "ipc",
+}),
+  // userinfo,
   Interval,
   Presenceready,
   osdistro,
@@ -110,9 +112,10 @@ async function connectDiscord() {
   Presence.once("disconnected", async () => {
     log.log(`Connect Discord: Disconnected`);
     Presenceready = false;
-    module.exports.userinfo = [];
+    module.exports.userinfo = ['Disconnected', undefined, undefined, `https://cdn.discordapp.com/embed/avatars/0.png?size=1024`];
     await trayupdata(false, undefined);
     await connectDiscord();
+    // await webupdate(userinfo);
   });
   Presence.once("ready", async () => {
     log.log(`Connect Discord: Ready`);
@@ -125,6 +128,7 @@ async function connectDiscord() {
     ]; //?size=1024]
     await StartPresence();
     await trayupdata(true, `${Presence.user.username}`);
+    // await webupdate(userinfo);
   });
   setTimeout(() => {
     Presence.login({ clientId });
