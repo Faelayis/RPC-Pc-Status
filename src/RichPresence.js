@@ -53,8 +53,8 @@ function checkos() {
 // }, 3000);
 
 // Start Presence
-function StartPresence() {
-  checkos();
+async function StartPresence() {
+  await checkos();
   Interval = setInterval(() => {
     si.currentLoad().then(
       (data) => (cpuload = data.currentLoad.toFixed(0) + " %")
