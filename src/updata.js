@@ -15,7 +15,11 @@ exports.Checkupdates = () => {
   if (allow === true) {
     allow = false;
     autoUpdater.channel = updaterChannel;
-    autoUpdater.allowPrerelease = true;
+    if (updaterChannel === "beta" | "alpha") {
+      autoUpdater.allowPrerelease = true;
+    } else {
+      autoUpdater.allowPrerelease = false;
+    }
     autoUpdater.allowDowngrade = true;
     autoUpdater.setFeedURL({
       provider: "github",
