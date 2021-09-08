@@ -10,8 +10,8 @@ const log = require("electron-log");
 const { webupdate } = require("./BrowserWindow");
 
 let Presence = new RPC.Client({
-  transport: "ipc",
-}),
+    transport: "ipc",
+  }),
   // userinfo,
   Interval,
   Presenceready,
@@ -98,7 +98,7 @@ async function setActivity() {
   Presence.smallImageKey = `${oslogo}`;
   Presence.smallImageText = `${osdistro} ${osrelease}`;
   Presence.instance = false;
-  if (allow_buttons_1 === true !== allow_buttons_2 === true) {
+  if (((allow_buttons_1 === true) !== allow_buttons_2) === true) {
     Presence.buttons = [
       {
         label: `${store.buttonslabelCustom[0]}`,
