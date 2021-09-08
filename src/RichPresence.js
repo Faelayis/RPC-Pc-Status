@@ -10,8 +10,6 @@ const log = require("electron-log");
 const { webupdate } = require("./BrowserWindow");
 
 let Presence = new RPC.Client({
-    transport: "ipc",
-  }),
   // userinfo,
   Interval,
   Presenceready,
@@ -91,21 +89,21 @@ async function setActivity() {
   }
   // console.log('updata Presence')
   // StartTimestamp,
-  (Presence.details = `CPU ${cpuload}`),
-    (Presence.state = `RAM ${ramusage} / ${ram}`),
-    (Presence.largeImageKey = `${store.largeImageKeyCustom}`),
-    (Presence.largeImageText = `${cpu}`),
-    (Presence.smallImageKey = `${oslogo}`),
-    (Presence.smallImageText = `${osdistro} ${osrelease}`),
-    (Presence.instance = false);
-  if (allow_buttons_1 !== allow_buttons_2) {
+  Presence.details = `CPU ${cpuload}`;
+  Presence.state = `RAM ${ramusage} / ${ram}`;
+  Presence.largeImageKey = `${store.largeImageKeyCustom}`;
+  Presence.largeImageText = `${cpu}`;
+  Presence.smallImageKey = `${oslogo}`;
+  Presence.smallImageText = `${osdistro} ${osrelease}`;
+  Presence.instance = false;
+  if (allow_buttons_1 === true !== allow_buttons_2 === true) {
     Presence.buttons = [
       {
         label: `${store.buttonslabelCustom[0]}`,
         url: `${store.buttonsurlCustom[0]}`,
       },
     ];
-  } else if (allow_buttons_2) {
+  } else if (allow_buttons_2 === true) {
     Presence.buttons = [
       {
         label: `${store.buttonslabelCustom[0]}`,
@@ -118,8 +116,7 @@ async function setActivity() {
     ];
   }
   Presence.setActivity(Presence);
-  // console.log(Presence)
-  // console.log(store.buttonslabelCustom)
+  //console.log(Presence);
 }
 
 connectDiscord();

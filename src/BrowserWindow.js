@@ -23,6 +23,8 @@ const mainWindow = new BrowserWindow({
     contextIsolation: false,
   },
 });
+mainWindow.setMenu(null);
+mainWindow.setAutoHideMenuBar(true);
 mainWindow.loadFile("./src/page/index.html");
 ipcMain.once("synchronous-userinfo", (event) => {
   event.returnValue = [
@@ -60,8 +62,7 @@ exports.webupdate = (userinfo) => {
   ipcMain.once("synchronous-userinfo", (event) => {
     event.returnValue = userinfo;
   });
-  ipcMain.on("asynchronous-buttonsinput", (arg) => {
-    console.log(arg);
+  ipcMain.on("asynchronous-buttonsinput", (event, arg) => {
     setbuttonslabel(arg[0], arg[2]);
     setbuttonsurl(arg[1], arg[3]);
   });

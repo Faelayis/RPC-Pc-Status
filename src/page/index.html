@@ -85,7 +85,7 @@
                       class="form-control"
                       id="button-label-1"
                       placeholder="Hello World"
-                      value=""
+                      value="text"
                       required
                     />
                   </div>
@@ -102,7 +102,7 @@
                     class="form-control"
                     id="button-url-1"
                     placeholder="https://url@example.com"
-                    value=""
+                    value="url"
                   />
                 </div>
 
@@ -118,7 +118,7 @@
                       class="form-control"
                       id="button-label-2"
                       placeholder="Hello World"
-                      value=""
+                      value="text"
                       required
                     />
                   </div>
@@ -135,7 +135,7 @@
                     class="form-control"
                     id="button-url-2"
                     placeholder="https://url@example.com"
-                    value=""
+                    value="url"
                   />
                 </div>
                 <button type="button" class="btn btn-primary" onclick="getInputValue()">Save</button>
@@ -145,13 +145,12 @@
     </div>
     <!-- Optional JavaScript; choose one of the two! -->
     <script>
-        //log.log(store.largeImageKeyCustom);
         let userinfo = ipcRenderer.sendSync("synchronous-userinfo");
           document.getElementById("imgprox").src = `${userinfo[3]}`;
           document.getElementById("namex").innerHTML = `${userinfo[0]}`;
           // document.getElementById("namex").innerHTML = `${userinfo[0]+`#`+userinfo[1]}`;
         function getInputValue(){
-            let inputVal = [];
+            // let inputVal = [];
             // inputVal[0] = document.getElementById("details").value;
             // inputVal[1] = document.getElementById("state").value;
             let inputValbutton = [
@@ -159,8 +158,7 @@
             document.getElementById("button-url-1").value,
             document.getElementById("button-label-2").value,
             document.getElementById("button-url-2").value];
-            ipcRenderer.send('asynchronous-buttonsinput', inputValbutton)
-            // console.log(inputValbutton); 
+            ipcRenderer.send('asynchronous-buttonsinput', inputValbutton);
         }
     </script>
     <!-- Option 1: Bootstrap Bundle with Popper -->
