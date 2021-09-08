@@ -17,13 +17,13 @@ const schema = {
   // largeImageTextCustom: {
   //   type: 'string',
   // },
-  // buttonsLabelCustom: {
-  //   type: 'string',
-  // },
-  // buttonsurlCustom: {
-  //   type: 'string',
-  //   format: 'url'
-  // }
+  buttonslabelCustom: {
+    type: 'string',
+  },
+  buttonsurlCustom: {
+    type: 'string',
+    format: 'url'
+  }
 };
 const store = new Store(schema);
 
@@ -49,6 +49,20 @@ exports.seticonlargeImageKey = (icon) => {
   log.log(`Set largeImageKeyCustom: ${icon}`);
 };
 
+exports.setbuttonslabel = (text1, text2) => {
+  store.set("buttonslabelCustom", [text1, text2]);
+  module.exports.buttonslabelCustom = store.get("buttonslabelCustom");
+  log.log(`Set buttonslabelCustom: ${text1, text2}`);
+};
+
+exports.setbuttonsurl = (url1, url2) => {
+  store.set("buttonsurlCustom", [url1, url2]);
+  module.exports.buttonsurlCustom = store.get("buttonsurlCustom");
+  log.log(`Set buttonsurlCustom: ${url1, url2}`);
+};
+
 module.exports.updaterChannel = store.get("updaterChannel");
 module.exports.largeImageKeyCustom = store.get("largeImageKeyCustom");
+module.exports.buttonslabelCustom = store.get("buttonslabelCustom");
+module.exports.buttonsurlCustom = store.get("buttonsurlCustom");
 log.log(`Store Ready`);

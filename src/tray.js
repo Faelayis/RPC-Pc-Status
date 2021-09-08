@@ -4,7 +4,7 @@ const log = require("electron-log");
 const path = require("path");
 const { Checkupdates } = require("./updata");
 const { seticonlargeImageKey, setupdaterchannel } = require("./store");
-// const { CreateWindow } = require("./BrowserWindow");
+const { CreateWindow } = require("./BrowserWindow");
 const Package = require("../package.json");
 const open = require("open");
 
@@ -21,9 +21,9 @@ exports.tray = () => {
   tray.setTitle("Pc Status");
   tray.setToolTip("Pc Status");
   tray.setIgnoreDoubleClickEvents(true);
-  // tray.on("click", () => {
-  //   CreateWindow();
-  // });
+  tray.on("click", () => {
+    CreateWindow();
+  });
 };
 
 exports.trayupdata = (allow, user) => {

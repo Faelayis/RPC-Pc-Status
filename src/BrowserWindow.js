@@ -1,5 +1,6 @@
 const { app, globalShortcut, BrowserWindow, ipcMain } = require("electron");
 const log = require("electron-log");
+const { setbuttonslabel, setbuttonsurl } = require("./store");
 // const path = require("path");
 app.on("browser-window-focus", function () {
   globalShortcut.register("CommandOrControl+R", () => {
@@ -59,6 +60,11 @@ exports.webupdate = (userinfo) => {
   ipcMain.once("synchronous-userinfo", (event) => {
     event.returnValue = userinfo;
   });
+  ipcMain.on('asynchronous-buttonsinput', (arg) => {
+    console.log(arg)
+    setbuttonslabel(arg[0],arg[2]);
+    setbuttonsurl(arg[1],arg[3]);
+ })
   mainWindow.loadFile("./src/page/index.html");
 };
 

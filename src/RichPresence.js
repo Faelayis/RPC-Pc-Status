@@ -7,11 +7,11 @@ const clientId = "879327042498342962";
 const { trayupdata } = require("./tray");
 const store = require("./store");
 const log = require("electron-log");
-// const { webupdate } = require("./BrowserWindow");
+const { webupdate } = require("./BrowserWindow");
 
 let Presence = new RPC.Client({
-    transport: "ipc",
-  }),
+  transport: "ipc",
+}),
   // userinfo,
   Interval,
   Presenceready,
@@ -80,23 +80,46 @@ function formatBytes(freemem, totalmem, decimals = 2) {
   ram = `${parseFloat((totalmem / k ** i).toFixed(dm))} ${sizes[i]}`;
 }
 
+let allow_buttons_1 = true
+let allow_buttons_2 = true
+
 // Presence setActivity
 async function setActivity() {
   if (!Presenceready || !Presence) {
     clearInterval(Interval);
     return;
   }
-
-  Presence.setActivity({
-    details: `CPU ${cpuload}`,
-    state: `RAM ${ramusage} / ${ram}`,
-    // StartTimestamp,
-    largeImageKey: `${store.largeImageKeyCustom}`,
-    largeImageText: `${cpu}`,
-    smallImageKey: `${oslogo}`,
-    smallImageText: `${osdistro} ${osrelease}`,
-    instance: false,
-  });
+  // console.log('updata Presence')
+  // StartTimestamp,
+  Presence.details = `CPU ${cpuload}`,
+    Presence.state = `RAM ${ramusage} / ${ram}`,
+    Presence.largeImageKey = `${store.largeImageKeyCustom}`,
+    Presence.largeImageText = `${cpu}`,
+    Presence.smallImageKey = `${oslogo}`,
+    Presence.smallImageText = `${osdistro} ${osrelease}`,
+    Presence.instance = false;
+  if (allow_buttons_1 !== allow_buttons_2) {
+    Presence.buttons = [
+      {
+        label: `${store.buttonslabelCustom[0]}`,
+        url: `${store.buttonsurlCustom[0]}`
+      },
+    ];
+  } else if (allow_buttons_2) {
+    Presence.buttons = [
+      {
+        label: `${store.buttonslabelCustom[0]}`,
+        url: `${store.buttonsurlCustom[0]}`
+      },
+      {
+        label: `${store.buttonslabelCustom[1]}`,
+        url: `${store.buttonsurlCustom[1]}`
+      }
+    ];
+  }
+  Presence.setActivity(Presence);
+  // console.log(Presence)
+  // console.log(store.buttonslabelCustom)
 }
 
 connectDiscord();
@@ -112,7 +135,7 @@ async function connectDiscord() {
   Presence.once("disconnected", async () => {
     log.log(`Connect Discord: Disconnected`);
     Presenceready = false;
-    module.exports.userinfo = [
+    module.exports.userinfo = this.userinfo = [
       "Disconnected",
       undefined,
       undefined,
@@ -120,12 +143,12 @@ async function connectDiscord() {
     ];
     await trayupdata(false, undefined);
     await connectDiscord();
-    // await webupdate(userinfo);
+    await webupdate(this.userinfo);
   });
   Presence.once("ready", async () => {
     log.log(`Connect Discord: Ready`);
     Presenceready = true;
-    module.exports.userinfo = [
+    module.exports.userinfo = this.userinfo = [
       Presence.user.username,
       Presence.user.discriminator,
       Presence.user.id,
@@ -133,7 +156,7 @@ async function connectDiscord() {
     ]; //?size=1024]
     await StartPresence();
     await trayupdata(true, `${Presence.user.username}`);
-    // await webupdate(userinfo);
+    await webupdate(this.userinfo);
   });
   setTimeout(() => {
     Presence.login({ clientId });

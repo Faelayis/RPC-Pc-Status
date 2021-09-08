@@ -39,7 +39,7 @@
             <h4 class="mb-2 bg-gradient-secondary text-white">Custom</h4>
             <form class="needs-validation" novalidate>
               <div class="row g-3">
-                <div class="col-sm-6">
+                <!-- <div class="col-sm-6">
                   <label
                     for="Details"
                     class="mb-2 bg-gradient-secondary text-white"
@@ -71,7 +71,7 @@
                     value=""
                     required
                   />
-                </div>
+                </div> -->
 
                 <div class="col-12">
                     <label
@@ -83,8 +83,9 @@
                       style="background-color: #40444b; color: #FFF;"
                       type="text"
                       class="form-control"
-                      id="Button-label-1"
+                      id="button-label-1"
                       placeholder="Hello World"
+                      value=""
                       required
                     />
                   </div>
@@ -101,6 +102,7 @@
                     class="form-control"
                     id="button-url-1"
                     placeholder="https://url@example.com"
+                    value=""
                   />
                 </div>
 
@@ -114,8 +116,9 @@
                       style="background-color: #40444b; color: #FFF;"
                       type="text"
                       class="form-control"
-                      id="Button-label-2"
+                      id="button-label-2"
                       placeholder="Hello World"
+                      value=""
                       required
                     />
                   </div>
@@ -132,29 +135,32 @@
                     class="form-control"
                     id="button-url-2"
                     placeholder="https://url@example.com"
+                    value=""
                   />
                 </div>
-                <button type="button" class="btn btn-primary" onclick="getInputValue();">Save</button>
+                <button type="button" class="btn btn-primary" onclick="getInputValue()">Save</button>
                 <footer class="my-5 pt-5 text-muted text-center text-small">
         <p class="mb-1">&copy; RPC-Pc-Status</p>
       </footer>
     </div>
     <!-- Optional JavaScript; choose one of the two! -->
     <script>
-        // log.log(store.largeImageKeyCustom);
+        //log.log(store.largeImageKeyCustom);
         let userinfo = ipcRenderer.sendSync("synchronous-userinfo");
           document.getElementById("imgprox").src = `${userinfo[3]}`;
           document.getElementById("namex").innerHTML = `${userinfo[0]}`;
           // document.getElementById("namex").innerHTML = `${userinfo[0]+`#`+userinfo[1]}`;
         function getInputValue(){
             let inputVal = [];
-            inputVal[0] = document.getElementById("details").value;
-            inputVal[1] = document.getElementById("state").value;
-            inputVal[2] = document.getElementById("Button-label-1").value;
-            inputVal[3] = document.getElementById("button-url-1").value;
-            inputVal[4] = document.getElementById("Button-label-2").value;
-            inputVal[5] = document.getElementById("button-url-2").value;
-            console.log(inputVal);
+            // inputVal[0] = document.getElementById("details").value;
+            // inputVal[1] = document.getElementById("state").value;
+            let inputValbutton = [
+            document.getElementById("button-label-1").value,
+            document.getElementById("button-url-1").value,
+            document.getElementById("button-label-2").value,
+            document.getElementById("button-url-2").value];
+            ipcRenderer.send('asynchronous-buttonsinput', inputValbutton)
+            // console.log(inputValbutton); 
         }
     </script>
     <!-- Option 1: Bootstrap Bundle with Popper -->
