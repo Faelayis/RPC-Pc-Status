@@ -1,4 +1,4 @@
-name: Continuous Integration
+name: Code Formatting Prettify
 
 # This action works with pull requests and pushes
 on:
