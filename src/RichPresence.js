@@ -10,8 +10,8 @@ const log = require("electron-log");
 const { webupdate } = require("./BrowserWindow");
 
 let Presence = new RPC.Client({
-    transport: "ipc",
-  }),
+  transport: "ipc",
+}),
   // userinfo,
   Interval,
   Presenceready,
@@ -79,9 +79,8 @@ function formatBytes(freemem, totalmem, decimals = 2) {
   )} `;
   ram = `${parseFloat((totalmem / k ** i).toFixed(dm))} ${sizes[i]}`;
 }
-
-let allow_buttons_1 = true;
-let allow_buttons_2 = true;
+let allow_buttons_1 = Boolean;
+let allow_buttons_2 = Boolean;
 
 // Presence setActivity
 async function setActivity() {
@@ -98,14 +97,7 @@ async function setActivity() {
   Presence.smallImageKey = `${oslogo}`;
   Presence.smallImageText = `${osdistro} ${osrelease}`;
   Presence.instance = false;
-  if (((allow_buttons_1 === true) !== allow_buttons_2) === true) {
-    Presence.buttons = [
-      {
-        label: `${store.buttonslabelCustom[0]}`,
-        url: `${store.buttonsurlCustom[0]}`,
-      },
-    ];
-  } else if (allow_buttons_2 === true) {
+  if (store.buttonslabelCustom[1] || store.buttonslabelCustom[1] === String) {
     Presence.buttons = [
       {
         label: `${store.buttonslabelCustom[0]}`,
@@ -116,6 +108,15 @@ async function setActivity() {
         url: `${store.buttonsurlCustom[1]}`,
       },
     ];
+  } else if (store.buttonslabelCustom[0] || store.buttonsurlCustom[0] === String) {
+    Presence.buttons = [
+      {
+        label: `${store.buttonslabelCustom[0]}`,
+        url: `${store.buttonsurlCustom[0]}`,
+      },
+    ];
+  } else {
+    delete Presence.buttons;
   }
   Presence.setActivity(Presence);
   //console.log(Presence);
@@ -126,6 +127,7 @@ trayupdata(false, undefined);
 async function connectDiscord() {
   // log.log("Connect Discord: Try")
   if (Presence) {
+    Presence.clearActivity();
     Presence.destroy();
     Presence = new RPC.Client({
       transport: "ipc",

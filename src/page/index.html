@@ -4,6 +4,19 @@
   const store = require("../store");
   const log = require("electron-log");
 </script>
+<script type="text/JavaScript">
+  function disableselect(e) {
+    return false
+  }
+  function reEnable() {
+    return false
+  }
+  document.onselectstart = new Function ("return false")
+  if (window.sidebar) {
+    document.onmousedown = disableselect
+    document.onclick = reEnable
+}
+</script>
 <html lang="en">
   <head>
     <!-- Required meta tags -->
@@ -24,19 +37,20 @@
       <main>
         <div class="py-5 text-center">
           <img
+            draggable="false"
             class="d-block mx-auto mb-4 rounded-circle"
             src="https://cdn.discordapp.com/embed/avatars/0.png?size=1024"
             alt=""
-            width="100"
-            height="100"
+            width="125"
+            height="125"
             id="imgprox"
             style="border: 4px solid #FFF;"
           />
-          <h2 class="mb-2 bg-gradient-dark text-white" id="namex"> </h2>
+          <h2 class="mb-2 bg-gradient-dark text-white" id="namex" style="cursor: context-menu;"> </h2>
         </div>
         <div class="d-flex justify-content-center">
           <div class="col-md-7 col-lg-8">
-            <h4 class="mb-2 bg-gradient-secondary text-white">Custom</h4>
+            <h4 class="mb-2 bg-gradient-secondary text-white" style="cursor: context-menu;">Custom</h4>
             <form class="needs-validation" novalidate>
               <div class="row g-3">
                 <!-- <div class="col-sm-6">
@@ -98,7 +112,7 @@
                   >
                 <input 
                     style="background-color: #40444b; color: #FFF;"
-                    type="button-url-1"
+                    type="text"
                     class="form-control"
                     id="button-url-1"
                     placeholder="https://url@example.com"
@@ -131,14 +145,15 @@
                   >
                 <input 
                     style="background-color: #40444b; color: #FFF;"
-                    type="button-url-1"
+                    type="text"
                     class="form-control"
                     id="button-url-2"
                     placeholder="https://url@example.com"
                     value="url"
                   />
                 </div>
-                <button type="button" class="btn btn-primary" onclick="getInputValue()">Save</button>
+                <br>
+                <button type="button" class="btn d-grid gap-2 col-8 mx-auto" style="background-color: #5865f2; color: #FFF;" onclick="getInputValue()">Save</button>
                 <footer class="my-5 pt-5 text-muted text-center text-small">
         <p class="mb-1">&copy; RPC-Pc-Status</p>
       </footer>
@@ -148,6 +163,10 @@
         let userinfo = ipcRenderer.sendSync("synchronous-userinfo");
           document.getElementById("imgprox").src = `${userinfo[3]}`;
           document.getElementById("namex").innerHTML = `${userinfo[0]}`;
+          document.getElementById("button-label-1").value = store.buttonslabelCustom[0];
+          document.getElementById("button-url-1").value = store.buttonsurlCustom[0];
+          document.getElementById("button-label-2").value = store.buttonslabelCustom[1];
+          document.getElementById("button-url-2").value = store.buttonsurlCustom[1];
           // document.getElementById("namex").innerHTML = `${userinfo[0]+`#`+userinfo[1]}`;
         function getInputValue(){
             // let inputVal = [];
