@@ -15,7 +15,7 @@ exports.Checkupdates = () => {
   if (allow === true) {
     allow = false;
     autoUpdater.channel = updaterChannel;
-    if ((updaterChannel === "beta") | "alpha") {
+    if (updaterChannel === "beta" || updaterChannel === "alpha") {
       autoUpdater.allowPrerelease = true;
     } else {
       autoUpdater.allowPrerelease = false;
