@@ -10,6 +10,8 @@ const log = require("electron-log");
 const { webupdate } = require("./BrowserWindow");
 
 let Presence = new RPC.Client({
+  transport: "ipc",
+}),
   // userinfo,
   Interval,
   Presenceready,
