@@ -42,7 +42,8 @@ app.on("ready", async () => {
   await require("./RichPresence");
   let myWindow = null;
   if (!gotTheLock) {
-    app.quit();
+    log.warn(`The app is already open!`);
+    app.exit(0);
   } else {
     app.once("second-instance", () => {
       if (myWindow) {

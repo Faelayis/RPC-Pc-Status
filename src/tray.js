@@ -167,7 +167,7 @@ exports.trayupdata = (allow, user) => {
         ],
       },
       { type: "separator" },
-      { label: "Quit Pc Status", type: "normal", click: () => app.quit() },
+      { label: "Quit Pc Status", type: "normal", click: () => app.exit(0) },
     ])
   );
 };
