@@ -10,8 +10,8 @@ const log = require("electron-log");
 const { webupdate } = require("./BrowserWindow");
 
 let Presence = new RPC.Client({
-  transport: "ipc",
-}),
+    transport: "ipc",
+  }),
   // userinfo,
   Interval,
   Presenceready,
@@ -108,7 +108,10 @@ async function setActivity() {
         url: `${store.buttonsurlCustom[1]}`,
       },
     ];
-  } else if (store.buttonslabelCustom[0] || store.buttonsurlCustom[0] === String) {
+  } else if (
+    store.buttonslabelCustom[0] ||
+    store.buttonsurlCustom[0] === String
+  ) {
     Presence.buttons = [
       {
         label: `${store.buttonslabelCustom[0]}`,
