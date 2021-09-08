@@ -10,8 +10,8 @@ const log = require("electron-log");
 const { webupdate } = require("./BrowserWindow");
 
 let Presence = new RPC.Client({
-  transport: "ipc",
-}),
+    transport: "ipc",
+  }),
   // userinfo,
   Interval,
   Presenceready,
@@ -80,8 +80,8 @@ function formatBytes(freemem, totalmem, decimals = 2) {
   ram = `${parseFloat((totalmem / k ** i).toFixed(dm))} ${sizes[i]}`;
 }
 
-let allow_buttons_1 = true
-let allow_buttons_2 = true
+let allow_buttons_1 = true;
+let allow_buttons_2 = true;
 
 // Presence setActivity
 async function setActivity() {
@@ -91,30 +91,30 @@ async function setActivity() {
   }
   // console.log('updata Presence')
   // StartTimestamp,
-  Presence.details = `CPU ${cpuload}`,
-    Presence.state = `RAM ${ramusage} / ${ram}`,
-    Presence.largeImageKey = `${store.largeImageKeyCustom}`,
-    Presence.largeImageText = `${cpu}`,
-    Presence.smallImageKey = `${oslogo}`,
-    Presence.smallImageText = `${osdistro} ${osrelease}`,
-    Presence.instance = false;
+  (Presence.details = `CPU ${cpuload}`),
+    (Presence.state = `RAM ${ramusage} / ${ram}`),
+    (Presence.largeImageKey = `${store.largeImageKeyCustom}`),
+    (Presence.largeImageText = `${cpu}`),
+    (Presence.smallImageKey = `${oslogo}`),
+    (Presence.smallImageText = `${osdistro} ${osrelease}`),
+    (Presence.instance = false);
   if (allow_buttons_1 !== allow_buttons_2) {
     Presence.buttons = [
       {
         label: `${store.buttonslabelCustom[0]}`,
-        url: `${store.buttonsurlCustom[0]}`
+        url: `${store.buttonsurlCustom[0]}`,
       },
     ];
   } else if (allow_buttons_2) {
     Presence.buttons = [
       {
         label: `${store.buttonslabelCustom[0]}`,
-        url: `${store.buttonsurlCustom[0]}`
+        url: `${store.buttonsurlCustom[0]}`,
       },
       {
         label: `${store.buttonslabelCustom[1]}`,
-        url: `${store.buttonsurlCustom[1]}`
-      }
+        url: `${store.buttonsurlCustom[1]}`,
+      },
     ];
   }
   Presence.setActivity(Presence);

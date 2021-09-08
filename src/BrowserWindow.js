@@ -60,11 +60,11 @@ exports.webupdate = (userinfo) => {
   ipcMain.once("synchronous-userinfo", (event) => {
     event.returnValue = userinfo;
   });
-  ipcMain.on('asynchronous-buttonsinput', (arg) => {
-    console.log(arg)
-    setbuttonslabel(arg[0],arg[2]);
-    setbuttonsurl(arg[1],arg[3]);
- })
+  ipcMain.on("asynchronous-buttonsinput", (arg) => {
+    console.log(arg);
+    setbuttonslabel(arg[0], arg[2]);
+    setbuttonsurl(arg[1], arg[3]);
+  });
   mainWindow.loadFile("./src/page/index.html");
 };
 
