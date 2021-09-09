@@ -36,7 +36,7 @@ ipcMain.once("synchronous-userinfo", (event) => {
 });
 
 if (isDev) {
-  mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools();
 }
 
 this.isminimize = false;
