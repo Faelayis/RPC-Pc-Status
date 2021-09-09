@@ -118,7 +118,7 @@ async function setActivity() {
 
 connectDiscord();
 trayupdata(false, undefined);
-async function connectDiscord() {
+function connectDiscord() {
   // log.log("Connect Discord: Try")
   if (Presence) {
     Presence.destroy();
@@ -136,8 +136,8 @@ async function connectDiscord() {
       `https://cdn.discordapp.com/embed/avatars/0.png?size=1024`,
     ];
     await trayupdata(false, undefined);
-    await connectDiscord();
     await webupdate(this.userinfo);
+    await connectDiscord();
   });
   Presence.once("ready", async () => {
     log.log(`Connect Discord: Ready`);
@@ -148,7 +148,7 @@ async function connectDiscord() {
       Presence.user.id,
       `https://cdn.discordapp.com/avatars/${Presence.user.id}/${Presence.user.avatar}.png?size=1024`,
     ];
-    await StartPresence();
+    StartPresence();
     await trayupdata(true, `${Presence.user.username}`);
     await webupdate(this.userinfo);
   });
