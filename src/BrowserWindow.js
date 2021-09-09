@@ -35,11 +35,11 @@ ipcMain.once("synchronous-userinfo", (event) => {
   ];
 });
 
-let isminimize = false;
+this.isminimize = false;
 exports.CreateWindow = () => {
   if (mainWindow.isVisible()) {
-    isminimize = true;
-    if (isminimize === false) {
+    this.isminimize = true;
+    if (this.isminimize === false) {
       mainWindow.hide();
     } else {
       mainWindow.focus();
@@ -49,12 +49,16 @@ exports.CreateWindow = () => {
   }
 };
 mainWindow.on("minimize", function () {
-  isminimize = true;
+  this.isminimize = true;
 });
 
-mainWindow.on("close", function (event) {
-  event.preventDefault();
-  mainWindow.hide();
+mainWindow.on('close', function (event) {
+  if (!app.isQuiting) {
+    event.preventDefault();
+    mainWindow.hide();
+  }
+
+  return false;
 });
 
 exports.webupdate = (userinfo) => {
@@ -62,7 +66,7 @@ exports.webupdate = (userinfo) => {
   ipcMain.once("synchronous-userinfo", (event) => {
     event.returnValue = userinfo;
   });
-  ipcMain.on("asynchronous-buttonsinput", (event, arg) => {
+  ipcMain.once("asynchronous-buttonsinput", (event, arg) => {
     setbuttonslabel(arg[0], arg[2]);
     setbuttonsurl(arg[1], arg[3]);
   });

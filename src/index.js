@@ -34,7 +34,7 @@ if (process.platform === "win32") {
   app.setAppUserModelId(app.name);
 }
 
-app.on("ready", async () => {
+app.once("ready", async () => {
   log.log("App Ready");
   await require("./store");
   const { tray } = await require("./tray");

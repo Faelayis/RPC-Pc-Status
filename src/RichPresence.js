@@ -10,39 +10,32 @@ const log = require("electron-log");
 const { webupdate } = require("./BrowserWindow");
 
 let Presence = new RPC.Client({
-    transport: "ipc",
-  }),
-  // userinfo,
-  Interval,
-  Presenceready,
-  osdistro,
-  osrelease,
-  oslogo,
-  cpu,
-  cpuload = "0 %",
-  ram,
-  ramusage;
+  transport: "ipc",
+});
+let Interval = Number,
+  Presenceready = Boolean;
 
 // console.log(si.time().current);
 // Check systeminformation
 si.osInfo().then(
   (data) => (
-    data.distro ? (osdistro = data.distro) : " ",
-    data.release ? (osrelease = data.release) : " ",
-    data.logofile ? (oslogo = data.logofile) : " "
+    data.distro ? (this.osdistro = data.distro) : " ",
+    data.release ? (this.osrelease = data.release) : " ",
+    data.logofile ? (this.oslogo = data.logofile) : " "
   )
 );
-si.cpu().then((data) => (cpu = `${data.manufacturer} ${data.brand}`));
+si.cpu().then((data) => (this.cpu = `${data.manufacturer} ${data.brand}`));
 
 function checkos() {
   switch (true) {
-    case /(Windows\s10)/g.test(osdistro):
-      oslogo = "windows10";
+    case /(Windows\s10)/g.test(this.osdistro):
+      this.oslogo = "windows10";
       break;
-    case /(Windows\s11)/g.test(osdistro):
-      oslogo = "windows11";
+    case /(Windows\s11)/g.test(this.osdistro):
+      this.oslogo = "windows11";
       break;
     default:
+      this.oslogo = "windows11";
       break;
   }
 }
@@ -57,7 +50,7 @@ async function StartPresence() {
   await checkos();
   Interval = setInterval(() => {
     si.currentLoad().then(
-      (data) => (cpuload = data.currentLoad.toFixed(0) + " %")
+      (data) => (this.cpuload = data.currentLoad.toFixed(0) + " %")
     );
     formatBytes(os.freemem(), os.totalmem());
     setActivity();
@@ -74,13 +67,11 @@ function formatBytes(freemem, totalmem, decimals = 2) {
   const dm = decimals < 0 ? 0 : decimals;
   const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
   const i = Math.floor(Math.log(freemem) / Math.log(k));
-  ramusage = `${parseFloat(
+  this.ramusage = `${parseFloat(
     (totalmem / k ** i - freemem / k ** i).toFixed(dm)
   )} `;
-  ram = `${parseFloat((totalmem / k ** i).toFixed(dm))} ${sizes[i]}`;
+  this.ram = `${parseFloat((totalmem / k ** i).toFixed(dm))} ${sizes[i]}`;
 }
-let allow_buttons_1 = Boolean;
-let allow_buttons_2 = Boolean;
 
 // Presence setActivity
 async function setActivity() {
@@ -90,12 +81,12 @@ async function setActivity() {
   }
   // console.log('updata Presence')
   // StartTimestamp,
-  Presence.details = `CPU ${cpuload}`;
-  Presence.state = `RAM ${ramusage} / ${ram}`;
+  Presence.details = `CPU ${this.cpuload}`;
+  Presence.state = `RAM ${this.ramusage} / ${this.ram}`;
   Presence.largeImageKey = `${store.largeImageKeyCustom}`;
-  Presence.largeImageText = `${cpu}`;
-  Presence.smallImageKey = `${oslogo}`;
-  Presence.smallImageText = `${osdistro} ${osrelease}`;
+  Presence.largeImageText = `${this.cpu}`;
+  Presence.smallImageKey = `${this.oslogo}`;
+  Presence.smallImageText = `${this.osdistro} ${this.osrelease}`;
   Presence.instance = false;
   if (store.buttonslabelCustom[1] || store.buttonslabelCustom[1] === String) {
     Presence.buttons = [
@@ -130,7 +121,6 @@ trayupdata(false, undefined);
 async function connectDiscord() {
   // log.log("Connect Discord: Try")
   if (Presence) {
-    Presence.clearActivity();
     Presence.destroy();
     Presence = new RPC.Client({
       transport: "ipc",
@@ -157,7 +147,7 @@ async function connectDiscord() {
       Presence.user.discriminator,
       Presence.user.id,
       `https://cdn.discordapp.com/avatars/${Presence.user.id}/${Presence.user.avatar}.png?size=1024`,
-    ]; //?size=1024]
+    ];
     await StartPresence();
     await trayupdata(true, `${Presence.user.username}`);
     await webupdate(this.userinfo);
