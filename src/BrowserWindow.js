@@ -20,6 +20,7 @@ const mainWindow = new BrowserWindow({
   autoHideMenuBar: true,
   webPreferences: {
     nodeIntegration: true,
+    nativeWindowOpen: false,
     contextIsolation: false,
   },
 });
