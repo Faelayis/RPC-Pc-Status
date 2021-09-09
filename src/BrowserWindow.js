@@ -52,7 +52,7 @@ mainWindow.on("minimize", function () {
   this.isminimize = true;
 });
 
-mainWindow.on('close', function (event) {
+mainWindow.on("close", function (event) {
   if (!app.isQuiting) {
     event.preventDefault();
     mainWindow.hide();
