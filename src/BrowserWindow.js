@@ -1,4 +1,5 @@
 const { app, globalShortcut, BrowserWindow, ipcMain } = require("electron");
+const isDev = require("electron-is-dev");
 const log = require("electron-log");
 const { setbuttonslabel, setbuttonsurl } = require("./store");
 // const path = require("path");
@@ -19,7 +20,6 @@ const mainWindow = new BrowserWindow({
   autoHideMenuBar: true,
   webPreferences: {
     nodeIntegration: true,
-    nativeWindowOpen: false,
     contextIsolation: false,
   },
 });
@@ -34,6 +34,10 @@ ipcMain.once("synchronous-userinfo", (event) => {
     `https://cdn.discordapp.com/embed/avatars/0.png?size=1024`,
   ];
 });
+
+if (isDev) {
+  mainWindow.webContents.openDevTools()
+}
 
 this.isminimize = false;
 exports.CreateWindow = () => {
