@@ -134,8 +134,7 @@ function connectDiscord() {
     Presenceready = false;
     module.exports.userinfo = this.userinfo = [
       "Disconnected",
-      undefined,
-      undefined,
+      null, null,
       `https://cdn.discordapp.com/embed/avatars/0.png?size=1024`,
     ];
     await trayupdata(false, undefined);
