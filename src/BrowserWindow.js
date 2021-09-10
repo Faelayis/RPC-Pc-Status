@@ -17,8 +17,8 @@ const mainWindow = new BrowserWindow({
   },
 });
 mainWindow.loadFile("./src/page/index.html");
-mainWindow.once('ready-to-show', () => {
-  log.log('Web Ready to show')
+mainWindow.once("ready-to-show", () => {
+  log.log("Web Ready to show");
   ipcMain.once("synchronous-userinfo", (event) => {
     event.returnValue = [
       "Not connected",

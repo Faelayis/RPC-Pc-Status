@@ -13,9 +13,17 @@ let tray = null;
 exports.tray = () => {
   log.log("Tray Start");
   if (tray) {
-    tray.setImage(nativeImage.createFromPath(path.join(__dirname, "assets/icon/notconnected.png")));
+    tray.setImage(
+      nativeImage.createFromPath(
+        path.join(__dirname, "assets/icon/notconnected.png")
+      )
+    );
   } else {
-    tray = new Tray(nativeImage.createFromPath(path.join(__dirname, "assets/icon/notconnected.png")));
+    tray = new Tray(
+      nativeImage.createFromPath(
+        path.join(__dirname, "assets/icon/notconnected.png")
+      )
+    );
   }
   tray.setTitle("Pc Status");
   tray.setToolTip("Pc Status");
