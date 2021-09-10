@@ -22,7 +22,8 @@ mainWindow.once("ready-to-show", () => {
   ipcMain.once("synchronous-userinfo", (event) => {
     event.returnValue = [
       "Not connected",
-      null, null,
+      null,
+      null,
       `https://cdn.discordapp.com/embed/avatars/0.png?size=1024`,
     ];
   });
