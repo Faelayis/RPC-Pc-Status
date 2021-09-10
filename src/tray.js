@@ -4,7 +4,7 @@ const log = require("electron-log");
 const path = require("path");
 const { Checkupdates } = require("./updata");
 const { seticonlargeImageKey, setupdaterchannel } = require("./store");
-const { CreateWindow } = require("./BrowserWindow");
+const { mainWindowshow } = require("./BrowserWindow");
 const Package = require("../package.json");
 const open = require("open");
 
@@ -12,17 +12,16 @@ let tray = null;
 
 exports.tray = () => {
   log.log("Tray Start");
-  const iconPath = "assets/icon/notconnected.png";
   if (tray) {
-    tray.setImage(nativeImage.createFromPath(path.join(__dirname, iconPath)));
+    tray.setImage(nativeImage.createFromPath(path.join(__dirname, "assets/icon/notconnected.png")));
   } else {
-    tray = new Tray(nativeImage.createFromPath(path.join(__dirname, iconPath)));
+    tray = new Tray(nativeImage.createFromPath(path.join(__dirname, "assets/icon/notconnected.png")));
   }
   tray.setTitle("Pc Status");
   tray.setToolTip("Pc Status");
   tray.setIgnoreDoubleClickEvents(true);
   tray.on("click", () => {
-    CreateWindow();
+    mainWindowshow();
   });
 };
 

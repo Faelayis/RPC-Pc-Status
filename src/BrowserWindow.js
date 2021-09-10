@@ -3,14 +3,6 @@ const isDev = require("electron-is-dev");
 const log = require("electron-log");
 const { setbuttonslabel, setbuttonsurl } = require("./store");
 // const path = require("path");
-app.on("browser-window-focus", function () {
-  globalShortcut.register("CommandOrControl+R", () => {
-    // console.log("CommandOrControl+R is pressed: Shortcut Disabled");
-  });
-  globalShortcut.register("F5", () => {
-    // console.log("F5 is pressed: Shortcut Disabled");
-  });
-});
 
 const mainWindow = new BrowserWindow({
   width: 800,
@@ -24,24 +16,32 @@ const mainWindow = new BrowserWindow({
     contextIsolation: false,
   },
 });
-mainWindow.setMenu(null);
-mainWindow.setAutoHideMenuBar(true);
 mainWindow.loadFile("./src/page/index.html");
-ipcMain.once("synchronous-userinfo", (event) => {
-  event.returnValue = [
-    "Not connected",
-    "",
-    undefined,
-    `https://cdn.discordapp.com/embed/avatars/0.png?size=1024`,
-  ];
+mainWindow.once('ready-to-show', () => {
+  log.log('Web Ready to show')
+  ipcMain.once("synchronous-userinfo", (event) => {
+    event.returnValue = [
+      "Not connected",
+      "",
+      undefined,
+      `https://cdn.discordapp.com/embed/avatars/0.png?size=1024`,
+    ];
+  });
+  if (isDev) {
+    mainWindow.webContents.openDevTools();
+    mainWindow.setAutoHideMenuBar(false);
+  } else {
+    mainWindow.setMenu(null);
+    mainWindow.setAutoHideMenuBar(true);
+    app.on("browser-window-focus", function () {
+      globalShortcut.register("CommandOrControl+R");
+      globalShortcut.register("F5");
+    });
+  }
 });
 
-if (isDev) {
-  mainWindow.webContents.openDevTools();
-}
-
 this.isminimize = false;
-exports.CreateWindow = () => {
+exports.mainWindowshow = () => {
   if (mainWindow.isVisible()) {
     this.isminimize = true;
     if (this.isminimize === false) {
@@ -53,16 +53,15 @@ exports.CreateWindow = () => {
     mainWindow.show();
   }
 };
+
 mainWindow.on("minimize", function () {
   this.isminimize = true;
 });
-
 mainWindow.on("close", function (event) {
   if (!app.isQuiting) {
     event.preventDefault();
     mainWindow.hide();
   }
-
   return false;
 });
 
