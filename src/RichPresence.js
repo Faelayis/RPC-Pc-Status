@@ -19,14 +19,14 @@ let Interval = Number,
 // Check systeminformation
 
 function checkos() {
-  si.osInfo().then((data) => (
-    data.distro ? (this.osdistro = `${data.distro}`) : " ",
-    data.release ? (this.osrelease = `${data.release}`) : " ",
-    data.logofile ? (this.oslogo = `${data.logofile}`) : " "
-  ));
-  si.cpu().then((data) => (
-    this.cpu = `${data.manufacturer} ${data.brand}`
-  ));
+  si.osInfo().then(
+    (data) => (
+      data.distro ? (this.osdistro = `${data.distro}`) : " ",
+      data.release ? (this.osrelease = `${data.release}`) : " ",
+      data.logofile ? (this.oslogo = `${data.logofile}`) : " "
+    )
+  );
+  si.cpu().then((data) => (this.cpu = `${data.manufacturer} ${data.brand}`));
   switch (true) {
     case /(Windows\s10)/g.test(this.osdistro):
       this.oslogo = "windows10";
