@@ -13,18 +13,21 @@ let Presence = new RPC.Client({
   transport: "ipc",
 });
 let Interval = Number,
-  Presenceready = Boolean;
+  Presenceready = Boolean,
+  cpu,
+  osdistro,
+  osrelease;
 
 // console.log(si.time().current);
 // Check systeminformation
 si.osInfo().then(
   (data) => (
-    data.distro ? (this.osdistro = data.distro) : " ",
-    data.release ? (this.osrelease = data.release) : " ",
+    data.distro ? (osdistro = data.distro) : " ",
+    data.release ? (osrelease = data.release) : " ",
     data.logofile ? (this.oslogo = data.logofile) : " "
   )
 );
-si.cpu().then((data) => (this.cpu = `${data.manufacturer} ${data.brand}`));
+si.cpu().then((data) => (cpu = `${data.manufacturer} ${data.brand}`));
 
 function checkos() {
   switch (true) {
@@ -84,9 +87,9 @@ async function setActivity() {
   Presence.details = `CPU ${this.cpuload}`;
   Presence.state = `RAM ${this.ramusage} / ${this.ram}`;
   Presence.largeImageKey = `${store.largeImageKeyCustom}`;
-  Presence.largeImageText = `${this.cpu}`;
+  Presence.largeImageText = `${cpu}`;
   Presence.smallImageKey = `${this.oslogo}`;
-  Presence.smallImageText = `${this.osdistro} ${this.osrelease}`;
+  Presence.smallImageText = `${osdistro} ${osrelease}`;
   Presence.instance = false;
   if (store.buttonslabelCustom[1] || store.buttonslabelCustom[1] === String) {
     Presence.buttons = [
