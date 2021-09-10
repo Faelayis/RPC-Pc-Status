@@ -17,16 +17,13 @@ let Interval = Number,
 
 // console.log(si.time().current);
 // Check systeminformation
-
-function checkos() {
-  si.osInfo().then(
-    (data) => (
+checkos();
+async function checkos() {
+  await si.osInfo().then((data) => (
       data.distro ? (this.osdistro = `${data.distro}`) : " ",
       data.release ? (this.osrelease = `${data.release}`) : " ",
-      data.logofile ? (this.oslogo = `${data.logofile}`) : " "
-    )
-  );
-  si.cpu().then((data) => (this.cpu = `${data.manufacturer} ${data.brand}`));
+      data.logofile ? (this.oslogo = `${data.logofile}`) : " "));
+  await si.cpu().then((data) => (this.cpu = `${data.manufacturer} ${data.brand}`));
   switch (true) {
     case /(Windows\s10)/g.test(this.osdistro):
       this.oslogo = "windows10";
@@ -47,7 +44,6 @@ function checkos() {
 
 // Start Presence
 async function StartPresence() {
-  await checkos();
   Interval = setInterval(() => {
     si.currentLoad().then(
       (data) => (this.cpuload = data.currentLoad.toFixed(0) + " %")
