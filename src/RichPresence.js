@@ -13,23 +13,20 @@ let Presence = new RPC.Client({
   transport: "ipc",
 });
 let Interval = Number,
-  Presenceready = Boolean,
-  cpu,
-  osdistro,
-  osrelease;
+  Presenceready = Boolean;
 
 // console.log(si.time().current);
 // Check systeminformation
-si.osInfo().then(
-  (data) => (
-    data.distro ? (osdistro = data.distro) : " ",
-    data.release ? (osrelease = data.release) : " ",
-    data.logofile ? (this.oslogo = data.logofile) : " "
-  )
-);
-si.cpu().then((data) => (cpu = `${data.manufacturer} ${data.brand}`));
 
 function checkos() {
+  si.osInfo().then((data) => (
+    data.distro ? (this.osdistro = `${data.distro}`) : " ",
+    data.release ? (this.osrelease = `${data.release}`) : " ",
+    data.logofile ? (this.oslogo = `${data.logofile}`) : " "
+  ));
+  si.cpu().then((data) => (
+    this.cpu = `${data.manufacturer} ${data.brand}`
+  ));
   switch (true) {
     case /(Windows\s10)/g.test(this.osdistro):
       this.oslogo = "windows10";
@@ -87,9 +84,9 @@ async function setActivity() {
   Presence.details = `CPU ${this.cpuload}`;
   Presence.state = `RAM ${this.ramusage} / ${this.ram}`;
   Presence.largeImageKey = `${store.largeImageKeyCustom}`;
-  Presence.largeImageText = `${cpu}`;
+  Presence.largeImageText = `${this.cpu}`;
   Presence.smallImageKey = `${this.oslogo}`;
-  Presence.smallImageText = `${osdistro} ${osrelease}`;
+  Presence.smallImageText = `${this.osdistro} ${this.osrelease}`;
   Presence.instance = false;
   if (store.buttonslabelCustom[1] || store.buttonslabelCustom[1] === String) {
     Presence.buttons = [
