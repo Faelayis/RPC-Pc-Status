@@ -23,9 +23,9 @@ async function checkos() {
     .osInfo()
     .then(
       (data) => (
-        data.distro ? (this.osdistro = `${data.distro}`) : " ",
-        data.release ? (this.osrelease = `${data.release}`) : " ",
-        data.logofile ? (this.oslogo = `${data.logofile}`) : " "
+        data.distro ? (this.osdistro = `${data.distro}`) : null,
+        data.release ? (this.osrelease = `${data.release}`) : null,
+        data.logofile ? (this.oslogo = `${data.logofile}`) : null
       )
     );
   await si
@@ -39,7 +39,7 @@ async function checkos() {
       this.oslogo = "windows11";
       break;
     default:
-      this.oslogo = "windows11";
+      this.oslogo = null;
       break;
   }
 }
