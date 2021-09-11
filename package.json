@@ -1,6 +1,6 @@
 {
   "name": "rpc-pc-status",
-  "version": "1.2.6",
+  "version": "1.2.7",
   "updaterchannel": "latest",
   "description": "Rich Presence Pc Status for your discord",
   "main": "src/index.js",
