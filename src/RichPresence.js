@@ -91,7 +91,7 @@ async function setActivity() {
   Presence.smallImageKey = `${this.oslogo}`;
   Presence.smallImageText = `${this.osdistro} ${this.osrelease}`;
   Presence.instance = false;
-  if (store.buttonsCustom[2, 3] && store.buttonsCustom[0, 1]) {
+  if (store.buttonsCustom[(2, 3)] && store.buttonsCustom[(0, 1)]) {
     Presence.buttons = [
       {
         label: `${store.buttonsCustom[0]}`,
