@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-<script> 
-  const { ipcRenderer } = require("electron");
-  const store = require("../store");
-  const log = require("electron-log");
-</script>
 <script type="text/JavaScript">
   function disableselect(e) {
     return false
@@ -159,27 +154,7 @@
       </footer>
     </div>
     <!-- Optional JavaScript; choose one of the two! -->
-    <script>
-        let userinfo = ipcRenderer.sendSync("synchronous-userinfo");
-          document.getElementById("imgprox").src = `${userinfo[3]}`;
-          document.getElementById("namex").innerHTML = `${userinfo[0]}`;
-          document.getElementById("button-label-1").value = store.buttonslabelCustom[0];
-          document.getElementById("button-url-1").value = store.buttonsurlCustom[0];
-          document.getElementById("button-label-2").value = store.buttonslabelCustom[1];
-          document.getElementById("button-url-2").value = store.buttonsurlCustom[1];
-          // document.getElementById("namex").innerHTML = `${userinfo[0]+`#`+userinfo[1]}`;
-        function getInputValue(){
-            // let inputVal = [];
-            // inputVal[0] = document.getElementById("details").value;
-            // inputVal[1] = document.getElementById("state").value;
-            let inputValbutton = [
-            document.getElementById("button-label-1").value,
-            document.getElementById("button-url-1").value,
-            document.getElementById("button-label-2").value,
-            document.getElementById("button-url-2").value];
-            ipcRenderer.send('asynchronous-buttonsinput', inputValbutton);
-        }
-    </script>
+    <script type="text/javascript" src="script.js"></script>
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
