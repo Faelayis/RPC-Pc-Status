@@ -34,13 +34,16 @@ if (store.get("updaterChannel") === undefined) {
 if (store.get("largeImageKeyCustom") === undefined) {
   store.set("largeImageKeyCustom", "icon_white");
 }
+if (store.get("buttonsCustom") === undefined) {
+  store.set("buttonsCustom", [null, null, null, null]);
+}
 
-exports.setupdaterchannel = (c) => {
-  store.set("updaterChannel", c);
+exports.setupdaterchannel = (arg) => {
+  store.set("updaterChannel", arg);
   const { trayupdata } = require("./tray");
   const { userinfo } = require("./RichPresence");
   module.exports.updaterChannel = store.get("updaterChannel");
-  log.log(`Set updaterchannel: ` + c);
+  log.log(`Set updaterchannel: ` + arg);
   trayupdata(true, userinfo[0]);
 };
 exports.seticonlargeImageKey = (icon) => {
@@ -49,20 +52,13 @@ exports.seticonlargeImageKey = (icon) => {
   log.log(`Set largeImageKeyCustom: ` + icon);
 };
 
-exports.setbuttonslabel = (text1, text2) => {
-  store.set("buttonslabelCustom", [text1, text2]);
-  module.exports.buttonslabelCustom = store.get("buttonslabelCustom");
-  log.log(`Set buttonslabelCustom: ` + [text1, text2]);
-};
-
-exports.setbuttonsurl = (url1, url2) => {
-  store.set("buttonsurlCustom", [url1, url2]);
-  module.exports.buttonsurlCustom = store.get("buttonsurlCustom");
-  log.log(`Set buttonsurlCustom: ` + [url1, url2]);
+exports.setbutton = (arg1, arg2, arg3, arg4) => {
+  store.set(`buttonsCustom`, [arg1, arg2, arg3, arg4]);
+  module.exports.buttonsCustom = store.get("buttonsCustom");
+  log.log(`Set buttonsCustom: ` + [arg1, arg2, arg3, arg4]);
 };
 
 module.exports.updaterChannel = store.get("updaterChannel");
 module.exports.largeImageKeyCustom = store.get("largeImageKeyCustom");
-module.exports.buttonslabelCustom = store.get("buttonslabelCustom");
-module.exports.buttonsurlCustom = store.get("buttonsurlCustom");
+module.exports.buttonsCustom = store.get("buttonsCustom");
 log.log(`Store Ready`);

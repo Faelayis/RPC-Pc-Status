@@ -1,7 +1,7 @@
 const { app, globalShortcut, BrowserWindow, ipcMain } = require("electron");
 const isDev = require("electron-is-dev");
 const log = require("electron-log");
-const { setbuttonslabel, setbuttonsurl } = require("./store");
+const { setbutton } = require("./store");
 // const path = require("path");
 
 const mainWindow = new BrowserWindow({
@@ -38,6 +38,9 @@ mainWindow.once("ready-to-show", () => {
       globalShortcut.register("F5");
     });
   }
+  ipcMain.on("asynchronous-buttonsinput", (event, arg) => {
+    setbutton(arg[0], arg[1], arg[2], arg[3]);
+  });
 });
 
 this.isminimize = false;
@@ -57,6 +60,7 @@ exports.mainWindowshow = () => {
 mainWindow.on("minimize", function () {
   this.isminimize = true;
 });
+
 mainWindow.on("close", function (event) {
   if (!app.isQuiting) {
     event.preventDefault();
@@ -69,10 +73,6 @@ exports.webupdate = (userinfo) => {
   log.log("Web Update");
   ipcMain.once("synchronous-userinfo", (event) => {
     event.returnValue = userinfo;
-  });
-  ipcMain.once("asynchronous-buttonsinput", (event, arg) => {
-    setbuttonslabel(arg[0], arg[2]);
-    setbuttonsurl(arg[1], arg[3]);
   });
   mainWindow.loadFile("./src/page/index.html");
 };

@@ -91,25 +91,22 @@ async function setActivity() {
   Presence.smallImageKey = `${this.oslogo}`;
   Presence.smallImageText = `${this.osdistro} ${this.osrelease}`;
   Presence.instance = false;
-  if (store.buttonslabelCustom[1] || store.buttonslabelCustom[1] === String) {
+  if (store.buttonsCustom[2, 3] && store.buttonsCustom[0, 1]) {
     Presence.buttons = [
       {
-        label: `${store.buttonslabelCustom[0]}`,
-        url: `${store.buttonsurlCustom[0]}`,
+        label: `${store.buttonsCustom[0]}`,
+        url: `${store.buttonsCustom[1]}`,
       },
       {
-        label: `${store.buttonslabelCustom[1]}`,
-        url: `${store.buttonsurlCustom[1]}`,
+        label: `${store.buttonsCustom[2]}`,
+        url: `${store.buttonsCustom[3]}`,
       },
     ];
-  } else if (
-    store.buttonslabelCustom[0] ||
-    store.buttonsurlCustom[0] === String
-  ) {
+  } else if (store.buttonsCustom[0] && store.buttonsCustom[1]) {
     Presence.buttons = [
       {
-        label: `${store.buttonslabelCustom[0]}`,
-        url: `${store.buttonsurlCustom[0]}`,
+        label: `${store.buttonsCustom[0]}`,
+        url: `${store.buttonsCustom[1]}`,
       },
     ];
   } else {
