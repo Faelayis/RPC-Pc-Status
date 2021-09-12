@@ -37,7 +37,6 @@ if (process.platform === "win32") {
 
 app.once("ready", async () => {
   log.log("App Ready");
-  await require("./updata");
   await require("./store");
   const { tray } = await require("./tray");
   await tray();

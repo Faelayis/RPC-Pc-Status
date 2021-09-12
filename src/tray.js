@@ -6,6 +6,7 @@ const { seticonlargeImageKey } = require("./store");
 const { mainWindowshow } = require("./BrowserWindow");
 const Package = require("../package.json");
 const open = require("open");
+const { Checkupdates } = require("./updata");
 
 let tray = null;
 
@@ -26,6 +27,7 @@ exports.tray = () => {
   tray.on("click", () => {
     mainWindowshow();
   });
+  Checkupdates(false);
 };
 
 exports.trayupdata = (allow, user) => {
@@ -126,6 +128,13 @@ exports.trayupdata = (allow, user) => {
         type: "normal",
         click: () => {
           open(`${Package.repository.url}/graphs/contributors`);
+        },
+      },
+      {
+        label: `Check for updates..`,
+        type: "normal",
+        click: () => {
+          Checkupdates(true);
         },
       },
       { label: "Quit Pc Status", type: "normal", click: () => app.exit(0) },

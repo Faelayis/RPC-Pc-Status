@@ -37,8 +37,7 @@
     "electron-squirrel-startup": "^1.0.0",
     "electron-store": "^8.0.0",
     "open": "^8.2.1",
-    "systeminformation": "^5.8.7",
-    "update-electron-app": "git+https://git@github.com/Faelayis/update-electron-app.git"
+    "systeminformation": "^5.8.8"
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.61",
@@ -49,6 +48,6 @@
     "@electron-forge/publisher-github": "^6.0.0-beta.61",
     "electron": "14.0.0",
     "eslint": "^7.32.0",
-    "prettier": "2.3.2"
+    "prettier": "2.4.0"
   }
 }
