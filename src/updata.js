@@ -33,6 +33,10 @@ const feedURL = `https://update.electronjs.org/${
 const requestHeaders = { "User-Agent": userAgent };
 let allow = true;
 
+log.info("feedURL", feedURL);
+log.info("requestHeaders", requestHeaders);
+autoUpdater.setFeedURL(feedURL, requestHeaders);
+
 exports.Checkupdates = (silent) => {
   if (allow === true) {
     allow = false;
@@ -61,9 +65,6 @@ exports.Checkupdates = (silent) => {
           });
       }
     }
-    log.info("feedURL", feedURL);
-    log.info("requestHeaders", requestHeaders);
-    autoUpdater.setFeedURL(feedURL, requestHeaders);
     autoUpdater.checkForUpdates();
     autoUpdater.once("checking-for-update", () => {
       log.info(`Checking for update...`);

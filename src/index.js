@@ -1,3 +1,4 @@
+/* eslint-disable no-fallthrough */
 const process = require("process");
 const { app } = require("electron");
 const log = require("electron-log");
@@ -16,7 +17,9 @@ if (isDev) {
   log.log(`Running in development ${app.getVersion()}`);
   RPC.disable();
 } else {
-  if (require("electron-squirrel-startup")) return;
+  if (handleSquirrelEvent()) {
+    return;
+  }
   log.log(`Running in production ${app.getVersion()}`);
   RPC.enable();
   RPC.isEnabled()
@@ -59,3 +62,43 @@ app.once("ready", async () => {
     });
   }
 });
+
+function handleSquirrelEvent() {
+  if (process.argv.length === 1) {
+    return false;
+  }
+  const ChildProcess = require("child_process");
+  const path = require("path");
+  const appFolder = path.resolve(process.execPath, "..");
+  const rootAtomFolder = path.resolve(appFolder, "..");
+  const updateDotExe = path.resolve(path.join(rootAtomFolder, "Update.exe"));
+  const exeName = path.basename(process.execPath);
+  const spawn = function (command, args) {
+    // eslint-disable-next-line no-unused-vars
+    let spawnedProcess, error;
+    try {
+      spawnedProcess = ChildProcess.spawn(command, args, { detached: true });
+    } catch (error) {
+      log.error(error);
+    }
+    return spawnedProcess;
+  };
+  const spawnUpdate = function (args) {
+    return spawn(updateDotExe, args);
+  };
+  const squirrelEvent = process.argv[1];
+  switch (squirrelEvent) {
+    case "--squirrel-install":
+      spawnUpdate(["--createShortcut", exeName]);
+    case "--squirrel-updated":
+      setTimeout(app.quit, 1000);
+      return true;
+    case "--squirrel-uninstall":
+      spawnUpdate(["--removeShortcut", exeName]);
+      setTimeout(app.quit, 1000);
+      return true;
+    case "--squirrel-obsolete":
+      app.quit();
+      return true;
+  }
+}
