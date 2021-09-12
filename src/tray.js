@@ -2,8 +2,7 @@
 const { app, Menu, Tray, nativeImage } = require("electron");
 const log = require("electron-log");
 const path = require("path");
-const { Checkupdates } = require("./updata");
-const { seticonlargeImageKey, setupdaterchannel } = require("./store");
+const { seticonlargeImageKey } = require("./store");
 const { mainWindowshow } = require("./BrowserWindow");
 const Package = require("../package.json");
 const open = require("open");
@@ -15,13 +14,13 @@ exports.tray = () => {
   if (tray) {
     tray.setImage(
       nativeImage.createFromPath(
-        path.join(__dirname, "assets/icon/notconnected.png")
+        path.join(__dirname, "icon/notconnected.png")
       )
     );
   } else {
     tray = new Tray(
       nativeImage.createFromPath(
-        path.join(__dirname, "assets/icon/notconnected.png")
+        path.join(__dirname, "icon/notconnected.png")
       )
     );
   }
@@ -35,12 +34,11 @@ exports.tray = () => {
 
 exports.trayupdata = (allow, user) => {
   log.log(`Tray Updata: ${allow} ${user}`);
-  const { updaterChannel } = require("./store");
   if (tray) {
     const iconPath =
       user === undefined
-        ? "assets/icon/notconnected.png"
-        : "assets/icon/connected.png";
+        ? "icon/notconnected.png"
+        : "icon/connected.png";
     tray.setImage(nativeImage.createFromPath(path.join(__dirname, iconPath)));
   }
   tray.setContextMenu(
@@ -136,44 +134,6 @@ exports.trayupdata = (allow, user) => {
           open(`${Package.repository.url}/graphs/contributors`);
         },
       },
-      {
-        label: `Check for ${updaterChannel} updates..`,
-        type: "normal",
-        click: () => {
-          Checkupdates();
-        },
-      },
-      {
-        label: "Channel Updata",
-        type: "submenu",
-        submenu: [
-          {
-            label: "latest",
-            type: "radio",
-            checked: updaterChannel === "latest" ? true : false,
-            click: () => {
-              setupdaterchannel("latest");
-            },
-          },
-          {
-            label: "beta",
-            type: "radio",
-            checked: updaterChannel === "beta" ? true : false,
-            click: () => {
-              setupdaterchannel("beta");
-            },
-          },
-          {
-            label: "alpha",
-            type: "radio",
-            checked: updaterChannel === "alpha" ? true : false,
-            click: () => {
-              setupdaterchannel("alpha");
-            },
-          },
-        ],
-      },
-      { type: "separator" },
       { label: "Quit Pc Status", type: "normal", click: () => app.exit(0) },
     ])
   );

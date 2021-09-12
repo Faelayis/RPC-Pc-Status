@@ -16,6 +16,9 @@ if (isDev) {
   log.log(`Running in development ${app.getVersion()}`);
   RPC.disable();
 } else {
+  if (require("electron-squirrel-startup")) {
+    app.exit(0);
+  }
   log.log(`Running in production ${app.getVersion()}`);
   RPC.enable();
   RPC.isEnabled()
@@ -36,6 +39,7 @@ if (process.platform === "win32") {
 
 app.once("ready", async () => {
   log.log("App Ready");
+  await require("./updata");
   await require("./store");
   const { tray } = await require("./tray");
   await tray();

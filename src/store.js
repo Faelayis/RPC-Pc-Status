@@ -1,10 +1,6 @@
 const Store = require("electron-store");
 const log = require("electron-log");
-const package = require("../package.json");
 const schema = {
-  updaterChannel: {
-    type: "string",
-  },
   // detailsCustom: {
   //   type: 'string',
   // },
@@ -27,10 +23,6 @@ const schema = {
 };
 const store = new Store(schema);
 
-if (store.get("updaterChannel") === undefined) {
-  store.set("updaterChannel", package.updaterchannel); //latest //beta //alpha
-  module.exports.updaterChannel = store.get("updaterChannel");
-}
 if (store.get("largeImageKeyCustom") === undefined) {
   store.set("largeImageKeyCustom", "icon_white");
 }
