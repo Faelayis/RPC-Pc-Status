@@ -28,7 +28,6 @@ module.exports = {
       name: "@electron-forge/maker-squirrel",
       config: {
         title: "RPC Pc Status",
-        setupExe: "RPC-Pc-Status-Setup.exe",
         iconUrl: __dirname + "/build/icon.ico",
         setupIcon: __dirname + "/build/icon.ico",
       },
