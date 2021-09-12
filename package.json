@@ -1,6 +1,6 @@
 {
   "name": "rpc-pc-status",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Rich Presence Pc Status for your discord",
   "main": "src/index.js",
   "engines": {
@@ -36,9 +36,9 @@
     "electron-log": "^4.4.1",
     "electron-squirrel-startup": "^1.0.0",
     "electron-store": "^8.0.0",
-    "update-electron-app": "^2.0.1",
     "open": "^8.2.1",
-    "systeminformation": "^5.8.7"
+    "systeminformation": "^5.8.7",
+    "update-electron-app": "git+https://git@github.com/Faelayis/update-electron-app.git"
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.61",
