@@ -13,15 +13,11 @@ exports.tray = () => {
   log.log("Tray Start");
   if (tray) {
     tray.setImage(
-      nativeImage.createFromPath(
-        path.join(__dirname, "icon/notconnected.png")
-      )
+      nativeImage.createFromPath(path.join(__dirname, "icon/notconnected.png"))
     );
   } else {
     tray = new Tray(
-      nativeImage.createFromPath(
-        path.join(__dirname, "icon/notconnected.png")
-      )
+      nativeImage.createFromPath(path.join(__dirname, "icon/notconnected.png"))
     );
   }
   tray.setTitle("Pc Status");
@@ -36,9 +32,7 @@ exports.trayupdata = (allow, user) => {
   log.log(`Tray Updata: ${allow} ${user}`);
   if (tray) {
     const iconPath =
-      user === undefined
-        ? "icon/notconnected.png"
-        : "icon/connected.png";
+      user === undefined ? "icon/notconnected.png" : "icon/connected.png";
     tray.setImage(nativeImage.createFromPath(path.join(__dirname, iconPath)));
   }
   tray.setContextMenu(
