@@ -16,7 +16,7 @@ if (isDev) {
   log.log(`Running in development ${app.getVersion()}`);
   RPC.disable();
 } else {
-  if (require('electron-squirrel-startup')) return;
+  if (require("electron-squirrel-startup")) return;
   log.log(`Running in production ${app.getVersion()}`);
   RPC.enable();
   RPC.isEnabled()
