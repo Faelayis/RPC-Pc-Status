@@ -25,17 +25,20 @@ function getInputValue() {
   ipcRenderer.send("asynchronous-buttonsinput", inputValbutton);
 }
 
-window.addEventListener("keydown", function (event) {
-  // log.log(event.code)
-  if (event.code === "NumpadDivide") {
-    this.nice = true
-  } else if (this.nice === true && event.code === "NumpadMultiply") {
-    this.nice = false
-    this.nice2 = true
-  } else if (this.nice2 === true && event.code === "Numpad1") {
-    this.nice = false
-    this.nice2 = false
-    seticonlargeImageKey("icon_peach_limited");
-  }
-}, true);
-
+window.addEventListener(
+  "keydown",
+  function (event) {
+    // log.log(event.code)
+    if (event.code === "NumpadDivide") {
+      this.nice = true;
+    } else if (this.nice === true && event.code === "NumpadMultiply") {
+      this.nice = false;
+      this.nice2 = true;
+    } else if (this.nice2 === true && event.code === "Numpad1") {
+      this.nice = false;
+      this.nice2 = false;
+      seticonlargeImageKey("icon_peach_limited");
+    }
+  },
+  true
+);
