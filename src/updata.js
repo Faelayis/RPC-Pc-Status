@@ -28,8 +28,9 @@ const userAgent = format(
 );
 
 const supportedPlatforms = ["darwin", "win32"];
-const feedURL = `https://update.electronjs.org/${package.author.name
-  }/RPC-Pc-Status/${process.platform}-${process.arch}/${app.getVersion()}`;
+const feedURL = `https://update.electronjs.org/${
+  package.author.name
+}/RPC-Pc-Status/${process.platform}-${process.arch}/${app.getVersion()}`;
 const requestHeaders = { "User-Agent": userAgent };
 let allow = true,
   AutoupdataRun = true,
@@ -207,7 +208,7 @@ function startautoupdata() {
     log.info(`Autoupdata: Run`);
     silent = false;
     autoUpdater.checkForUpdates();
-  }, 5 * 60 * 1000);// 
+  }, 5 * 60 * 1000); //
 }
 
 function pauseautoupdata() {
