@@ -12,8 +12,10 @@ const mainWindow = new BrowserWindow({
   autoHideMenuBar: true,
   webPreferences: {
     nodeIntegration: true,
+    enableRemoteModule: true,
     nativeWindowOpen: false,
     contextIsolation: false,
+    webSecurity: true
   },
 });
 mainWindow.loadFile("./src/page/index.html");

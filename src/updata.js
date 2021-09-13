@@ -130,21 +130,6 @@ exports.Checkupdates = (silent) => {
           allow = true;
         }
       });
-      autoUpdater.once("download-progress", (progressObj) => {
-        checkupdates = false;
-        allow = false;
-        let log_message = "Download speed: " + progressObj.bytesPerSecond;
-        log_message =
-          log_message + " - Downloaded " + progressObj.percent + "%";
-        log_message =
-          log_message +
-          " (" +
-          progressObj.transferred +
-          "/" +
-          progressObj.total +
-          ")";
-        log.info(log_message);
-      });
       autoUpdater.once(
         "update-downloaded",
         (event, releaseNotes, releaseName, releaseDate, updateURL) => {
@@ -205,9 +190,6 @@ module.exports.ACU = () => {
     });
     autoUpdater.once("error", (message) => {
       log.error(`Autoupdata: ${message}`);
-    });
-    autoUpdater.once("download-progress", () => {
-      log.info(`Autoupdata: download-progress`);
     });
     autoUpdater.once(
       "update-downloaded",

@@ -82,7 +82,7 @@ async function StartPresence() {
 }
 
 // FormatBytes
-function formatBytes(freemem, totalmem, decimals = 2) {
+function formatBytes(freemem, totalmem, decimals = 0) {
   if (freemem === 0) {
     return "0 Bytes";
   }
@@ -92,7 +92,7 @@ function formatBytes(freemem, totalmem, decimals = 2) {
   const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
   const i = Math.floor(Math.log(freemem) / Math.log(k));
   this.ramusage = `${parseFloat(
-    (totalmem / k ** i - freemem / k ** i).toFixed(dm)
+    (totalmem / k ** i - freemem / k ** i).toFixed(decimals < 0 ? 0 : 1)
   )} `;
   this.ram = `${parseFloat((totalmem / k ** i).toFixed(dm))} ${sizes[i]}`;
 }
