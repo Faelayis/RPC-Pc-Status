@@ -34,7 +34,7 @@ async function checkos() {
     );
   if (process.platform === "win32") {
     log.info("windows platform");
-    this.SImageText = `${this.osdistro} ${this.osrelease}`
+    this.SImageText = `${this.osdistro} ${this.osrelease}`;
     switch (true) {
       case /(Windows\s10)/g.test(this.osdistro):
         this.oslogo = "windows10";
@@ -48,7 +48,7 @@ async function checkos() {
     }
   } else if (process.platform === "linux") {
     log.info("Linux Platform");
-    this.SImageText = `${this.osdistro} ${this.osrelease} ${os.release()}`
+    this.SImageText = `${this.osdistro} ${this.osrelease} ${os.release()}`;
     switch (true) {
       case /(Ubuntu)/g.test(this.osdistro):
         this.oslogo = "linux_ubuntu";

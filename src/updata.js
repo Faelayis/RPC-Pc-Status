@@ -28,8 +28,9 @@ const userAgent = format(
 );
 
 const supportedPlatforms = ["darwin", "win32"];
-const feedURL = `https://update.electronjs.org/${package.author.name
-  }/RPC-Pc-Status/${process.platform}-${process.arch}/${app.getVersion()}`;
+const feedURL = `https://update.electronjs.org/${
+  package.author.name
+}/RPC-Pc-Status/${process.platform}-${process.arch}/${app.getVersion()}`;
 const requestHeaders = { "User-Agent": userAgent };
 let allow = true;
 
@@ -65,8 +66,7 @@ exports.Checkupdates = (silent) => {
           });
       }
     }
-    if (isDev)
-      log.warn(`Updata: not support Running in development `)
+    if (isDev) log.warn(`Updata: not support Running in development `);
     else {
       autoUpdater.checkForUpdates();
       autoUpdater.once("checking-for-update", () => {
@@ -113,7 +113,8 @@ exports.Checkupdates = (silent) => {
       autoUpdater.once("download-progress", (progressObj) => {
         allow = false;
         let log_message = "Download speed: " + progressObj.bytesPerSecond;
-        log_message = log_message + " - Downloaded " + progressObj.percent + "%";
+        log_message =
+          log_message + " - Downloaded " + progressObj.percent + "%";
         log_message =
           log_message +
           " (" +
