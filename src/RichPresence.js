@@ -18,24 +18,22 @@ let Interval = Number,
 // Check systeminformation
 checkos();
 async function checkos() {
-  // await log.info("Systeminformation: " + os.version(), os.release());  
-  this.cpuload = "loading.."
-  this.ramusage = "0"
-  this.ram = "0"
-  this.cpu = "loading.."
-  this.SImageText = "loading.."
-  si
-    .cpu()
-    .then((data) => (data.manufacturer ? this.cpu = `${data.manufacturer} ${data.brand}` : null));
-  si
-    .osInfo()
-    .then(
-      (data) => (
-        data.distro ? this.osdistro = `${data.distro}` : null,
-        data.release ? this.osrelease = `${data.release}` : null,
-        data.logofile ? this.oslogo = `${data.logofile}` : null
-      )
-    );
+  // await log.info("Systeminformation: " + os.version(), os.release());
+  this.cpuload = "loading..";
+  this.ramusage = "0";
+  this.ram = "0";
+  this.cpu = "loading..";
+  this.SImageText = "loading..";
+  si.cpu().then((data) =>
+    data.manufacturer ? (this.cpu = `${data.manufacturer} ${data.brand}`) : null
+  );
+  si.osInfo().then(
+    (data) => (
+      data.distro ? (this.osdistro = `${data.distro}`) : null,
+      data.release ? (this.osrelease = `${data.release}`) : null,
+      data.logofile ? (this.oslogo = `${data.logofile}`) : null
+    )
+  );
   if (process.platform === "win32") {
     log.info("windows platform");
     this.SImageText = `${this.osdistro} ${this.osrelease}`;
@@ -68,7 +66,7 @@ async function checkos() {
     log.info("Darwin platform (MacOS, IOS etc)");
     this.oslogo = "macOS";
   }
-  await si.battery().then((data) => data.hasBattery)
+  (await si.battery().then((data) => data.hasBattery))
     ? connectDiscord("886899221062647818")
     : connectDiscord("886899221062647818");
 }
@@ -80,8 +78,10 @@ async function checkos() {
 // Start Presence
 async function StartPresence() {
   Interval = setInterval(() => {
-    si.currentLoad().then(
-      (data) => (data.currentLoad ? this.cpuload = data.currentLoad.toFixed(0) + " %" : null)
+    si.currentLoad().then((data) =>
+      data.currentLoad
+        ? (this.cpuload = data.currentLoad.toFixed(0) + " %")
+        : null
     );
     formatBytes(os.freemem(), os.totalmem());
     setActivity();
@@ -148,8 +148,8 @@ async function setActivity() {
 trayupdata(false, undefined);
 
 async function connectDiscord(id) {
-  id ? clientId = id : clientId = "886899221062647818";
-  log.warn("Connect Discord: Try")
+  id ? (clientId = id) : (clientId = "886899221062647818");
+  log.warn("Connect Discord: Try");
   if (Presence) {
     Presence.destroy();
     Presence = new RPC.Client({

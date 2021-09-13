@@ -44,8 +44,8 @@ function setbutton(arg1, arg2, arg3, arg4) {
 
 module.exports = {
   seticonlargeImageKey,
-  setbutton
-}
+  setbutton,
+};
 module.exports.updaterChannel = store.get("updaterChannel");
 module.exports.largeImageKeyCustom = store.get("largeImageKeyCustom");
 module.exports.buttonsCustom = store.get("buttonsCustom");
