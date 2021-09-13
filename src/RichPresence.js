@@ -3,33 +3,37 @@ const process = require("process");
 const RPC = require("discord-rpc");
 const os = require("os");
 const si = require("systeminformation");
-const clientId = "879327042498342962";
 const { trayupdata } = require("./tray");
 const store = require("./store");
 const log = require("electron-log");
 const { webupdate } = require("./BrowserWindow");
-
-let Presence = new RPC.Client({
-  transport: "ipc",
-});
 let Interval = Number,
-  Presenceready = Boolean;
+  Presenceready = Boolean,
+  clientId = Boolean,
+  Presence = new RPC.Client({
+    transport: "ipc",
+  });
 
 // log.info(si.time().current);
 // Check systeminformation
 checkos();
 async function checkos() {
-  // await log.info("Systeminformation: " + os.version(), os.release());
-  await si
+  // await log.info("Systeminformation: " + os.version(), os.release());  
+  this.cpuload = "loading.."
+  this.ramusage = "0"
+  this.ram = "0"
+  this.cpu = "loading.."
+  this.SImageText = "loading.."
+  si
     .cpu()
-    .then((data) => (this.cpu = `${data.manufacturer} ${data.brand}`));
-  await si
+    .then((data) => (data.manufacturer ? this.cpu = `${data.manufacturer} ${data.brand}` : null));
+  si
     .osInfo()
     .then(
       (data) => (
-        data.distro ? (this.osdistro = `${data.distro}`) : null,
-        data.release ? (this.osrelease = `${data.release}`) : null,
-        data.logofile ? (this.oslogo = `${data.logofile}`) : null
+        data.distro ? this.osdistro = `${data.distro}` : null,
+        data.release ? this.osrelease = `${data.release}` : null,
+        data.logofile ? this.oslogo = `${data.logofile}` : null
       )
     );
   if (process.platform === "win32") {
@@ -64,6 +68,9 @@ async function checkos() {
     log.info("Darwin platform (MacOS, IOS etc)");
     this.oslogo = "macOS";
   }
+  await si.battery().then((data) => data.hasBattery)
+    ? connectDiscord("886899221062647818")
+    : connectDiscord("886899221062647818");
 }
 // Let Memoryfree, Memoryused;
 // setInterval(() => {
@@ -74,7 +81,7 @@ async function checkos() {
 async function StartPresence() {
   Interval = setInterval(() => {
     si.currentLoad().then(
-      (data) => (this.cpuload = data.currentLoad.toFixed(0) + " %")
+      (data) => (data.currentLoad ? this.cpuload = data.currentLoad.toFixed(0) + " %" : null)
     );
     formatBytes(os.freemem(), os.totalmem());
     setActivity();
@@ -90,6 +97,7 @@ function formatBytes(freemem, totalmem, decimals = 0) {
   const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
   const i = Math.floor(Math.log(freemem) / Math.log(k));
   this.ramusage = `${parseFloat(
+    // eslint-disable-next-line no-constant-condition
     (totalmem / k ** i - freemem / k ** i).toFixed(2 < 0 ? 0 : 2)
   )} `;
   this.ram = `${parseFloat(
@@ -137,10 +145,11 @@ async function setActivity() {
   // log.info(Presence);
 }
 
-connectDiscord();
 trayupdata(false, undefined);
-function connectDiscord() {
-  // log.info("Connect Discord: Try")
+
+async function connectDiscord(id) {
+  id ? clientId = id : clientId = "886899221062647818";
+  log.warn("Connect Discord: Try")
   if (Presence) {
     Presence.destroy();
     Presence = new RPC.Client({
