@@ -15,7 +15,7 @@ const mainWindow = new BrowserWindow({
     enableRemoteModule: true,
     nativeWindowOpen: false,
     contextIsolation: false,
-    webSecurity: true
+    webSecurity: true,
   },
 });
 mainWindow.loadFile("./src/page/index.html");
