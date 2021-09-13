@@ -15,10 +15,14 @@ let Presence = new RPC.Client({
 let Interval = Number,
   Presenceready = Boolean;
 
-// console.log(si.time().current);
+// log.info(si.time().current);
 // Check systeminformation
 checkos();
 async function checkos() {
+  // await log.info("Systeminformation: " + os.version(), os.release());
+  await si
+    .cpu()
+    .then((data) => (this.cpu = `${data.manufacturer} ${data.brand}`));
   await si
     .osInfo()
     .then(
@@ -28,22 +32,39 @@ async function checkos() {
         data.logofile ? (this.oslogo = `${data.logofile}`) : null
       )
     );
-  await si
-    .cpu()
-    .then((data) => (this.cpu = `${data.manufacturer} ${data.brand}`));
-  switch (true) {
-    case /(Windows\s10)/g.test(this.osdistro):
-      this.oslogo = "windows10";
-      break;
-    case /(Windows\s11)/g.test(this.osdistro):
-      this.oslogo = "windows11";
-      break;
-    default:
-      this.oslogo = null;
-      break;
+  if (process.platform === "win32") {
+    log.info("windows platform");
+    this.SImageText = `${this.osdistro} ${this.osrelease}`
+    switch (true) {
+      case /(Windows\s10)/g.test(this.osdistro):
+        this.oslogo = "windows10";
+        break;
+      case /(Windows\s11)/g.test(this.osdistro):
+        this.oslogo = "windows11";
+        break;
+      default:
+        this.oslogo = null;
+        break;
+    }
+  } else if (process.platform === "linux") {
+    log.info("Linux Platform");
+    this.SImageText = `${this.osdistro} ${this.osrelease} ${os.release()}`
+    switch (true) {
+      case /(Ubuntu)/g.test(this.osdistro):
+        this.oslogo = "linux_ubuntu";
+        break;
+      case /(Kali)/g.test(this.osdistro):
+        this.oslogo = "linux_kali";
+        break;
+      default:
+        this.oslogo = null;
+        break;
+    }
+  } else if (process.platform === "darwin") {
+    log.info("Darwin platform (MacOS, IOS etc)");
+    this.oslogo = "macOS";
   }
 }
-
 // Let Memoryfree, Memoryused;
 // setInterval(() => {
 //     si.mem().then(data => (Memoryfree = data.free, Memoryused = data.total));
@@ -82,14 +103,14 @@ async function setActivity() {
     clearInterval(Interval);
     return;
   }
-  // console.log('updata Presence')
+  // log.info('updata Presence')
   // StartTimestamp,
   Presence.details = `CPU ${this.cpuload}`;
   Presence.state = `RAM ${this.ramusage} / ${this.ram}`;
   Presence.largeImageKey = `${store.largeImageKeyCustom}`;
   Presence.largeImageText = `${this.cpu}`;
   Presence.smallImageKey = `${this.oslogo}`;
-  Presence.smallImageText = `${this.osdistro} ${this.osrelease}`;
+  Presence.smallImageText = `${this.SImageText}`;
   Presence.instance = false;
   if (store.buttonsCustom[(2, 3)] && store.buttonsCustom[(0, 1)]) {
     Presence.buttons = [
@@ -113,13 +134,13 @@ async function setActivity() {
     delete Presence.buttons;
   }
   Presence.setActivity(Presence);
-  //console.log(Presence);
+  //log.info(Presence);
 }
 
 connectDiscord();
 trayupdata(false, undefined);
 function connectDiscord() {
-  // log.log("Connect Discord: Try")
+  // log.info("Connect Discord: Try")
   if (Presence) {
     Presence.destroy();
     Presence = new RPC.Client({
@@ -127,7 +148,7 @@ function connectDiscord() {
     });
   }
   Presence.once("disconnected", async () => {
-    log.log(`Connect Discord: Disconnected`);
+    log.info(`Connect Discord: Disconnected`);
     Presenceready = false;
     module.exports.userinfo = this.userinfo = [
       "Disconnected",
@@ -140,7 +161,7 @@ function connectDiscord() {
     await connectDiscord();
   });
   Presence.once("ready", async () => {
-    log.log(`Connect Discord: Ready`);
+    log.info(`Connect Discord: Ready`);
     Presenceready = true;
     module.exports.userinfo = this.userinfo = [
       Presence.user.username,
@@ -159,12 +180,12 @@ function connectDiscord() {
 
 process.on("unhandledRejection", (err) => {
   if (err.message === "Could not connect") {
-    // log.log("Connect Discord: Could not connect")
+    // log.info("Connect Discord: Could not connect")
     connectDiscord();
   }
 });
 
-exports.connectDiscord = async () => {
-  await connectDiscord();
-  await trayupdata();
-};
+// exports.connectDiscord = async () => {
+//   await connectDiscord();
+//   await trayupdata();
+// };
