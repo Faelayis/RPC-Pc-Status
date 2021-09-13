@@ -28,7 +28,9 @@ const userAgent = format(
 );
 
 const supportedPlatforms = ["darwin", "win32"];
-const feedURL = `https://update.electronjs.org/${package.author.name}/RPC-Pc-Status/${process.platform}-${process.arch}/${app.getVersion()}`;
+const feedURL = `https://update.electronjs.org/${
+  package.author.name
+}/RPC-Pc-Status/${process.platform}-${process.arch}/${app.getVersion()}`;
 const requestHeaders = { "User-Agent": userAgent };
 let allow = true;
 
@@ -51,16 +53,23 @@ exports.Autoupdata = () => {
     autoUpdater.once("error", (message) => {
       log.error(`Autoupdata: ${message}`);
     });
-    autoUpdater.once("download-progress", () => {
-    });
-    autoUpdater.once("update-downloaded", (event, releaseNotes, releaseName, releaseDate, updateURL) => {
-      log.warn("Autoupdata: update-downloaded", [event, releaseNotes, releaseName, releaseDate, updateURL,]);
-      autoUpdater.quitAndInstall();
-      app.exit(0);
-    }
+    autoUpdater.once("download-progress", () => {});
+    autoUpdater.once(
+      "update-downloaded",
+      (event, releaseNotes, releaseName, releaseDate, updateURL) => {
+        log.warn("Autoupdata: update-downloaded", [
+          event,
+          releaseNotes,
+          releaseName,
+          releaseDate,
+          updateURL,
+        ]);
+        autoUpdater.quitAndInstall();
+        app.exit(0);
+      }
     );
   }, 5 * 60 * 1000);
-}
+};
 
 exports.Checkupdates = (silent) => {
   if (allow === true) {
