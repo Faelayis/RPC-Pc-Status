@@ -149,7 +149,7 @@ trayupdata(false, undefined);
 
 async function connectDiscord(id) {
   id ? (clientId = id) : (clientId = "886899221062647818");
-  log.warn("Connect Discord: Try");
+  // log.warn("Connect Discord: Try");
   if (Presence) {
     Presence.destroy();
     Presence = new RPC.Client({
