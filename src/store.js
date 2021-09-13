@@ -35,22 +35,22 @@ exports.setupdaterchannel = (arg) => {
   const { trayupdata } = require("./tray");
   const { userinfo } = require("./RichPresence");
   module.exports.updaterChannel = store.get("updaterChannel");
-  log.log(`Set updaterchannel: ` + arg);
+  log.info(`Set updaterchannel: ` + arg);
   trayupdata(true, userinfo[0]);
 };
 exports.seticonlargeImageKey = (icon) => {
   store.set("largeImageKeyCustom", icon);
   module.exports.largeImageKeyCustom = store.get("largeImageKeyCustom");
-  log.log(`Set largeImageKeyCustom: ` + icon);
+  log.info(`Set largeImageKeyCustom: ` + icon);
 };
 
 exports.setbutton = (arg1, arg2, arg3, arg4) => {
   store.set(`buttonsCustom`, [arg1, arg2, arg3, arg4]);
   module.exports.buttonsCustom = store.get("buttonsCustom");
-  log.log(`Set buttonsCustom: ` + [arg1, arg2, arg3, arg4]);
+  log.info(`Set buttonsCustom: ` + [arg1, arg2, arg3, arg4]);
 };
 
 module.exports.updaterChannel = store.get("updaterChannel");
 module.exports.largeImageKeyCustom = store.get("largeImageKeyCustom");
 module.exports.buttonsCustom = store.get("buttonsCustom");
-log.log(`Store Ready`);
+log.info(`Store Ready`);

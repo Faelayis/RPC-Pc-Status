@@ -11,7 +11,7 @@ const { Checkupdates } = require("./updata");
 let tray = null;
 
 exports.tray = () => {
-  log.log("Tray Start");
+  log.info("Tray Start");
   if (tray) {
     tray.setImage(
       nativeImage.createFromPath(path.join(__dirname, "icon/notconnected.png"))
@@ -31,7 +31,7 @@ exports.tray = () => {
 };
 
 exports.trayupdata = (allow, user) => {
-  log.log(`Tray Updata: ${allow} ${user}`);
+  log.info(`Tray Updata: ${allow} ${user}`);
   if (tray) {
     const iconPath =
       user === undefined ? "icon/notconnected.png" : "icon/connected.png";

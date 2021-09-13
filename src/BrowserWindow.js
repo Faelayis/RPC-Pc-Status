@@ -18,7 +18,7 @@ const mainWindow = new BrowserWindow({
 });
 mainWindow.loadFile("./src/page/index.html");
 mainWindow.once("ready-to-show", () => {
-  log.log("Web Ready to show");
+  log.info("Web Ready to show");
   ipcMain.once("synchronous-userinfo", (event) => {
     event.returnValue = [
       "Not connected",
@@ -70,11 +70,11 @@ mainWindow.on("close", function (event) {
 });
 
 exports.webupdate = (userinfo) => {
-  log.log("Web Update");
+  log.info("Web Update");
   ipcMain.once("synchronous-userinfo", (event) => {
     event.returnValue = userinfo;
   });
   mainWindow.loadFile("./src/page/index.html");
 };
 
-log.log(`BrowserWindow Ready`);
+log.info(`BrowserWindow Ready`);

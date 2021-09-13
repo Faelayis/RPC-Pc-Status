@@ -12,8 +12,8 @@ process.on("uncaughtException", (err) => {
   log.error("uncaughtException:", err);
 });
 process.on("beforeExit", (code) => {
-  log.log("Process beforeExit event with code: ", code);
+  log.info("Process beforeExit event with code: ", code);
 });
 process.on("exit", (code) => {
-  log.log("Process exit event with code: ", code);
+  log.info("Process exit event with code: ", code);
 });

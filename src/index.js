@@ -14,13 +14,13 @@ const RPC = new AutoLaunch({
 });
 
 if (isDev) {
-  log.log(`Running in development ${app.getVersion()}`);
+  log.info(`Running in development ${app.getVersion()}`);
   RPC.disable();
 } else {
   if (handleSquirrelEvent()) {
     return;
   }
-  log.log(`Running in production ${app.getVersion()}`);
+  log.info(`Running in production ${app.getVersion()}`);
   RPC.enable();
   RPC.isEnabled()
     .then((isEnabled) => {
@@ -39,7 +39,7 @@ if (process.platform === "win32") {
 }
 
 app.once("ready", async () => {
-  log.log("App Ready");
+  log.info("App Ready");
   await require("./store");
   const { tray } = await require("./tray");
   await tray();
