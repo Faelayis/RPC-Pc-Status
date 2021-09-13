@@ -134,7 +134,7 @@ async function setActivity() {
     delete Presence.buttons;
   }
   Presence.setActivity(Presence);
-  //log.info(Presence);
+  // log.info(Presence);
 }
 
 connectDiscord();
