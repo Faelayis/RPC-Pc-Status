@@ -52,6 +52,7 @@ exports.Checkupdates = (silent) => {
       log.warn(
         `Electron's autoUpdater does not support the '${process.platform}' platform`
       );
+      checkupdates = false;
       if (silent) {
         dialog
           .showMessageBox({
