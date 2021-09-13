@@ -30,26 +30,22 @@ if (store.get("buttonsCustom") === undefined) {
   store.set("buttonsCustom", [null, null, null, null]);
 }
 
-exports.setupdaterchannel = (arg) => {
-  store.set("updaterChannel", arg);
-  const { trayupdata } = require("./tray");
-  const { userinfo } = require("./RichPresence");
-  module.exports.updaterChannel = store.get("updaterChannel");
-  log.info(`Set updaterchannel: ` + arg);
-  trayupdata(true, userinfo[0]);
-};
-exports.seticonlargeImageKey = (icon) => {
+function seticonlargeImageKey(icon) {
+  log.info(`Set largeImageKeyCustom: ` + icon);
   store.set("largeImageKeyCustom", icon);
   module.exports.largeImageKeyCustom = store.get("largeImageKeyCustom");
-  log.info(`Set largeImageKeyCustom: ` + icon);
-};
+}
 
-exports.setbutton = (arg1, arg2, arg3, arg4) => {
+function setbutton(arg1, arg2, arg3, arg4) {
+  log.info(`Set buttonsCustom: ` + [arg1, arg2, arg3, arg4]);
   store.set(`buttonsCustom`, [arg1, arg2, arg3, arg4]);
   module.exports.buttonsCustom = store.get("buttonsCustom");
-  log.info(`Set buttonsCustom: ` + [arg1, arg2, arg3, arg4]);
-};
+}
 
+module.exports = {
+  seticonlargeImageKey,
+  setbutton
+}
 module.exports.updaterChannel = store.get("updaterChannel");
 module.exports.largeImageKeyCustom = store.get("largeImageKeyCustom");
 module.exports.buttonsCustom = store.get("buttonsCustom");
