@@ -6,7 +6,7 @@ const { seticonlargeImageKey } = require("./store");
 const { mainWindowshow } = require("./BrowserWindow");
 const Package = require("../package.json");
 const open = require("open");
-const { Checkupdates } = require("./updata");
+const { Autoupdata, Checkupdates } = require("./updata");
 
 let tray = null;
 
@@ -28,6 +28,7 @@ exports.tray = () => {
     mainWindowshow();
   });
   Checkupdates(false);
+  Autoupdata();
 };
 
 exports.trayupdata = (allow, user) => {

@@ -28,15 +28,39 @@ const userAgent = format(
 );
 
 const supportedPlatforms = ["darwin", "win32"];
-const feedURL = `https://update.electronjs.org/${
-  package.author.name
-}/RPC-Pc-Status/${process.platform}-${process.arch}/${app.getVersion()}`;
+const feedURL = `https://update.electronjs.org/${package.author.name}/RPC-Pc-Status/${process.platform}-${process.arch}/${app.getVersion()}`;
 const requestHeaders = { "User-Agent": userAgent };
 let allow = true;
 
 log.info("Updata feedURL:", feedURL);
 log.info("Updata requestHeaders:", requestHeaders);
 autoUpdater.setFeedURL(feedURL, requestHeaders);
+
+exports.Autoupdata = () => {
+  setInterval(() => {
+    autoUpdater.checkForUpdates();
+    autoUpdater.once("checking-for-update", () => {
+      log.info(`Autoupdata: checking-for-update`);
+    });
+    autoUpdater.once("update-available", () => {
+      log.info(`Autoupdata: update-available`);
+    });
+    autoUpdater.once("update-not-available", () => {
+      log.info(`Autoupdata: update-not-available`);
+    });
+    autoUpdater.once("error", (message) => {
+      log.error(`Autoupdata: ${message}`);
+    });
+    autoUpdater.once("download-progress", () => {
+    });
+    autoUpdater.once("update-downloaded", (event, releaseNotes, releaseName, releaseDate, updateURL) => {
+      log.warn("Autoupdata: update-downloaded", [event, releaseNotes, releaseName, releaseDate, updateURL,]);
+      autoUpdater.quitAndInstall();
+      app.exit(0);
+    }
+    );
+  }, 5 * 60 * 1000);
+}
 
 exports.Checkupdates = (silent) => {
   if (allow === true) {
