@@ -1,6 +1,6 @@
 const { ipcRenderer } = require("electron");
-const { buttonsCustom, seticonlargeImageKey } = require("../store");
-// const log = require("electron-log");
+const { buttonsCustom } = require("../store");
+const log = require("electron-log");
 
 let userinfo = ipcRenderer.sendSync("synchronous-userinfo");
 document.getElementById("imgprox").src = `${userinfo[3]}`;
@@ -24,21 +24,34 @@ function getInputValue() {
   ];
   ipcRenderer.send("asynchronous-buttonsinput", inputValbutton);
 }
-
-window.addEventListener(
-  "keydown",
-  function (event) {
-    // log.log(event.code)
-    if (event.code === "NumpadDivide") {
-      this.nice = true;
-    } else if (this.nice === true && event.code === "NumpadMultiply") {
-      this.nice = false;
-      this.nice2 = true;
-    } else if (this.nice2 === true && event.code === "Numpad1") {
-      this.nice = false;
-      this.nice2 = false;
-      seticonlargeImageKey("icon_peach_limited");
+let CodeEnter = [null];
+window.addEventListener("keydown", function (event) {
+  // log.log(event.code)
+  if (event.code === "NumpadDivide") {
+    this.i1 = true;
+  } else if (event.code === "Backspace") {
+    this.i1 = false, this.i2 = false, this.i3 = false;
+    CodeEnter = [null]
+  } else if (this.i1 === true && event.code === "KeyS") {
+    this.i1 = false, this.i2 = true;
+    setTimeout(() => {
+      CodeEnter = [null];
+      this.i1 = false, this.i2 = false, this.i3 = false;
+    }, 1 * 60 * 1000);
+  } else if (this.i2 === true && event.code) {
+    CodeEnter.push(`${event.code}`)
+    this.i3 = true;
+    if (this.i3 === true && event.code === "Enter") {
+      this.i1 = false, this.i2 = false, this.i3 = false;
+      log.log("Event Code Enter:" + CodeEnter)
+      if (CodeEnter[1] === "Numpad0" && CodeEnter[2] === "Enter") {
+        ipcRenderer.send("asynchronous-largeImageKey", null);
+      } else if (CodeEnter[1] === "Numpad1" && CodeEnter[2] === "Enter") {
+        ipcRenderer.send("asynchronous-largeImageKey", "icon_peach_limited");
+      }
+      CodeEnter = [null];
     }
-  },
+  }
+},
   true
 );
