@@ -28,10 +28,12 @@ const userAgent = format(
 );
 
 const supportedPlatforms = ["darwin", "win32"];
-const feedURL = `https://update.electronjs.org/${package.author.name
-  }/RPC-Pc-Status/${process.platform}-${process.arch}/${app.getVersion()}`;
+const feedURL = `https://update.electronjs.org/${
+  package.author.name
+}/RPC-Pc-Status/${process.platform}-${process.arch}/${app.getVersion()}`;
 const requestHeaders = { "User-Agent": userAgent };
-let allow = true, checkupdates = true;
+let allow = true,
+  checkupdates = true;
 
 log.info("Updata feedURL:", feedURL);
 log.info("Updata requestHeaders:", requestHeaders);
@@ -39,9 +41,16 @@ autoUpdater.setFeedURL(feedURL, requestHeaders);
 
 exports.Checkupdates = (silent) => {
   if (allow === true) {
-    checkupdates = false; allow = false;
-    if (typeof process !== "undefined" && process.platform && !supportedPlatforms.includes(process.platform)) {
-      log.warn(`Electron's autoUpdater does not support the '${process.platform}' platform`);
+    checkupdates = false;
+    allow = false;
+    if (
+      typeof process !== "undefined" &&
+      process.platform &&
+      !supportedPlatforms.includes(process.platform)
+    ) {
+      log.warn(
+        `Electron's autoUpdater does not support the '${process.platform}' platform`
+      );
       if (silent) {
         dialog
           .showMessageBox({
@@ -54,16 +63,19 @@ exports.Checkupdates = (silent) => {
           })
           .then((returnValue) => {
             if (returnValue.response === 0) {
-              checkupdates = true; allow = true;
+              checkupdates = true;
+              allow = true;
             }
           });
       } else if (silent === false) {
-        checkupdates = true; allow = true;
+        checkupdates = true;
+        allow = true;
       }
     }
     if (isDev) {
-      log.warn(`Updata: not support Running in development`)
-      checkupdates = true; allow = true;
+      log.warn(`Updata: not support Running in development`);
+      checkupdates = true;
+      allow = true;
     } else {
       autoUpdater.checkForUpdates();
       autoUpdater.once("checking-for-update", () => {
@@ -85,13 +97,16 @@ exports.Checkupdates = (silent) => {
             title: "Update not available",
             body: `You are now using ${app.getVersion()} the latest version.`,
           }).show();
-          checkupdates = true; allow = true;
+          checkupdates = true;
+          allow = true;
         } else if (silent === false) {
-          checkupdates = true; allow = true;
+          checkupdates = true;
+          allow = true;
         }
       });
       autoUpdater.once("error", (message) => {
-        checkupdates = false; allow = false;
+        checkupdates = false;
+        allow = false;
         if (silent) {
           dialog
             .showMessageBox({
@@ -104,15 +119,18 @@ exports.Checkupdates = (silent) => {
             })
             .then((returnValue) => {
               if (returnValue.response === 0) {
-                checkupdates = true; allow = true;
+                checkupdates = true;
+                allow = true;
               }
             });
         } else if (silent === false) {
-          checkupdates = true; allow = true;
+          checkupdates = true;
+          allow = true;
         }
       });
       autoUpdater.once("download-progress", (progressObj) => {
-        checkupdates = false; allow = false;
+        checkupdates = false;
+        allow = false;
         let log_message = "Download speed: " + progressObj.bytesPerSecond;
         log_message =
           log_message + " - Downloaded " + progressObj.percent + "%";
@@ -135,7 +153,8 @@ exports.Checkupdates = (silent) => {
             releaseDate,
             updateURL,
           ]);
-          checkupdates = false; allow = false;
+          checkupdates = false;
+          allow = false;
           if (silent) {
             dialog
               .showMessageBox({
@@ -148,15 +167,18 @@ exports.Checkupdates = (silent) => {
               })
               .then((returnValue) => {
                 if (returnValue.response === 0) {
-                  checkupdates = true; allow = true;
+                  checkupdates = true;
+                  allow = true;
                   autoUpdater.quitAndInstall();
                   app.exit(0);
                 } else if (returnValue.response === 1) {
-                  checkupdates = true; allow = true;
+                  checkupdates = true;
+                  allow = true;
                 }
               });
           } else if (silent === false) {
-            checkupdates = true; allow = true;
+            checkupdates = true;
+            allow = true;
             autoUpdater.quitAndInstall();
             app.exit(0);
           }
@@ -200,6 +222,6 @@ module.exports.ACU = () => {
       }
     );
   }, 5 * 60 * 1000);
-}
+};
 
 log.info(`Updata Ready`);
