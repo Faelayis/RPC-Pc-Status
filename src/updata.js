@@ -33,6 +33,7 @@ const feedURL = `https://update.electronjs.org/${
 }/RPC-Pc-Status/${process.platform}-${process.arch}/${app.getVersion()}`;
 const requestHeaders = { "User-Agent": userAgent };
 let allow = true,
+  // eslint-disable-next-line no-unused-vars
   checkupdates = true;
 
 log.info("Updata feedURL:", feedURL);
