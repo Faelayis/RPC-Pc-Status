@@ -6,7 +6,7 @@ const { seticonlargeImageKey } = require("./store");
 const { mainWindowshow } = require("./BrowserWindow");
 const Package = require("../package.json");
 const open = require("open");
-const { Checkupdates, ACU } = require("./updata");
+const { Checkupdates } = require("./updata");
 
 let tray = null;
 
@@ -28,9 +28,6 @@ exports.tray = () => {
     mainWindowshow();
   });
   Checkupdates(false);
-  setTimeout(() => {
-    ACU();
-  }, 5 * 60 * 1000);
 };
 
 exports.trayupdata = (allow, user) => {
