@@ -60,7 +60,7 @@ exports.Checkupdates = (silent) => {
             buttons: ["ok"],
             title: "RPC Pc Status Update Error",
             message: "There was a problem updating the application",
-            detail: `Electron's autoUpdater does not support the '${process.platform}' platform`,
+            detail: `Updater does not support the '${process.platform}' platform`,
             noLink: true,
           })
           .then((returnValue) => {
@@ -76,8 +76,26 @@ exports.Checkupdates = (silent) => {
     }
     if (isDev) {
       log.warn(`Updata: not support Running in development`);
-      checkupdates = true;
-      allow = true;
+      if (silent) {
+        dialog
+          .showMessageBox({
+            type: "error",
+            buttons: ["ok"],
+            title: "RPC Pc Status Update Error",
+            message: "There was a problem updating the application",
+            detail: `Updater not support Running in development`,
+            noLink: true,
+          })
+          .then((returnValue) => {
+            if (returnValue.response === 0) {
+              checkupdates = true;
+              allow = true;
+            }
+          });
+      } else if (silent === false) {
+        checkupdates = true;
+        allow = true;
+      }
     } else {
       autoUpdater.checkForUpdates();
       autoUpdater.once("checking-for-update", () => {
