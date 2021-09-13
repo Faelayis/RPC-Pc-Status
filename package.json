@@ -9,6 +9,7 @@
   "module": "commonjs",
   "scripts": {
     "start": "electron-forge start",
+    "dev": "electromon .",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "make:rebuild": "rmdir /s /q out && npm run make",
