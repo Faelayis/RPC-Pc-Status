@@ -8,27 +8,24 @@ const Package = require("../package.json");
 const open = require("open");
 const { Checkupdates } = require("./updata");
 
+log.info("Tray Start");
 let tray = null;
-
-exports.tray = () => {
-  log.info("Tray Start");
-  if (tray) {
-    tray.setImage(
-      nativeImage.createFromPath(path.join(__dirname, "icon/notconnected.png"))
-    );
-  } else {
-    tray = new Tray(
-      nativeImage.createFromPath(path.join(__dirname, "icon/notconnected.png"))
-    );
-  }
-  tray.setTitle("Pc Status");
-  tray.setToolTip("Pc Status");
-  tray.setIgnoreDoubleClickEvents(true);
-  tray.on("click", () => {
-    mainWindowshow();
-  });
-  Checkupdates(false);
-};
+if (tray) {
+  tray.setImage(
+    nativeImage.createFromPath(path.join(__dirname, "icon/notconnected.png"))
+  );
+} else {
+  tray = new Tray(
+    nativeImage.createFromPath(path.join(__dirname, "icon/notconnected.png"))
+  );
+}
+tray.setTitle("Pc Status");
+tray.setToolTip("Pc Status");
+tray.setIgnoreDoubleClickEvents(true);
+tray.on("click", () => {
+  mainWindowshow();
+});
+Checkupdates(false);
 
 exports.trayupdata = (allow, user) => {
   log.info(`Tray Updata: ${allow} ${user}`);

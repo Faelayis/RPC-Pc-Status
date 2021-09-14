@@ -29,7 +29,7 @@ if (isDev) {
       RPC.enable();
     })
     .catch((err) => {
-      log.error(`AutoLaunch error:${err}`);
+      log.error(`AutoLaunch error: ${err}`);
     });
 }
 
@@ -56,9 +56,8 @@ app.once("ready", async () => {
         }
       });
   } else {
+    require("./tray");
     await require("./store");
-    const { tray } = await require("./tray");
-    await tray();
     await require("./RichPresence");
   }
 });

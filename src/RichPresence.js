@@ -202,3 +202,5 @@ process.on("unhandledRejection", (err) => {
 //   await connectDiscord();
 //   await trayupdata();
 // };
+
+log.info(`RichPresence Ready`);
