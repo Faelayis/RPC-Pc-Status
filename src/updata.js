@@ -206,7 +206,6 @@ function startautoupdata(b) {
       log.info(`Autoupdata: Start`);
       AutoupdataRun = true;
       Interval = setInterval(() => {
-        log.info(`Autoupdata: run`);
         silent = true;
         autoUpdater.checkForUpdates();
       }, 5 * 60 * 1000); // 5 * 60 * 1000
