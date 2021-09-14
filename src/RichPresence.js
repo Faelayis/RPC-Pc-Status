@@ -68,11 +68,11 @@ async function checkos() {
     log.info("Darwin platform");
     this.oslogo = "macOS";
   }
-  si.battery().then((data) =>
-    data.hasBattery
-      ? connectDiscord("886899221062647818")
-      : connectDiscord("879327042498342962")
+  await si.battery().then((data) => (data.hasBattery
+    ? clientId = "886899221062647818"
+    : clientId = "879327042498342962")
   );
+  await connectDiscord();
 }
 // Let Memoryfree, Memoryused;
 // setInterval(() => {
@@ -151,8 +151,7 @@ async function setActivity() {
 
 trayupdata(false, undefined);
 
-async function connectDiscord(id) {
-  id ? (clientId = id) : (clientId = "886899221062647818");
+async function connectDiscord() {
   // log.warn("Connect Discord: Try");
   if (Presence) {
     Presence.destroy();
