@@ -27,7 +27,7 @@ async function checkos() {
   si.cpu().then((data) =>
     data.manufacturer ? (this.cpu = `${data.manufacturer} ${data.brand}`) : null
   );
-  si.osInfo().then(
+  await si.osInfo().then(
     (data) => (
       data.distro ? (this.osdistro = `${data.distro}`) : null,
       data.release ? (this.osrelease = `${data.release}`) : null,
@@ -66,9 +66,7 @@ async function checkos() {
     log.info("Darwin platform (MacOS, IOS etc)");
     this.oslogo = "macOS";
   }
-  (await si.battery().then((data) => data.hasBattery))
-    ? connectDiscord("886899221062647818")
-    : connectDiscord("886899221062647818");
+  si.battery().then((data) => data.hasBattery ?  connectDiscord("886899221062647818") : connectDiscord("879327042498342962"));
 }
 // Let Memoryfree, Memoryused;
 // setInterval(() => {
