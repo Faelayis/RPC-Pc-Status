@@ -52,7 +52,7 @@ this.isminimize = false;
 exports.mainWindowshow = () => {
   if (mainWindow.isVisible()) {
     this.isminimize = true;
-    if (this.isminimize === false) {
+    if (!this.isminimize) {
       mainWindow.hide();
     } else {
       mainWindow.focus();

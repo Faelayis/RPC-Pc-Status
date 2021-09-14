@@ -43,7 +43,7 @@ autoUpdater.setFeedURL(feedURL, requestHeaders);
 autoUpdater.on("checking-for-update", () => {
   if (silent) {
     null;
-  } else if (silent === false) {
+  } else if (!silent) {
     log.info(`Checking for update...`);
   }
 });
@@ -54,7 +54,7 @@ autoUpdater.on("update-available", () => {
   }
   if (silent) {
     null;
-  } else if (silent === false) {
+  } else if (!silent) {
     new Notification({
       title: "Update available",
       body: `Found New version download automatically \ncomplete you will be notified.`,
@@ -63,17 +63,17 @@ autoUpdater.on("update-available", () => {
 });
 autoUpdater.on("update-not-available", () => {
   if (silent) {
-    if (AutoupdataRun === false) {
+    if (!AutoupdataRun) {
       startautoupdata();
     }
     allow = true;
-  } else if (silent === false) {
+  } else if (!silent) {
     log.info("Update not available.");
     new Notification({
       title: "Update not available",
       body: `You are now using ${app.getVersion()} the latest version.`,
     }).show();
-    if (AutoupdataRun === false) {
+    if (!AutoupdataRun) {
       startautoupdata();
     }
     allow = true;
@@ -83,11 +83,11 @@ autoUpdater.on("error", (message) => {
   log.error(`Update error: ${message}`);
   allow = false;
   if (silent) {
-    if (AutoupdataRun === false) {
+    if (!AutoupdataRun) {
       startautoupdata();
     }
     allow = true;
-  } else if (silent === false) {
+  } else if (!silent) {
     dialog
       .showMessageBox({
         type: "error",
@@ -99,7 +99,7 @@ autoUpdater.on("error", (message) => {
       })
       .then((returnValue) => {
         if (returnValue.response === 0) {
-          if (AutoupdataRun === false) {
+          if (!AutoupdataRun) {
             startautoupdata();
           }
           allow = true;
@@ -122,7 +122,7 @@ autoUpdater.on(
     if (silent) {
       autoUpdater.quitAndInstall();
       app.exit(0);
-    } else if (silent === false) {
+    } else if (!silent) {
       dialog
         .showMessageBox({
           type: "info",
@@ -137,7 +137,7 @@ autoUpdater.on(
             autoUpdater.quitAndInstall();
             app.exit(0);
           } else if (returnValue.response === 1) {
-            if (AutoupdataRun === false) {
+            if (!AutoupdataRun) {
               startautoupdata();
             }
             allow = true;
@@ -164,7 +164,7 @@ exports.Checkupdates = (arg) => {
       );
       if (silent) {
         allow = true;
-      } else if (silent === false) {
+      } else if (!silent) {
         dialog
           .showMessageBox({
             type: "error",
@@ -185,7 +185,7 @@ exports.Checkupdates = (arg) => {
       log.warn(`Updata: not support Running in development`);
       if (silent) {
         allow = true;
-      } else if (silent === false) {
+      } else if (!silent) {
         dialog
           .showMessageBox({
             type: "error",
