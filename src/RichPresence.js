@@ -169,7 +169,7 @@ async function connectDiscord(id) {
       null,
       `https://cdn.discordapp.com/embed/avatars/0.png?size=1024`,
     ];
-    await trayupdata(false, undefined);
+    trayupdata(false, undefined);
     await webupdate(this.userinfo);
     await connectDiscord();
   });
@@ -183,7 +183,7 @@ async function connectDiscord(id) {
       `https://cdn.discordapp.com/avatars/${Presence.user.id}/${Presence.user.avatar}.png?size=1024`,
     ];
     StartPresence();
-    await trayupdata(true, `${Presence.user.username}`);
+    trayupdata(true, `${Presence.user.username}`);
     await webupdate(this.userinfo);
   });
   setTimeout(() => {
