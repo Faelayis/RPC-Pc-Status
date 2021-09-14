@@ -68,10 +68,13 @@ async function checkos() {
     log.info("Darwin platform");
     this.oslogo = "macOS";
   }
-  await si.battery().then((data) => (data.hasBattery
-    ? clientId = "886899221062647818"
-    : clientId = "879327042498342962")
-  );
+  await si
+    .battery()
+    .then((data) =>
+      data.hasBattery
+        ? (clientId = "886899221062647818")
+        : (clientId = "879327042498342962")
+    );
   await connectDiscord();
 }
 // Let Memoryfree, Memoryused;
