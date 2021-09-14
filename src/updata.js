@@ -28,7 +28,9 @@ const userAgent = format(
 );
 
 const supportedPlatforms = ["darwin", "win32"];
-const feedURL = `https://update.electronjs.org/${package.author.name}/RPC-Pc-Status/${process.platform}-${process.arch}/${app.getVersion()}`;
+const feedURL = `https://update.electronjs.org/${
+  package.author.name
+}/RPC-Pc-Status/${process.platform}-${process.arch}/${app.getVersion()}`;
 const requestHeaders = { "User-Agent": userAgent };
 let allow = true,
   AutoupdataRun = true,
@@ -40,7 +42,7 @@ log.info("Updata requestHeaders:", requestHeaders);
 autoUpdater.setFeedURL(feedURL, requestHeaders);
 autoUpdater.on("checking-for-update", () => {
   if (silent) {
-    null
+    null;
   } else if (silent === false) {
     log.info(`Checking for update...`);
   }
@@ -51,7 +53,7 @@ autoUpdater.on("update-available", () => {
     pauseautoupdata();
   }
   if (silent) {
-    null
+    null;
   } else if (silent === false) {
     new Notification({
       title: "Update available",
