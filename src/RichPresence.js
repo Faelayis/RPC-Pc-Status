@@ -27,13 +27,15 @@ async function checkos() {
   si.cpu().then((data) =>
     data.manufacturer ? (this.cpu = `${data.manufacturer} ${data.brand}`) : null
   );
-  await si.osInfo().then(
-    (data) => (
-      data.distro ? (this.osdistro = `${data.distro}`) : null,
-      data.release ? (this.osrelease = `${data.release}`) : null,
-      data.logofile ? (this.oslogo = `${data.logofile}`) : null
-    )
-  );
+  await si
+    .osInfo()
+    .then(
+      (data) => (
+        data.distro ? (this.osdistro = `${data.distro}`) : null,
+        data.release ? (this.osrelease = `${data.release}`) : null,
+        data.logofile ? (this.oslogo = `${data.logofile}`) : null
+      )
+    );
   if (process.platform === "win32") {
     log.info("windows platform");
     this.SImageText = `${this.osdistro} ${this.osrelease}`;
@@ -66,7 +68,11 @@ async function checkos() {
     log.info("Darwin platform (MacOS, IOS etc)");
     this.oslogo = "macOS";
   }
-  si.battery().then((data) => data.hasBattery ?  connectDiscord("886899221062647818") : connectDiscord("879327042498342962"));
+  si.battery().then((data) =>
+    data.hasBattery
+      ? connectDiscord("886899221062647818")
+      : connectDiscord("879327042498342962")
+  );
 }
 // Let Memoryfree, Memoryused;
 // setInterval(() => {
