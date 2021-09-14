@@ -28,8 +28,9 @@ const userAgent = format(
 );
 
 const supportedPlatforms = ["darwin", "win32"];
-const feedURL = `https://update.electronjs.org/${package.author.name
-  }/RPC-Pc-Status/${process.platform}-${process.arch}/${app.getVersion()}`;
+const feedURL = `https://update.electronjs.org/${
+  package.author.name
+}/RPC-Pc-Status/${process.platform}-${process.arch}/${app.getVersion()}`;
 const requestHeaders = { "User-Agent": userAgent };
 let allow = true,
   AutoupdataRun = true,
@@ -48,7 +49,7 @@ autoUpdater.on("checking-for-update", () => {
 });
 autoUpdater.on("update-available", () => {
   log.info("Update available.");
-  !AutoupdataRun ? startautoupdata(true) : null
+  !AutoupdataRun ? startautoupdata(true) : null;
   if (silent) {
     null;
   } else if (!silent) {
@@ -60,7 +61,7 @@ autoUpdater.on("update-available", () => {
 });
 autoUpdater.on("update-not-available", () => {
   if (silent) {
-    !AutoupdataRun ? startautoupdata(true) : null
+    !AutoupdataRun ? startautoupdata(true) : null;
     allow = true;
   } else if (!silent) {
     log.info("Update not available.");
@@ -68,7 +69,7 @@ autoUpdater.on("update-not-available", () => {
       title: "Update not available",
       body: `You are now using ${app.getVersion()} the latest version.`,
     }).show();
-    !AutoupdataRun ? startautoupdata(true) : null
+    !AutoupdataRun ? startautoupdata(true) : null;
     allow = true;
   }
 });
@@ -92,7 +93,7 @@ autoUpdater.on("error", (message) => {
       })
       .then((returnValue) => {
         if (returnValue.response === 0) {
-          !AutoupdataRun ? startautoupdata(true) : null
+          !AutoupdataRun ? startautoupdata(true) : null;
           allow = true;
         }
       });
@@ -128,7 +129,7 @@ autoUpdater.on(
             autoUpdater.quitAndInstall();
             app.exit(0);
           } else if (returnValue.response === 1) {
-            !AutoupdataRun ? startautoupdata(true) : null
+            !AutoupdataRun ? startautoupdata(true) : null;
             allow = true;
           }
         });
@@ -139,7 +140,7 @@ autoUpdater.on(
 exports.Checkupdates = (arg) => {
   if (allow === true) {
     allow = false;
-    AutoupdataRun === true ? startautoupdata(false) : null
+    AutoupdataRun === true ? startautoupdata(false) : null;
     silent = arg;
     if (
       typeof process !== "undefined" &&
@@ -208,7 +209,7 @@ function startautoupdata(b) {
         log.info(`Autoupdata: run`);
         silent = true;
         autoUpdater.checkForUpdates();
-      }, 5 * 60 * 1000);// 5 * 60 * 1000
+      }, 5 * 60 * 1000); // 5 * 60 * 1000
       break;
   }
 }
