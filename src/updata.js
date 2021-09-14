@@ -50,7 +50,7 @@ autoUpdater.on("checking-for-update", () => {
 autoUpdater.on("update-available", () => {
   log.info("Update available.");
   if (AutoupdataRun === true) {
-    pauseautoupdata();
+    startautoupdata(false);
   }
   if (silent) {
     null;
@@ -64,7 +64,7 @@ autoUpdater.on("update-available", () => {
 autoUpdater.on("update-not-available", () => {
   if (silent) {
     if (!AutoupdataRun) {
-      startautoupdata();
+      startautoupdata(true);
     }
     allow = true;
   } else if (!silent) {
@@ -74,7 +74,7 @@ autoUpdater.on("update-not-available", () => {
       body: `You are now using ${app.getVersion()} the latest version.`,
     }).show();
     if (!AutoupdataRun) {
-      startautoupdata();
+      startautoupdata(true);
     }
     allow = true;
   }
@@ -84,7 +84,7 @@ autoUpdater.on("error", (message) => {
   allow = false;
   if (silent) {
     if (!AutoupdataRun) {
-      startautoupdata();
+      startautoupdata(true);
     }
     allow = true;
   } else if (!silent) {
@@ -100,7 +100,7 @@ autoUpdater.on("error", (message) => {
       .then((returnValue) => {
         if (returnValue.response === 0) {
           if (!AutoupdataRun) {
-            startautoupdata();
+            startautoupdata(true);
           }
           allow = true;
         }
@@ -138,7 +138,7 @@ autoUpdater.on(
             app.exit(0);
           } else if (returnValue.response === 1) {
             if (!AutoupdataRun) {
-              startautoupdata();
+              startautoupdata(true);
             }
             allow = true;
           }
@@ -151,7 +151,7 @@ exports.Checkupdates = (arg) => {
   if (allow === true) {
     allow = false;
     if (AutoupdataRun === true) {
-      pauseautoupdata();
+      startautoupdata(false);
     }
     silent = arg;
     if (
@@ -207,24 +207,23 @@ exports.Checkupdates = (arg) => {
   }
 };
 
-function startautoupdata() {
-  log.info(`Autoupdata: Start`);
-  AutoupdataRun = true;
-  Interval = setInterval(() => {
-    silent = true;
-    autoUpdater.checkForUpdates();
-  }, 5 * 60 * 1000); //
+function startautoupdata(b) {
+  switch (b) {
+    case false:
+      log.info(`Autoupdata: Pause`);
+      clearInterval(Interval);
+      AutoupdataRun = false;
+      break;
+    case true:
+      log.info(`Autoupdata: Start`);
+      AutoupdataRun = true;
+      Interval = setInterval(() => {
+        log.info(`Autoupdata: run`);
+        silent = true;
+        autoUpdater.checkForUpdates();
+      },5 * 60 * 1000 );
+      break;
+  }
 }
-
-function pauseautoupdata() {
-  log.info(`Autoupdata: Pause`);
-  clearInterval(Interval);
-  AutoupdataRun = false;
-}
-
-// setTimeout(() => {
-//   log.info(`Autoupdata: Start`);
-//   startautoupdata();
-// }, 0);// 3 * 60 * 1000
 
 log.info(`Updata Ready`);
