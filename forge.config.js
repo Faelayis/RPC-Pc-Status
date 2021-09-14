@@ -6,7 +6,7 @@ module.exports = {
     productName: "RPC Pc Status",
     appId: "rpc-pc-status",
     asar: true,
-    icon: path.join(__dirname, '/build/icon.ico'),
+    icon: path.join(__dirname, "/build/icon.ico"),
     ignore: [
       ".eslintrc",
       ".gitattributes",
@@ -30,8 +30,9 @@ module.exports = {
       name: "@electron-forge/maker-squirrel",
       config: {
         title: "RPC Pc Status",
-        iconUrl: "https://raw.githubusercontent.com/Faelayis/RPC-Pc-Status/master/build/icon.ico",
-        setupIcon: path.join(__dirname, '/build/icon.ico'),
+        iconUrl:
+          "https://raw.githubusercontent.com/Faelayis/RPC-Pc-Status/master/build/icon.ico",
+        setupIcon: path.join(__dirname, "/build/icon.ico"),
       },
     },
     {
