@@ -1,10 +1,12 @@
 /* eslint-disable no-undef */
+const path = require("path");
+
 module.exports = {
   packagerConfig: {
     productName: "RPC Pc Status",
     appId: "rpc-pc-status",
     asar: true,
-    icon: __dirname + "/build/icon.icns",
+    icon: path.join(__dirname, '/build/icon.ico'),
     ignore: [
       ".eslintrc",
       ".gitattributes",
@@ -28,8 +30,8 @@ module.exports = {
       name: "@electron-forge/maker-squirrel",
       config: {
         title: "RPC Pc Status",
-        iconUrl: __dirname + "/build/icon.ico",
-        setupIcon: __dirname + "/build/icon.ico",
+        iconUrl: "https://raw.githubusercontent.com/Faelayis/RPC-Pc-Status/master/build/icon.ico",
+        setupIcon: path.join(__dirname, '/build/icon.ico'),
       },
     },
     {
