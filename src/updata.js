@@ -28,9 +28,7 @@ const userAgent = format(
 );
 
 const supportedPlatforms = ["darwin", "win32"];
-const feedURL = `https://update.electronjs.org/${
-  package.author.name
-}/RPC-Pc-Status/${process.platform}-${process.arch}/${app.getVersion()}`;
+const feedURL = `https://update.electronjs.org/${package.author.name}/RPC-Pc-Status/${process.platform}-${process.arch}/${app.getVersion()}`;
 const requestHeaders = { "User-Agent": userAgent };
 let allow = true,
   AutoupdataRun = true,
@@ -41,7 +39,11 @@ log.info("Updata feedURL:", feedURL);
 log.info("Updata requestHeaders:", requestHeaders);
 autoUpdater.setFeedURL(feedURL, requestHeaders);
 autoUpdater.on("checking-for-update", () => {
-  log.info(`Checking for update...`);
+  if (silent) {
+    null
+  } else if (silent === false) {
+    log.info(`Checking for update...`);
+  }
 });
 autoUpdater.on("update-available", () => {
   log.info("Update available.");
@@ -49,6 +51,8 @@ autoUpdater.on("update-available", () => {
     pauseautoupdata();
   }
   if (silent) {
+    null
+  } else if (silent === false) {
     new Notification({
       title: "Update available",
       body: `Found New version download automatically \ncomplete you will be notified.`,
@@ -56,17 +60,17 @@ autoUpdater.on("update-available", () => {
   }
 });
 autoUpdater.on("update-not-available", () => {
-  log.info("Update not available.");
   if (silent) {
-    new Notification({
-      title: "Update not available",
-      body: `You are now using ${app.getVersion()} the latest version.`,
-    }).show();
     if (AutoupdataRun === false) {
       startautoupdata();
     }
     allow = true;
   } else if (silent === false) {
+    log.info("Update not available.");
+    new Notification({
+      title: "Update not available",
+      body: `You are now using ${app.getVersion()} the latest version.`,
+    }).show();
     if (AutoupdataRun === false) {
       startautoupdata();
     }
@@ -77,6 +81,11 @@ autoUpdater.on("error", (message) => {
   log.error(`Update error: ${message}`);
   allow = false;
   if (silent) {
+    if (AutoupdataRun === false) {
+      startautoupdata();
+    }
+    allow = true;
+  } else if (silent === false) {
     dialog
       .showMessageBox({
         type: "error",
@@ -94,11 +103,6 @@ autoUpdater.on("error", (message) => {
           allow = true;
         }
       });
-  } else if (silent === false) {
-    if (AutoupdataRun === false) {
-      startautoupdata();
-    }
-    allow = true;
   }
 });
 
@@ -114,6 +118,9 @@ autoUpdater.on(
     ]);
     allow = false;
     if (silent) {
+      autoUpdater.quitAndInstall();
+      app.exit(0);
+    } else if (silent === false) {
       dialog
         .showMessageBox({
           type: "info",
@@ -134,20 +141,17 @@ autoUpdater.on(
             allow = true;
           }
         });
-    } else if (silent === false) {
-      autoUpdater.quitAndInstall();
-      app.exit(0);
     }
   }
 );
 
-exports.Checkupdates = (s) => {
+exports.Checkupdates = (arg) => {
   if (allow === true) {
     allow = false;
     if (AutoupdataRun === true) {
       pauseautoupdata();
     }
-    silent = s;
+    silent = arg;
     if (
       typeof process !== "undefined" &&
       process.platform &&
@@ -157,6 +161,8 @@ exports.Checkupdates = (s) => {
         `Electron's autoUpdater does not support the '${process.platform}' platform`
       );
       if (silent) {
+        allow = true;
+      } else if (silent === false) {
         dialog
           .showMessageBox({
             type: "error",
@@ -171,13 +177,13 @@ exports.Checkupdates = (s) => {
               allow = true;
             }
           });
-      } else if (silent === false) {
-        allow = true;
       }
     }
     if (isDev) {
       log.warn(`Updata: not support Running in development`);
       if (silent) {
+        allow = true;
+      } else if (silent === false) {
         dialog
           .showMessageBox({
             type: "error",
@@ -192,8 +198,6 @@ exports.Checkupdates = (s) => {
               allow = true;
             }
           });
-      } else if (silent === false) {
-        allow = true;
       }
     } else {
       autoUpdater.checkForUpdates();
@@ -205,8 +209,7 @@ function startautoupdata() {
   log.info(`Autoupdata: Start`);
   AutoupdataRun = true;
   Interval = setInterval(() => {
-    log.info(`Autoupdata: Run`);
-    silent = false;
+    silent = true;
     autoUpdater.checkForUpdates();
   }, 5 * 60 * 1000); //
 }

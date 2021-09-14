@@ -25,7 +25,7 @@ tray.setIgnoreDoubleClickEvents(true);
 tray.on("click", () => {
   mainWindowshow();
 });
-Checkupdates(false);
+Checkupdates(true);
 
 exports.trayupdata = (allow, user) => {
   log.info(`Tray Updata: ${allow} ${user}`);
@@ -131,7 +131,7 @@ exports.trayupdata = (allow, user) => {
         label: `Check for updates..`,
         type: "normal",
         click: () => {
-          Checkupdates(true);
+          Checkupdates(false);
         },
       },
       { label: "Quit Pc Status", type: "normal", click: () => app.exit(0) },
