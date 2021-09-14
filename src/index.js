@@ -5,7 +5,6 @@ const log = require("electron-log");
 require("./log");
 const isDev = require("electron-is-dev");
 const AutoLaunch = require("auto-launch");
-const gotTheLock = app.requestSingleInstanceLock();
 
 const RPC = new AutoLaunch({
   name: "RPC-Pc-Status",
@@ -40,26 +39,27 @@ if (process.platform === "win32") {
 
 app.once("ready", async () => {
   log.info("App Ready");
-  await require("./store");
-  const { tray } = await require("./tray");
-  await tray();
-  await require("./RichPresence");
-  let myWindow = null;
-  if (!gotTheLock) {
+  if (!app.requestSingleInstanceLock()) {
+    const { dialog } = require("electron");
     log.warn(`The app is already open!`);
-    app.exit(0);
-  } else {
-    app.once("second-instance", () => {
-      if (myWindow) {
-        if (myWindow.isMinimized()) {
-          myWindow.restore();
+    dialog
+      .showMessageBox({
+        type: "error",
+        buttons: ["ok"],
+        title: "RPC Pc Status",
+        message: "The app is already open!",
+        noLink: true,
+      })
+      .then((returnValue) => {
+        if (returnValue.response === 0) {
+          app.exit(0);
         }
-        myWindow.focus();
-      }
-    });
-    app.whenReady().then(() => {
-      myWindow = null;
-    });
+      });
+  } else {
+    await require("./store");
+    const { tray } = await require("./tray");
+    await tray();
+    await require("./RichPresence");
   }
 });
 

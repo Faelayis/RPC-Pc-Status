@@ -37,7 +37,7 @@ async function checkos() {
       )
     );
   if (process.platform === "win32") {
-    log.info("windows platform");
+    log.info("Windows platform");
     this.SImageText = `${this.osdistro} ${this.osrelease}`;
     switch (true) {
       case /(Windows\s10)/g.test(this.osdistro):
@@ -65,7 +65,7 @@ async function checkos() {
         break;
     }
   } else if (process.platform === "darwin") {
-    log.info("Darwin platform (MacOS, IOS etc)");
+    log.info("Darwin platform");
     this.oslogo = "macOS";
   }
   si.battery().then((data) =>
@@ -170,8 +170,8 @@ async function connectDiscord(id) {
       `https://cdn.discordapp.com/embed/avatars/0.png?size=1024`,
     ];
     trayupdata(false, undefined);
-    await webupdate(this.userinfo);
-    await connectDiscord();
+    webupdate(this.userinfo);
+    connectDiscord();
   });
   Presence.once("ready", async () => {
     log.info(`Connect Discord: Ready`);
@@ -182,9 +182,9 @@ async function connectDiscord(id) {
       Presence.user.id,
       `https://cdn.discordapp.com/avatars/${Presence.user.id}/${Presence.user.avatar}.png?size=1024`,
     ];
-    StartPresence();
     trayupdata(true, `${Presence.user.username}`);
-    await webupdate(this.userinfo);
+    webupdate(this.userinfo);
+    StartPresence();
   });
   setTimeout(() => {
     Presence.login({ clientId });
