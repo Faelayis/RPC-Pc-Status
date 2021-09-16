@@ -50,10 +50,8 @@ module.exports = {
     },
     {
       name: "electron-forge-maker-appimage",
-      platforms: [
-        "linux"
-      ]
-    }
+      platforms: ["linux"],
+    },
   ],
   publishers: [
     {
