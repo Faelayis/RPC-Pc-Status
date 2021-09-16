@@ -40,6 +40,7 @@
     "systeminformation": "^5.8.8"
   },
   "devDependencies": {
+    "electron-forge-maker-appimage": "git+https://github.com/Marcus10110/electron-forge-maker-appimage.git",
     "@electron-forge/cli": "^6.0.0-beta.61",
     "@electron-forge/maker-deb": "^6.0.0-beta.61",
     "@electron-forge/maker-rpm": "^6.0.0-beta.61",
