@@ -5,10 +5,12 @@ const electron = require("electron");
 const isDev = require("electron-is-dev");
 
 if (isDev) {
-  log.transports.console.format = "[{h}:{i}:{s}.{ms}] [{processType}] [{level}] {text} ";
+  log.transports.console.format =
+    "[{h}:{i}:{s}.{ms}] [{processType}] [{level}] {text} ";
 } else {
   const APP_DATA = (electron.app || electron.remote.app).getPath("userData");
-  log.transports.console.format = "[{y}-{m}-{d} {h}:{i}:{s}] [{level}] > {text}";
+  log.transports.console.format =
+    "[{y}-{m}-{d} {h}:{i}:{s}] [{level}] > {text}";
   log.transports.file.format = "[{y}-{m}-{d} {h}:{i}:{s}] [{level}] > {text}";
   log.transports.file.resolvePath = () => path.join(APP_DATA, "logs/main.log");
   process.on("uncaughtException", (err) => {

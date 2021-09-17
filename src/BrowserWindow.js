@@ -69,7 +69,7 @@ mainWindow.on("close", function (event) {
 
 exports.webupdate = (userinfo) => {
   log.info("Web Update");
-  mainWindow.webContents.send('synchronous-userinfo', userinfo)
+  mainWindow.webContents.send("synchronous-userinfo", userinfo);
 };
 
 log.info(`BrowserWindow Ready`);
