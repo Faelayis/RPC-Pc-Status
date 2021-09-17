@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 const process = require("process");
 const RPC = require("discord-rpc");
 const os = require("os");
@@ -15,7 +14,6 @@ let Interval = Number,
   });
 
 // log.info(si.time().current);
-// Check systeminformation
 checkos();
 async function checkos() {
   // await log.info("Systeminformation: " + os.version(), os.release());
@@ -77,12 +75,6 @@ async function checkos() {
     );
   await connectDiscord();
 }
-// Let Memoryfree, Memoryused;
-// setInterval(() => {
-//     si.mem().then(data => (Memoryfree = data.free, Memoryused = data.total));
-// }, 3000);
-
-// Start Presence
 async function StartPresence() {
   Interval = setInterval(() => {
     si.currentLoad().then((data) =>
@@ -94,8 +86,6 @@ async function StartPresence() {
     setActivity();
   }, 3000); // 15e33
 }
-
-// FormatBytes
 function formatBytes(freemem, totalmem, decimals = 0) {
   if (freemem === 0) {
     return "0 Bytes";
@@ -111,15 +101,11 @@ function formatBytes(freemem, totalmem, decimals = 0) {
     (totalmem / k ** i).toFixed(decimals < 0 ? 0 : decimals)
   )} ${sizes[i]}`;
 }
-
-// Presence setActivity
 async function setActivity() {
   if (!Presenceready || !Presence) {
     clearInterval(Interval);
     return;
   }
-  // log.info('updata Presence')
-  // StartTimestamp,
   Presence.details = `CPU ${this.cpuload}`;
   Presence.state = `RAM ${this.ramusage} / ${this.ram}`;
   Presence.largeImageKey = `${store.largeImageKeyCustom}`;
@@ -151,11 +137,8 @@ async function setActivity() {
   Presence.setActivity(Presence);
   // log.info(Presence);
 }
-
 trayupdata(false, undefined);
-
 async function connectDiscord() {
-  // log.warn("Connect Discord: Try");
   if (Presence) {
     Presence.destroy();
     Presence = new RPC.Client({
@@ -192,17 +175,9 @@ async function connectDiscord() {
     Presence.login({ clientId });
   }, 1 * 1000);
 }
-
 process.on("unhandledRejection", (err) => {
   if (err.message === "Could not connect") {
-    // log.info("Connect Discord: Could not connect")
     connectDiscord();
   }
 });
-
-// exports.connectDiscord = async () => {
-//   await connectDiscord();
-//   await trayupdata();
-// };
-
 log.info(`RichPresence Ready`);
