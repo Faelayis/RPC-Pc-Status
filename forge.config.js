@@ -19,7 +19,6 @@ module.exports = {
       "node_modules/eslint-scope",
       "node_modules/eslint-utils",
       "node_modules/eslint-visitor-keys",
-      "node_modules/electromon",
       "electron-builder.yml",
       "dev-app-update.yml",
       "README.md",
