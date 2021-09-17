@@ -51,6 +51,13 @@ module.exports = {
       name: "electron-forge-maker-appimage",
       platforms: ["linux"],
     },
+    {
+      name: '@electron-forge/maker-dmg',
+      platforms: ["darwin"],
+      config: {
+        format: 'ULFO'
+      }
+    }
   ],
   publishers: [
     {
