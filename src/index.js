@@ -1,4 +1,3 @@
-/* eslint-disable no-fallthrough */
 const process = require("process");
 const { app } = require("electron");
 const log = require("electron-log");
@@ -89,6 +88,7 @@ function handleSquirrelEvent() {
   switch (squirrelEvent) {
     case "--squirrel-install":
       spawnUpdate(["--createShortcut", exeName]);
+    // eslint-disable-next-line no-fallthrough
     case "--squirrel-updated":
       setTimeout(app.quit, 1000);
       return true;

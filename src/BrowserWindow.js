@@ -2,14 +2,15 @@ const { app, globalShortcut, BrowserWindow, ipcMain } = require("electron");
 const isDev = require("electron-is-dev");
 const log = require("electron-log");
 const { setbutton, seticonlargeImageKey } = require("./store");
-// const path = require("path");
+const path = require("path");
 
-const mainWindow = new BrowserWindow({
+let mainWindow = new BrowserWindow({
   width: 800,
   height: 600,
   show: false,
   resizable: false,
   autoHideMenuBar: true,
+  icon: path.join(__dirname, "icon/default.png"),
   webPreferences: {
     nodeIntegration: true,
     enableRemoteModule: true,
@@ -18,17 +19,9 @@ const mainWindow = new BrowserWindow({
     webSecurity: true,
   },
 });
-mainWindow.loadFile("./src/page/index.html");
+mainWindow.loadFile(path.join(__dirname, "page/index.html"));
 mainWindow.once("ready-to-show", () => {
   log.info("Web Ready to show");
-  ipcMain.once("synchronous-userinfo", (event) => {
-    event.returnValue = [
-      "Not connected",
-      null,
-      null,
-      `https://cdn.discordapp.com/embed/avatars/0.png?size=1024`,
-    ];
-  });
   if (isDev) {
     mainWindow.webContents.openDevTools();
     mainWindow.setAutoHideMenuBar(false);
@@ -76,10 +69,7 @@ mainWindow.on("close", function (event) {
 
 exports.webupdate = (userinfo) => {
   log.info("Web Update");
-  ipcMain.once("synchronous-userinfo", (event) => {
-    event.returnValue = userinfo;
-  });
-  mainWindow.loadFile("./src/page/index.html");
+  mainWindow.webContents.send('synchronous-userinfo', userinfo)
 };
 
 log.info(`BrowserWindow Ready`);

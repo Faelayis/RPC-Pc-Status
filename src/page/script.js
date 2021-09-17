@@ -2,9 +2,11 @@ const { ipcRenderer } = require("electron");
 const { buttonsCustom } = require("../store");
 const log = require("electron-log");
 
-let userinfo = ipcRenderer.sendSync("synchronous-userinfo");
-document.getElementById("imgprox").src = `${userinfo[3]}`;
-document.getElementById("namex").innerHTML = `${userinfo[0]}`;
+ipcRenderer.on('synchronous-userinfo', function (e, userinfo) {
+  document.getElementById("imgprox").src = `${userinfo[3]}`;
+  document.getElementById("namex").innerHTML = `${userinfo[0]}`;
+})
+
 // document.getElementById("namex").innerHTML = `${userinfo[0]+`#`+userinfo[1]}`;
 document.getElementById("button-label-1").value = buttonsCustom[0];
 document.getElementById("button-url-1").value = buttonsCustom[1];

@@ -2,22 +2,22 @@ const Store = require("electron-store");
 const log = require("electron-log");
 const schema = {
   // detailsCustom: {
-  //   type: 'string',
+  //   type: String,
   // },
   // stateCustom: {
-  //   type: 'string',
+  //   type: String,
   // },
   largeImageKeyCustom: {
-    type: "string",
+    type: String,
   },
   // largeImageTextCustom: {
-  //   type: 'string',
+  //   type: String,
   // },
   buttonslabelCustom: {
-    type: "string",
+    type: String,
   },
   buttonsurlCustom: {
-    type: "string",
+    type: String,
     format: "url",
   },
 };
