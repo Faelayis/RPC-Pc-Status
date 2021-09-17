@@ -52,12 +52,12 @@ module.exports = {
       platforms: ["linux"],
     },
     {
-      name: '@electron-forge/maker-dmg',
+      name: "@electron-forge/maker-dmg",
       platforms: ["darwin"],
       config: {
-        format: 'ULFO'
-      }
-    }
+        format: "ULFO",
+      },
+    },
   ],
   publishers: [
     {
