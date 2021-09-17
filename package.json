@@ -11,7 +11,7 @@
     "start": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
-    "make:rebuild": "rmdir /s /q out && npm run make",
+    "remake": "rmdir /s /q out && npm run make",
     "publish": "electron-forge publish",
     "prettier": "prettier --write .",
     "npm:clean": "rmdir /s /q node_modules",
@@ -45,8 +45,8 @@
     "@electron-forge/maker-squirrel": "^6.0.0-beta.61",
     "@electron-forge/maker-zip": "^6.0.0-beta.61",
     "@electron-forge/publisher-github": "^6.0.0-beta.61",
-    "electron-forge-maker-appimage": "github:Marcus10110/electron-forge-maker-appimage",
     "electron": "14.0.1",
+    "electron-forge-maker-appimage": "github:Marcus10110/electron-forge-maker-appimage",
     "eslint": "^7.32.0",
     "prettier": "2.4.1"
   }
