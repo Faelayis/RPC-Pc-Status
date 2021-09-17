@@ -1,4 +1,4 @@
-const process = require("process");
+const { platform } = require("process");
 const path = require("path");
 const os = require("os");
 const { format } = require("util");
@@ -6,7 +6,6 @@ const package = require("../package.json");
 const log = require("electron-log");
 const {
   app,
-  autoUpdater,
   dialog,
   Notification,
   nativeImage,
@@ -16,30 +15,46 @@ const iconpath = nativeImage.createFromPath(
   // eslint-disable-next-line no-undef
   path.join(__dirname, "icon/updateavailable.png")
 );
-autoUpdater.logger = log;
-autoUpdater.logger.transports.file.level = "info";
 
-const userAgent = format(
-  "%s/%s (% s: %s)",
-  package.name,
-  package.version,
-  os.platform(),
-  os.arch()
-);
-
-const supportedPlatforms = ["darwin", "win32"];
-const feedURL = `https://update.electronjs.org/${
-  package.author.name
-}/RPC-Pc-Status/${process.platform}-${process.arch}/${app.getVersion()}`;
-const requestHeaders = { "User-Agent": userAgent };
 let allow = true,
   AutoupdataRun = true,
   silent = Boolean,
   Interval = Number;
 
+var supportedPlatforms = ["darwin", "win32", "linux"];
+const options = {
+  provider: "github",
+  owner: "Faelayis",
+  repo: "RPC-Pc-Status",
+}
+if (platform === "darwin" || platform === "win32") {
+  var { autoUpdater } = require('electron');
+  const userAgent = format(
+    "%s/%s (% s: %s)",
+    package.name,
+    package.version,
+    os.platform(),
+    os.arch()
+  );
+  var feedURL = `https://update.electronjs.org/${package.author.name
+    }/RPC-Pc-Status/${platform}-${process.arch}/${app.getVersion()}`;
+  var requestHeaders = { "User-Agent": userAgent };
+  autoUpdater.setFeedURL(feedURL, requestHeaders);
+} else if (platform === "linux") {
+  // eslint-disable-next-line no-redeclare
+  var { AppImageUpdater } = require('electron-updater');
+  autoUpdater = new AppImageUpdater(options)
+  // autoUpdater.setFeedURL({
+  //   provider: "github",
+  //   owner: "Faelayis",
+  //   repo: "RPC-Pc-Status",
+  // });
+}
+
+autoUpdater.logger = require("electron-log")
+autoUpdater.logger.transports.file.level = "info";
 log.info("Updata feedURL:", feedURL);
 log.info("Updata requestHeaders:", requestHeaders);
-autoUpdater.setFeedURL(feedURL, requestHeaders);
 autoUpdater.on("checking-for-update", () => {
   if (silent) {
     null;
@@ -99,7 +114,6 @@ autoUpdater.on("error", (message) => {
       });
   }
 });
-
 autoUpdater.on(
   "update-downloaded",
   (event, releaseNotes, releaseName, releaseDate, updateURL) => {
@@ -135,7 +149,7 @@ autoUpdater.on(
         });
     }
   }
-);
+)
 
 exports.Checkupdates = (arg) => {
   if (allow === true) {
@@ -144,11 +158,11 @@ exports.Checkupdates = (arg) => {
     silent = arg;
     if (
       typeof process !== "undefined" &&
-      process.platform &&
-      !supportedPlatforms.includes(process.platform)
+      platform &&
+      !supportedPlatforms.includes(platform)
     ) {
       log.warn(
-        `Electron's autoUpdater does not support the '${process.platform}' platform`
+        `Electron's autoUpdater does not support the '${platform}' platform`
       );
       if (silent) {
         allow = true;
@@ -156,10 +170,10 @@ exports.Checkupdates = (arg) => {
         dialog
           .showMessageBox({
             type: "error",
-            buttons: ["ok"],
+            buttons: ["ok", "Try Update"],
             title: "RPC Pc Status Update Error",
             message: "There was a problem updating the application",
-            detail: `Updater does not support the '${process.platform}' platform`,
+            detail: `Updater does not support the '${platform}' platform`,
             noLink: true,
           })
           .then((returnValue) => {
@@ -208,7 +222,7 @@ function startautoupdata(b) {
       Interval = setInterval(() => {
         silent = true;
         autoUpdater.checkForUpdates();
-      }, 5 * 60 * 1000); // 5 * 60 * 1000
+      }, 15 * 60 * 1000); // 5 * 60 * 1000
       break;
   }
 }
