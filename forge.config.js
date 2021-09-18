@@ -5,7 +5,7 @@ module.exports = {
   packagerConfig: {
     productName: "RPC Pc Status",
     appId: "rpc-pc-status",
-    name: 'RPC Pc Status',
+    name: "RPC Pc Status",
     asar: true,
     icon: path.join(__dirname, "/build/icon.ico"),
     ignore: [
