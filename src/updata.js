@@ -183,7 +183,7 @@ exports.Checkupdates = (arg) => {
           });
       }
     }
-    if (isDev) {
+    if (!isDev) {
       log.warn(`Updata: not support Running in development`);
       if (silent) {
         allow = true;
