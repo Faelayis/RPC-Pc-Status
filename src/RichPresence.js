@@ -4,8 +4,8 @@ const os = require("os");
 const si = require("systeminformation");
 const store = require("./store");
 const log = require("electron-log");
-const { trayupdata } = require("./tray");
-const { webupdate } = require("./BrowserWindow");
+const { tupdata } = require("./tray");
+const { wupdate } = require("./BrowserWindow");
 let Interval = Number,
   Presenceready = Boolean,
   clientId = Boolean,
@@ -137,7 +137,7 @@ async function setActivity() {
   Presence.setActivity(Presence);
   // log.info(Presence);
 }
-trayupdata(false, undefined);
+tupdata(false, undefined);
 async function connectDiscord() {
   if (Presence) {
     Presence.destroy();
@@ -146,29 +146,27 @@ async function connectDiscord() {
     });
   }
   Presence.once("disconnected", async () => {
-    log.info(`Connect Discord: Disconnected`);
     Presenceready = false;
-    module.exports.userinfo = this.userinfo = [
+    log.info(`Connect Discord: Disconnected`);
+    tupdata(false, undefined);
+    wupdate([
       "Disconnected",
       null,
       null,
       `https://cdn.discordapp.com/embed/avatars/0.png?size=1024`,
-    ];
-    trayupdata(false, undefined);
-    webupdate(this.userinfo);
+    ]);
     connectDiscord();
   });
   Presence.once("ready", async () => {
-    log.info(`Connect Discord: Ready`);
     Presenceready = true;
-    module.exports.userinfo = this.userinfo = [
+    log.info(`Connect Discord: Ready`);
+    tupdata(true, `${Presence.user.username}`);
+    wupdate([
       Presence.user.username,
       Presence.user.discriminator,
       Presence.user.id,
       `https://cdn.discordapp.com/avatars/${Presence.user.id}/${Presence.user.avatar}.png?size=1024`,
-    ];
-    trayupdata(true, `${Presence.user.username}`);
-    webupdate(this.userinfo);
+    ]);
     StartPresence();
   });
   setTimeout(() => {

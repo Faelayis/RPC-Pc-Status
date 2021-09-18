@@ -4,6 +4,8 @@ const log = require("electron-log");
 const { setbutton, seticonlargeImageKey } = require("./store");
 const path = require("path");
 
+this.isready = false;
+this.isminimize = false;
 let mainWindow = new BrowserWindow({
   width: 800,
   height: 600,
@@ -29,8 +31,8 @@ mainWindow.once("ready-to-show", () => {
     mainWindow.setMenu(null);
     mainWindow.setAutoHideMenuBar(true);
     app.on("browser-window-focus", function () {
-      globalShortcut.register("CommandOrControl+R", () => {});
-      globalShortcut.register("F5", () => {});
+      globalShortcut.register("CommandOrControl+R", () => { });
+      globalShortcut.register("F5", () => { });
     });
   }
   ipcMain.on("asynchronous-buttonsinput", (event, arg) => {
@@ -39,19 +41,17 @@ mainWindow.once("ready-to-show", () => {
   ipcMain.on("asynchronous-largeImageKey", (event, arg) => {
     seticonlargeImageKey(arg);
   });
+  this.isready = true;
 });
 
-this.isminimize = false;
 exports.mainWindowshow = () => {
-  if (mainWindow.isVisible()) {
-    this.isminimize = true;
-    if (!this.isminimize) {
-      mainWindow.hide();
+  if (this.isready) {
+    if (mainWindow.isVisible()) {
+      this.isminimize = true;
+      !this.isminimize ? mainWindow.hide() : mainWindow.focus();
     } else {
-      mainWindow.focus();
+      mainWindow.show();
     }
-  } else {
-    mainWindow.show();
   }
 };
 
@@ -66,9 +66,7 @@ mainWindow.on("close", function (event) {
   }
   return false;
 });
-
-exports.webupdate = (userinfo) => {
-  log.info("Web Update");
+exports.wupdate = (userinfo) => {
   mainWindow.webContents.send("synchronous-userinfo", userinfo);
 };
 

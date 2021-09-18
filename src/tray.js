@@ -27,7 +27,7 @@ tray.on("click", () => {
 });
 Checkupdates(true);
 
-exports.trayupdata = (allow, user) => {
+exports.tupdata = (allow, user) => {
   log.info(`Tray Updata: ${allow} ${user}`);
   if (tray) {
     const iconPath =
@@ -134,6 +134,7 @@ exports.trayupdata = (allow, user) => {
           Checkupdates(false);
         },
       },
+      { type: "separator" },
       { label: "Quit Pc Status", type: "normal", click: () => app.exit(0) },
     ])
   );
