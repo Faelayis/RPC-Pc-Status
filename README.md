@@ -3,7 +3,7 @@
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/Faelayis/RPC-Pc-Status/Publish?label=Publish)
 <br>
 Rich Presence Pc Status for your discord<br>
-![Previews](docs/img/Previews.gif)
+<!-- ![Previews](docs/img/Previews.gif) -->
 ## Manual Installation
 ### [Download](https://github.com/Faelayis/RPC-Pc-Status/releases/latest)
 <!--
