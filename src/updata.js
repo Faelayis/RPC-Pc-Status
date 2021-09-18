@@ -196,10 +196,10 @@ exports.Checkupdates = (arg) => {
     silent
       ? log.info(`Update: is working now!`)
       : new Notification({
-        title: "Update is working now!",
-        body: null,
-      }).show();
-    allow ? allow = true : log.warn(`Update: is working now!`);
+          title: "Update is working now!",
+          body: null,
+        }).show();
+    allow ? (allow = true) : log.warn(`Update: is working now!`);
   }
 };
 
