@@ -1,9 +1,9 @@
 /* eslint-disable no-undef */
 const path = require("path");
-const package = require('./package.json')
+const package = require("./package.json");
 const app = {
-  productName: "RPC Pc Status"
-}
+  productName: "RPC Pc Status",
+};
 
 module.exports = {
   packagerConfig: {
@@ -35,7 +35,7 @@ module.exports = {
   makers: [
     {
       name: "@electron-forge/maker-squirrel",
-      platforms: ['win32'],
+      platforms: ["win32"],
       config: {
         iconUrl:
           "https://raw.githubusercontent.com/Faelayis/RPC-Pc-Status/master/build/icon.ico",
