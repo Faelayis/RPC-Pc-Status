@@ -58,7 +58,6 @@ module.exports = {
     {
       name: "@electron-forge/maker-deb",
       config: {
-        categories: "Utility",
         homepage: `${package.repository.url}`,
         icon: path.join(__dirname, "/build/icon.png"),
         name: `${package.name}`,
@@ -68,7 +67,6 @@ module.exports = {
     {
       name: "@electron-forge/maker-rpm",
       config: {
-        categories: "Utility",
         homepage: `${package.repository.url}`,
         icon: path.join(__dirname, "/build/icon.png"),
         name: `${package.name}`,
