@@ -6,7 +6,7 @@ const app = {
 
 module.exports = {
   packagerConfig: {
-    name: `${package.name}`,
+    name: `${app.productName}`,
     appId: `${package.name}`,
     productName: `${app.productName}`,
     CompanyName: `${package.author.name}`,
