@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 const path = require("path");
 const package = require("./package.json");
 const app = {
@@ -30,12 +29,6 @@ module.exports = {
       "dev-app-update.yml",
       "README.md",
     ],
-    // win32metadata: {
-    //   FileDescription: `${package.dependencies}`,
-    //   InternalName: `${app.productName}`,
-    //   OriginalFilename: `${app.productName}.exe`,
-    //   ProductName: `${app.productName}`,
-    // }
   },
   makers: [
     {
