@@ -80,8 +80,8 @@ module.exports = {
       platforms: ["linux"],
       config: {
         name: `${package.name}`,
-        productName: `${app.productName}`
-      }
+        productName: `${app.productName}`,
+      },
     },
     {
       name: "@electron-forge/maker-dmg",
