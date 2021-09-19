@@ -10,6 +10,7 @@ module.exports = {
     appId: `${package.name}`,
     productName: `${app.productName}`,
     CompanyName: `${package.author.name}`,
+    executableName: `${app.productName}`,
     asar: true,
     icon: path.join(__dirname, "/build/icon.ico"),
     ignore: [
@@ -28,6 +29,9 @@ module.exports = {
       "dev-app-update.yml",
       "README.md",
     ],
+    win32metadata: {
+      ProductName: `${app.productName}`,
+    }
   },
   makers: [
     {
