@@ -6,9 +6,6 @@ const app = {
 
 module.exports = {
   packagerConfig: {
-    name: `${app.productName}`,
-    appId: `${package.name}`,
-    productName: `${app.productName}`,
     CompanyName: `${package.author.name}`,
     asar: true,
     icon: path.join(__dirname, "/build/icon.ico"),
