@@ -85,8 +85,7 @@ module.exports = {
       name: "@electron-forge/maker-dmg",
       platforms: ["darwin"],
       config: {
-        name: `${package.name}`,
-        productName: `${app.productName}`,
+        name: `${package.name}-${package.version}`,
         format: "ULFO",
       },
     },
