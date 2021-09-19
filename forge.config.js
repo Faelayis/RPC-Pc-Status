@@ -35,7 +35,7 @@ module.exports = {
       title: `${app.productName}`,
       ProductName: `${app.productName}`,
       executableName: `${app.productName}`,
-    }
+    },
   },
   makers: [
     {
