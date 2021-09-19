@@ -1,12 +1,20 @@
 /* eslint-disable no-undef */
 const path = require("path");
+const package = require('./package.json')
+const app = {
+  productName: "RPC Pc Status"
+}
 
 module.exports = {
   packagerConfig: {
-    productName: "RPC Pc Status",
-    appId: "rpc-pc-status",
+    name: `${package.name}`,
+    appId: `${package.name}`,
+    productName: `${app.productName}`,
+    CompanyName: `${package.author.name}`,
+    executableName: `${app.productName}`,
     asar: true,
     icon: path.join(__dirname, "/build/icon.ico"),
+    deleteAppDataOnUninstall: true,
     ignore: [
       ".eslintrc",
       ".gitattributes",
@@ -27,11 +35,15 @@ module.exports = {
   makers: [
     {
       name: "@electron-forge/maker-squirrel",
+      platforms: ['win32'],
       config: {
-        title: "RPC Pc Status",
         iconUrl:
           "https://raw.githubusercontent.com/Faelayis/RPC-Pc-Status/master/build/icon.ico",
         setupIcon: path.join(__dirname, "/build/icon.ico"),
+        setupExe: `${package.name}-${package.version}.Setup.exe`,
+        setupMsi: `${package.name}-${package.version}.Setup.msi`,
+        title: `${app.productName}`,
+        ProductName: `${app.productName}`,
       },
     },
     {
