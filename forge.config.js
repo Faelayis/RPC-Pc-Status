@@ -31,7 +31,7 @@ module.exports = {
     ],
     win32metadata: {
       ProductName: `${app.productName}`,
-    }
+    },
   },
   makers: [
     {
