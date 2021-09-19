@@ -30,12 +30,12 @@ module.exports = {
       "dev-app-update.yml",
       "README.md",
     ],
-    win32metadata: {
-      name: `${app.productName}`,
-      title: `${app.productName}`,
-      ProductName: `${app.productName}`,
-      executableName: `${app.productName}`,
-    },
+    // win32metadata: {
+    //   FileDescription: `${package.dependencies}`,
+    //   InternalName: `${app.productName}`,
+    //   OriginalFilename: `${app.productName}.exe`,
+    //   ProductName: `${app.productName}`,
+    // }
   },
   makers: [
     {
@@ -46,7 +46,6 @@ module.exports = {
           "https://raw.githubusercontent.com/Faelayis/RPC-Pc-Status/master/build/icon.ico",
         setupIcon: path.join(__dirname, "/build/icon.ico"),
         setupExe: `${package.name}-${package.version}.Setup.exe`,
-        setupMsi: `${package.name}-${package.version}.Setup.msi`,
         title: `${app.productName}`,
         ProductName: `${app.productName}`,
       },
@@ -58,20 +57,38 @@ module.exports = {
     },
     {
       name: "@electron-forge/maker-deb",
-      config: {},
+      config: {
+        categories: "Utility",
+        homepage: `${package.repository.url}`,
+        icon: path.join(__dirname, "/build/icon.png"),
+        name: `${package.name}`,
+        productName: `${app.productName}`,
+      },
     },
     {
       name: "@electron-forge/maker-rpm",
-      config: {},
+      config: {
+        categories: "Utility",
+        homepage: `${package.repository.url}`,
+        icon: path.join(__dirname, "/build/icon.png"),
+        name: `${package.name}`,
+        productName: `${app.productName}`,
+      },
     },
     {
       name: "electron-forge-maker-appimage",
       platforms: ["linux"],
+      config: {
+        name: `${package.name}`,
+        productName: `${app.productName}`
+      }
     },
     {
       name: "@electron-forge/maker-dmg",
       platforms: ["darwin"],
       config: {
+        name: `${package.name}`,
+        productName: `${app.productName}`,
         format: "ULFO",
       },
     },
