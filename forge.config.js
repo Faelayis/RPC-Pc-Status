@@ -10,7 +10,6 @@ module.exports = {
     appId: `${package.name}`,
     productName: `${app.productName}`,
     CompanyName: `${package.author.name}`,
-    executableName: `${app.productName}`,
     asar: true,
     icon: path.join(__dirname, "/build/icon.ico"),
     ignore: [
