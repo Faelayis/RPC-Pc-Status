@@ -137,8 +137,8 @@ async function updateon() {
               app.exit(0);
             } else if (returnValue.response === 1) {
               !autoupdatarun ? autoupdata(true) : null;
-              allow = true;
               reqrestart = true;
+              allow = true;
             }
           });
       }
