@@ -1,7 +1,6 @@
 const process = require("process");
 const {
   app,
-  autoUpdater,
   dialog,
   Notification,
   nativeImage,
@@ -15,124 +14,139 @@ const package = require("../package.json");
 const iconpath = nativeImage.createFromPath(
   path.join(__dirname, "icon/updateavailable.png")
 );
-const supportedPlatforms = ["darwin", "win32"];
-const userAgent = format(
-  "%s/%s (% s: %s)",
-  package.name,
-  package.version,
-  os.platform(),
-  os.arch()
-);
-const feedURL = `https://update.electronjs.org/${
-  package.author.name
-}/RPC-Pc-Status/${process.platform}-${process.arch}/${app.getVersion()}`;
-const requestHeaders = { "User-Agent": userAgent };
-autoUpdater.logger = log;
-autoUpdater.logger.transports.file.level = "info";
-
 let allow = true,
   AutoupdataRun = true,
   silent = Boolean,
   Interval = Number;
 
-log.info("Updata feedURL:", feedURL);
-log.info("Updata requestHeaders:", requestHeaders);
-autoUpdater.setFeedURL(feedURL, requestHeaders);
-autoUpdater.on("checking-for-update", () => {
-  if (silent) {
-    null;
-  } else if (!silent) {
-    log.info(`Checking for update...`);
+var supportedPlatforms = ["darwin", "win32","linux"];
+if (process.platform === "darwin" || process.platform === "win32") {
+  var { autoUpdater } = require('electron');
+  var userAgent = format(
+    "%s/%s (% s: %s)",
+    package.name,
+    package.version,
+    os.platform(),
+    os.arch()
+  );
+  var feedURL = `https://update.electronjs.org/${package.author.name
+    }/RPC-Pc-Status/${process.platform}-${process.arch}/${app.getVersion()}`;
+  var requestHeaders = { "User-Agent": userAgent };
+  autoUpdater.setFeedURL(feedURL, requestHeaders);
+  updateon()
+} else if (process.platform === "linux") {
+  var { AppImageUpdater } = require('electron-updater');
+  const options = {
+    provider: "github",
+    owner: `${package.author.name}`,
+    repo: "RPC-Pc-Status",
   }
-});
-autoUpdater.on("update-available", () => {
-  log.info("Update available.");
-  !AutoupdataRun ? autoupdata(true) : null;
-  if (silent) {
-    null;
-  } else if (!silent) {
-    new Notification({
-      title: "Update available",
-      body: `Found New version download automatically \ncomplete you will be notified.`,
-    }).show();
-  }
-});
-autoUpdater.on("update-not-available", () => {
-  if (silent) {
-    !AutoupdataRun ? autoupdata(true) : null;
-    allow = true;
-  } else if (!silent) {
-    log.info("Update not available.");
-    new Notification({
-      title: "Update not available",
-      body: `You are now using ${app.getVersion()} the latest version.`,
-    }).show();
-    !AutoupdataRun ? autoupdata(true) : null;
-    allow = true;
-  }
-});
-autoUpdater.on("error", (message) => {
-  log.error(`Update ${message}`);
-  allow = false;
-  if (silent) {
-    if (!AutoupdataRun) {
-      autoupdata(true);
+  autoUpdater = new AppImageUpdater(options)
+  updateon()
+}
+
+async function updateon() {
+  log.info("Updata feedURL:", feedURL);
+  log.info("Updata requestHeaders:", requestHeaders);
+  autoUpdater.logger = log;
+  autoUpdater.logger.transports.file.level = "info";
+  autoUpdater.setFeedURL(feedURL, requestHeaders);
+  autoUpdater.on("checking-for-update", () => {
+    if (silent) {
+      null;
+    } else if (!silent) {
+      log.info(`Checking for update...`);
     }
-    allow = true;
-  } else if (!silent) {
-    dialog
-      .showMessageBox({
-        type: "error",
-        buttons: ["ok"],
-        title: `${package.apptitle} Update Error`,
-        message: "There was a problem updating the application",
-        detail: `${message}`,
-        noLink: true,
-      })
-      .then((returnValue) => {
-        if (returnValue.response === 0) {
-          !AutoupdataRun ? autoupdata(true) : null;
-          allow = true;
-        }
-      });
-  }
-});
-autoUpdater.on(
-  "update-downloaded",
-  (event, releaseNotes, releaseName, releaseDate, updateURL) => {
-    log.warn("Update downloaded", [
-      event,
-      releaseNotes,
-      releaseName,
-      releaseDate,
-      updateURL,
-    ]);
+  });
+  autoUpdater.on("update-available", () => {
+    log.info("Update available.");
+    !AutoupdataRun ? autoupdata(true) : null;
+    if (silent) {
+      null;
+    } else if (!silent) {
+      new Notification({
+        title: "Update available",
+        body: `Found New version download automatically \ncomplete you will be notified.`,
+      }).show();
+    }
+  });
+  autoUpdater.on("update-not-available", () => {
+    if (silent) {
+      !AutoupdataRun ? autoupdata(true) : null;
+      allow = true;
+    } else if (!silent) {
+      log.info("Update not available.");
+      new Notification({
+        title: "Update not available",
+        body: `You are now using ${app.getVersion()} the latest version.`,
+      }).show();
+      !AutoupdataRun ? autoupdata(true) : null;
+      allow = true;
+    }
+  });
+  autoUpdater.on("error", (message) => {
+    log.error(`Update ${message}`);
     allow = false;
     if (silent) {
-      autoUpdater.quitAndInstall();
-      app.exit(0);
+      if (!AutoupdataRun) {
+        autoupdata(true);
+      }
+      allow = true;
     } else if (!silent) {
       dialog
         .showMessageBox({
-          type: "info",
-          buttons: ["Restart App", "Later"],
-          title: `${package.apptitle} Update`,
-          detail: `A new version has been downloaded. Restart the application to apply the updates.`,
+          type: "error",
+          buttons: ["ok"],
+          title: `${package.apptitle} Update Error`,
+          message: "There was a problem updating the application",
+          detail: `${message}`,
           noLink: true,
-          icon: iconpath,
         })
         .then((returnValue) => {
           if (returnValue.response === 0) {
-            autoUpdater.quitAndInstall();
-            app.exit(0);
-          } else if (returnValue.response === 1) {
             !AutoupdataRun ? autoupdata(true) : null;
             allow = true;
           }
         });
     }
-  }
-);
+  });
+  autoUpdater.on(
+    "update-downloaded",
+    (event, releaseNotes, releaseName, releaseDate, updateURL) => {
+      log.warn("Update downloaded", [
+        event,
+        releaseNotes,
+        releaseName,
+        releaseDate,
+        updateURL,
+      ]);
+      allow = false;
+      if (silent) {
+        autoUpdater.quitAndInstall();
+        app.exit(0);
+      } else if (!silent) {
+        dialog
+          .showMessageBox({
+            type: "info",
+            buttons: ["Restart App", "Later"],
+            title: `${package.apptitle} Update`,
+            detail: `A new version has been downloaded. Restart the application to apply the updates.`,
+            noLink: true,
+            icon: iconpath,
+          })
+          .then((returnValue) => {
+            if (returnValue.response === 0) {
+              autoUpdater.quitAndInstall();
+              app.exit(0);
+            } else if (returnValue.response === 1) {
+              !AutoupdataRun ? autoupdata(true) : null;
+              allow = true;
+            }
+          });
+      }
+    }
+  );
+}
 
 exports.checkupdates = (arg) => {
   if (allow === true) {
