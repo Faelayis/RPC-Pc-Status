@@ -1,12 +1,14 @@
 const { app, globalShortcut, BrowserWindow, ipcMain } = require("electron");
 const isDev = require("electron-is-dev");
 const log = require("electron-log");
-const { setbutton, seticonlargeImageKey } = require("./store");
 const path = require("path");
+const package = require("../package.json");
+const { setbutton, seticonlargeImageKey } = require("./store");
 
 this.isready = false;
 this.isminimize = false;
 let mainWindow = new BrowserWindow({
+  title: `${package.apptitle}`,
   width: 800,
   height: 600,
   show: false,
@@ -31,8 +33,8 @@ mainWindow.once("ready-to-show", () => {
     mainWindow.setMenu(null);
     mainWindow.setAutoHideMenuBar(true);
     app.on("browser-window-focus", function () {
-      globalShortcut.register("CommandOrControl+R", () => {});
-      globalShortcut.register("F5", () => {});
+      globalShortcut.register("CommandOrControl+R", () => { });
+      globalShortcut.register("F5", () => { });
     });
   }
   ipcMain.on("asynchronous-buttonsinput", (event, arg) => {

@@ -4,7 +4,8 @@ const log = require("electron-log");
 require("./log");
 const isDev = require("electron-is-dev");
 const AutoLaunch = require("auto-launch");
-
+const { platform } = require("os");
+const package = require("../package.json");
 const RPC = new AutoLaunch({
   name: "RPC-Pc-Status",
   path: app.getPath("exe"),
@@ -32,8 +33,10 @@ if (isDev) {
     });
 }
 
-if (process.platform === "win32") {
-  app.setAppUserModelId(app.name);
+switch (platform()) {
+  case "win32":
+    app.setAppUserModelId(package.apptitle);
+    break;
 }
 
 app.once("ready", async () => {
@@ -45,7 +48,7 @@ app.once("ready", async () => {
       .showMessageBox({
         type: "error",
         buttons: ["ok"],
-        title: "RPC Pc Status",
+        title: `${package.apptitle}`,
         message: "The app is already open!",
         noLink: true,
       })

@@ -1,12 +1,11 @@
-/* eslint-disable no-undef */
 const { app, Menu, Tray, nativeImage } = require("electron");
 const log = require("electron-log");
-const path = require("path");
-const { seticonlargeImageKey } = require("./store");
-const { mainWindowshow } = require("./BrowserWindow");
-const Package = require("../package.json");
 const open = require("open");
-const { Checkupdates } = require("./updata");
+const path = require("path");
+const package = require("../package.json");
+const { mainWindowshow } = require("./BrowserWindow");
+const { seticonlargeImageKey } = require("./store");
+const { checkupdates } = require("./updata");
 
 log.info("Tray Start");
 let tray = null;
@@ -25,7 +24,7 @@ tray.setIgnoreDoubleClickEvents(true);
 tray.on("click", () => {
   mainWindowshow();
 });
-Checkupdates(true);
+checkupdates(true);
 
 exports.tupdata = (allow, user) => {
   log.info(`Tray Updata: ${allow} ${user}`);
@@ -124,14 +123,14 @@ exports.tupdata = (allow, user) => {
         label: "Contributors",
         type: "normal",
         click: () => {
-          open(`${Package.repository.url}/graphs/contributors`);
+          open(`${package.repository.url}/graphs/contributors`);
         },
       },
       {
         label: `Check for updates..`,
         type: "normal",
         click: () => {
-          Checkupdates(false);
+          checkupdates(false);
         },
       },
       { type: "separator" },
