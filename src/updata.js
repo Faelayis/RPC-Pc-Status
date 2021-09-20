@@ -138,7 +138,7 @@ async function updateon() {
             } else if (returnValue.response === 1) {
               !autoupdatarun ? autoupdata(true) : null;
               allow = true;
-              reqrestart = true
+              reqrestart = true;
             }
           });
       }
