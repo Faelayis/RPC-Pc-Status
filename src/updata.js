@@ -10,9 +10,10 @@ const iconpath = nativeImage.createFromPath(
   path.join(__dirname, "icon/updateavailable.png")
 );
 let allow = true,
-  AutoupdataRun = true,
+  autoupdatarun = true,
+  reqrestart = false,
   silent = Boolean,
-  Interval = Number;
+  interval = Number;
 
 var supportedPlatforms = ["darwin", "win32", "linux"];
 if (process.platform === "darwin" || process.platform === "win32") {
@@ -56,7 +57,7 @@ async function updateon() {
   });
   autoUpdater.on("update-available", () => {
     log.info("Update available.");
-    !AutoupdataRun ? autoupdata(true) : null;
+    !autoupdatarun ? autoupdata(true) : null;
     if (silent) {
       null;
     } else if (!silent) {
@@ -68,7 +69,7 @@ async function updateon() {
   });
   autoUpdater.on("update-not-available", () => {
     if (silent) {
-      !AutoupdataRun ? autoupdata(true) : null;
+      !autoupdatarun ? autoupdata(true) : null;
       allow = true;
     } else if (!silent) {
       log.info("Update not available.");
@@ -76,7 +77,7 @@ async function updateon() {
         title: "Update not available",
         body: `You are now using ${app.getVersion()} the latest version.`,
       }).show();
-      !AutoupdataRun ? autoupdata(true) : null;
+      !autoupdatarun ? autoupdata(true) : null;
       allow = true;
     }
   });
@@ -84,7 +85,7 @@ async function updateon() {
     log.error(`Update ${message}`);
     allow = false;
     if (silent) {
-      if (!AutoupdataRun) {
+      if (!autoupdatarun) {
         autoupdata(true);
       }
       allow = true;
@@ -100,7 +101,7 @@ async function updateon() {
         })
         .then((returnValue) => {
           if (returnValue.response === 0) {
-            !AutoupdataRun ? autoupdata(true) : null;
+            !autoupdatarun ? autoupdata(true) : null;
             allow = true;
           }
         });
@@ -135,8 +136,9 @@ async function updateon() {
               autoUpdater.quitAndInstall();
               app.exit(0);
             } else if (returnValue.response === 1) {
-              !AutoupdataRun ? autoupdata(true) : null;
+              !autoupdatarun ? autoupdata(true) : null;
               allow = true;
+              reqrestart = true
             }
           });
       }
@@ -147,7 +149,7 @@ async function updateon() {
 exports.checkupdates = (arg) => {
   if (allow === true) {
     allow = false;
-    AutoupdataRun === true ? autoupdata(false) : null;
+    autoupdatarun === true ? autoupdata(false) : null;
     silent = arg;
     if (
       typeof process !== "undefined" &&
@@ -197,7 +199,12 @@ exports.checkupdates = (arg) => {
           });
       }
     } else {
-      autoUpdater.checkForUpdates();
+      if (reqrestart) {
+        autoUpdater.quitAndInstall();
+        app.exit(0);
+      } else {
+        autoUpdater.checkForUpdates();
+      }
     }
   } else {
     silent
@@ -213,12 +220,12 @@ exports.checkupdates = (arg) => {
 function autoupdata(B) {
   switch (B) {
     case false:
-      clearInterval(Interval);
-      AutoupdataRun = false;
+      clearInterval(interval);
+      autoupdatarun = false;
       break;
     case true:
-      AutoupdataRun = true;
-      Interval = setInterval(() => {
+      autoupdatarun = true;
+      interval = setInterval(() => {
         silent = true;
         autoUpdater.checkForUpdates();
       }, 15 * 60 * 1000); // 5 * 60 * 1000
