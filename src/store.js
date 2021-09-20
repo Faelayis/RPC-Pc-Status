@@ -46,7 +46,6 @@ module.exports = {
   seticonlargeImageKey,
   setbutton,
 };
-module.exports.updaterChannel = store.get("updaterChannel");
 module.exports.largeImageKeyCustom = store.get("largeImageKeyCustom");
 module.exports.buttonsCustom = store.get("buttonsCustom");
 log.info(`Store Ready`);

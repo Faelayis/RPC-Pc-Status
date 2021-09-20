@@ -13,7 +13,6 @@ const {
 } = require("electron");
 const isDev = require("electron-is-dev");
 const iconpath = nativeImage.createFromPath(
-  // eslint-disable-next-line no-undef
   path.join(__dirname, "icon/updateavailable.png")
 );
 autoUpdater.logger = log;
@@ -99,7 +98,6 @@ autoUpdater.on("error", (message) => {
       });
   }
 });
-
 autoUpdater.on(
   "update-downloaded",
   (event, releaseNotes, releaseName, releaseDate, updateURL) => {
