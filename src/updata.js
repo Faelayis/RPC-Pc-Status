@@ -1,10 +1,5 @@
 const process = require("process");
-const {
-  app,
-  dialog,
-  Notification,
-  nativeImage,
-} = require("electron");
+const { app, dialog, Notification, nativeImage } = require("electron");
 const log = require("electron-log");
 const isDev = require("electron-is-dev");
 const os = require("os");
@@ -19,9 +14,9 @@ let allow = true,
   silent = Boolean,
   Interval = Number;
 
-var supportedPlatforms = ["darwin", "win32","linux"];
+var supportedPlatforms = ["darwin", "win32", "linux"];
 if (process.platform === "darwin" || process.platform === "win32") {
-  var { autoUpdater } = require('electron');
+  var { autoUpdater } = require("electron");
   var userAgent = format(
     "%s/%s (% s: %s)",
     package.name,
@@ -29,20 +24,21 @@ if (process.platform === "darwin" || process.platform === "win32") {
     os.platform(),
     os.arch()
   );
-  var feedURL = `https://update.electronjs.org/${package.author.name
-    }/RPC-Pc-Status/${process.platform}-${process.arch}/${app.getVersion()}`;
+  var feedURL = `https://update.electronjs.org/${
+    package.author.name
+  }/RPC-Pc-Status/${process.platform}-${process.arch}/${app.getVersion()}`;
   var requestHeaders = { "User-Agent": userAgent };
   autoUpdater.setFeedURL(feedURL, requestHeaders);
-  updateon()
+  updateon();
 } else if (process.platform === "linux") {
-  var { AppImageUpdater } = require('electron-updater');
+  var { AppImageUpdater } = require("electron-updater");
   const options = {
     provider: "github",
     owner: `${package.author.name}`,
     repo: "RPC-Pc-Status",
-  }
-  autoUpdater = new AppImageUpdater(options)
-  updateon()
+  };
+  autoUpdater = new AppImageUpdater(options);
+  updateon();
 }
 
 async function updateon() {
