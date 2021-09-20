@@ -80,7 +80,7 @@ module.exports = {
       name: "@electron-forge/maker-dmg",
       platforms: ["darwin"],
       config: {
-        name: `${package.name}-${package.version}`,
+        name: `${package.name}-${package.version}-x64`,
         format: "ULFO",
       },
     },
