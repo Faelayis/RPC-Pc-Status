@@ -33,8 +33,8 @@ mainWindow.once("ready-to-show", () => {
     mainWindow.setMenu(null);
     mainWindow.setAutoHideMenuBar(true);
     app.on("browser-window-focus", function () {
-      globalShortcut.register("CommandOrControl+R", () => { });
-      globalShortcut.register("F5", () => { });
+      globalShortcut.register("CommandOrControl+R", () => {});
+      globalShortcut.register("F5", () => {});
     });
   }
   ipcMain.on("asynchronous-buttonsinput", (event, arg) => {

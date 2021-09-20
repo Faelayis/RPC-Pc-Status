@@ -1,5 +1,11 @@
 const process = require("process");
-const { app, autoUpdater, dialog, Notification, nativeImage } = require("electron");
+const {
+  app,
+  autoUpdater,
+  dialog,
+  Notification,
+  nativeImage,
+} = require("electron");
 const log = require("electron-log");
 const isDev = require("electron-is-dev");
 const os = require("os");
@@ -10,8 +16,16 @@ const iconpath = nativeImage.createFromPath(
   path.join(__dirname, "icon/updateavailable.png")
 );
 const supportedPlatforms = ["darwin", "win32"];
-const userAgent = format("%s/%s (% s: %s)", package.name, package.version, os.platform(), os.arch());
-const feedURL = `https://update.electronjs.org/${package.author.name}/RPC-Pc-Status/${process.platform}-${process.arch}/${app.getVersion()}`;
+const userAgent = format(
+  "%s/%s (% s: %s)",
+  package.name,
+  package.version,
+  os.platform(),
+  os.arch()
+);
+const feedURL = `https://update.electronjs.org/${
+  package.author.name
+}/RPC-Pc-Status/${process.platform}-${process.arch}/${app.getVersion()}`;
 const requestHeaders = { "User-Agent": userAgent };
 autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = "info";
@@ -179,9 +193,9 @@ exports.checkupdates = (arg) => {
     silent
       ? log.info(`Update: is working now!`)
       : new Notification({
-        title: "Update is working now!",
-        body: null,
-      }).show();
+          title: "Update is working now!",
+          body: null,
+        }).show();
     allow ? (allow = true) : log.warn(`Update: is working now!`);
   }
 };
