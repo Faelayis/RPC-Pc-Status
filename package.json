@@ -37,7 +37,7 @@
     "electron-log": "^4.4.1",
     "electron-store": "^8.0.1",
     "open": "^8.2.1",
-    "systeminformation": "^5.9.2"
+    "systeminformation": "^5.9.3"
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.61",
