@@ -14,6 +14,7 @@ let mainWindow = new BrowserWindow({
   show: false,
   resizable: false,
   autoHideMenuBar: true,
+  openDevTools: true,
   icon: path.join(__dirname, "icon/default.png"),
   webPreferences: {
     nodeIntegration: true,
