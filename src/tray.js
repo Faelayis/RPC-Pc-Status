@@ -42,7 +42,7 @@ exports.tupdata = (allow, user) => {
         enabled: true,
         click: () => {
           setstatus();
-          this.tupdata(allow, user)
+          this.tupdata(allow, user);
         },
       },
       {
