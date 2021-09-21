@@ -1,7 +1,8 @@
 {
   "name": "rpc-pc-status",
+  "productName": "RPC Pc Status",
   "apptitle": "RPC Pc Status",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "Rich Presence Pc Status for your discord",
   "main": "src/index.js",
   "engines": {
