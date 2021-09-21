@@ -25,8 +25,9 @@ if (process.platform === "darwin" || process.platform === "win32") {
     os.platform(),
     os.arch()
   );
-  var feedURL = `https://update.electronjs.org/${package.author.name
-    }/RPC-Pc-Status/${process.platform}-${process.arch}/${app.getVersion()}`;
+  var feedURL = `https://update.electronjs.org/${
+    package.author.name
+  }/RPC-Pc-Status/${process.platform}-${process.arch}/${app.getVersion()}`;
   var requestHeaders = { "User-Agent": userAgent };
   autoUpdater.setFeedURL(feedURL, requestHeaders);
   updateon();
@@ -208,9 +209,9 @@ exports.checkupdates = async (arg) => {
     silent
       ? log.info(`Update: is working now!`)
       : new Notification({
-        title: "Update is working now!",
-        body: null,
-      }).show();
+          title: "Update is working now!",
+          body: null,
+        }).show();
     allow ? null : log.warn(`Update: is working now!`);
   }
 };
