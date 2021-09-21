@@ -8,7 +8,7 @@ module.exports = {
   packagerConfig: {
     name: `${package.name}`,
     appId: `${package.name}`,
-    //     productName: `${app.productName}`,
+    productName: `${app.productName}`,
     CompanyName: `${package.author.name}`,
     asar: true,
     icon: path.join(__dirname, "/build/icon.ico"),
@@ -42,7 +42,7 @@ module.exports = {
         setupIcon: path.join(__dirname, "/build/icon.ico"),
         setupExe: `${package.name}-${package.version}.Setup.exe`,
         title: `${app.productName}`,
-        //         ProductName: `${app.productName}`,
+        ProductName: `${app.productName}`,
       },
     },
     {
@@ -56,7 +56,7 @@ module.exports = {
         homepage: `${package.repository.url}`,
         icon: path.join(__dirname, "/build/icon.png"),
         name: `${package.name}`,
-        //         productName: `${app.productName}`,
+        productName: `${app.productName}`,
       },
     },
     {
@@ -65,7 +65,7 @@ module.exports = {
         homepage: `${package.repository.url}`,
         icon: path.join(__dirname, "/build/icon.png"),
         name: `${package.name}`,
-        //         productName: `${app.productName}`,
+        productName: `${app.productName}`,
       },
     },
     {
@@ -73,7 +73,7 @@ module.exports = {
       platforms: ["linux"],
       config: {
         name: `${package.name}`,
-        //         productName: `${app.productName}`,
+        productName: `${app.productName}`,
       },
     },
     {
