@@ -4,7 +4,7 @@ const open = require("open");
 const path = require("path");
 const package = require("../package.json");
 const { mainWindowshow } = require("./BrowserWindow");
-const { seticonlargeImageKey } = require("./store");
+const { seticonlargeImageKey, setstatus } = require("./store");
 const { checkupdates } = require("./updata");
 
 log.info("Tray Start");
@@ -27,7 +27,8 @@ tray.on("click", () => {
 checkupdates(true);
 
 exports.tupdata = (allow, user) => {
-  log.info(`Tray Updata: ${allow} ${user}`);
+  const { status } = require("./store");
+  log.info(`Tray Updata: ${status} ${allow} ${user}`);
   if (tray) {
     const iconPath =
       user === undefined ? "icon/notconnected.png" : "icon/connected.png";
@@ -35,6 +36,15 @@ exports.tupdata = (allow, user) => {
   }
   tray.setContextMenu(
     Menu.buildFromTemplate([
+      {
+        label: `${!status ? "Enable" : "Disable"}`,
+        type: "normal",
+        enabled: true,
+        click: () => {
+          setstatus();
+          this.tupdata(allow, user)
+        },
+      },
       {
         label: `Status : ${user ? "Connected" : "Not connected"}`,
         type: "normal",

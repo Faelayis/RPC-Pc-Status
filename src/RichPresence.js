@@ -102,8 +102,10 @@ function formatBytes(freemem, totalmem, decimals = 0) {
   )} ${sizes[i]}`;
 }
 async function setActivity() {
-  if (!Presenceready || !Presence) {
-    clearInterval(Interval);
+  if (!store.status || !Presenceready || !Presence) {
+    if (!Presenceready || !Presence) {
+      clearInterval(Interval);
+    }
     return;
   }
   Presence.details = `CPU ${this.cpuload}`;

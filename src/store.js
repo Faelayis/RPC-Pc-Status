@@ -13,6 +13,9 @@ const schema = {
   // largeImageTextCustom: {
   //   type: String,
   // },
+  status: {
+    type: Boolean,
+  },
   buttonslabelCustom: {
     type: String,
   },
@@ -28,6 +31,23 @@ if (store.get("largeImageKeyCustom") === undefined) {
 }
 if (store.get("buttonsCustom") === undefined) {
   store.set("buttonsCustom", [null, null, null, null]);
+}
+if (store.get("status") === undefined) {
+  store.set("status", true);
+}
+
+function setstatus() {
+  switch (store.get("status")) {
+    case true:
+      store.set(`status`, false);
+      log.info(`Set status: ` + false);
+      break;
+    case false:
+      store.set(`status`, true);
+      log.info(`Set status: ` + true);
+      break;
+  }
+  module.exports.status = store.get("status");
 }
 
 function seticonlargeImageKey(icon) {
@@ -45,7 +65,9 @@ function setbutton(arg1, arg2, arg3, arg4) {
 module.exports = {
   seticonlargeImageKey,
   setbutton,
+  setstatus,
 };
 module.exports.largeImageKeyCustom = store.get("largeImageKeyCustom");
 module.exports.buttonsCustom = store.get("buttonsCustom");
+module.exports.status = store.get("status");
 log.info(`Store Ready`);
