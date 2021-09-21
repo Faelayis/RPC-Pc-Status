@@ -1,16 +1,14 @@
 const path = require("path");
 const package = require("./package.json");
-const app = {
-  productName: "RPC Pc Status",
-};
 
 module.exports = {
   packagerConfig: {
-    // name: `${package.name}`,
-    // ProductName: `${app.productName}`,
+    name: `${package.name}`,
+    productName: `${package.productName}`,
     appId: `${package.name}`,
     CompanyName: `${package.author.name}`,
     asar: true,
+    executableName: `${package.productName}`,
     icon: path.join(__dirname, "/build/icon.ico"),
     ignore: [
       ".eslintrc",
@@ -28,9 +26,9 @@ module.exports = {
       "dev-app-update.yml",
       "README.md",
     ],
-    // win32metadata: {
-    //   ProductName: `${app.productName}`,
-    // },
+    win32metadata: {
+      ProductName: `${package.productName}`,
+    },
   },
   makers: [
     {
@@ -41,7 +39,7 @@ module.exports = {
           "https://raw.githubusercontent.com/Faelayis/RPC-Pc-Status/master/build/icon.ico",
         setupIcon: path.join(__dirname, "/build/icon.ico"),
         setupExe: `${package.name}-${package.version}.Setup.exe`,
-        title: `${app.productName}`,
+        title: `${package.productName}`,
       },
     },
     {
