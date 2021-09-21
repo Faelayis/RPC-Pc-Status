@@ -1,5 +1,6 @@
 {
   "name": "rpc-pc-status",
+  "productName": "RPC Pc Status",
   "apptitle": "RPC Pc Status",
   "version": "2.2.1",
   "description": "Rich Presence Pc Status for your discord",
