@@ -59,15 +59,15 @@ module.exports = {
         productName: `${app.productName}`,
       },
     },
-    {
-      name: "@electron-forge/maker-rpm",
-      config: {
-        homepage: `${package.repository.url}`,
-        icon: path.join(__dirname, "/build/icon.png"),
-        name: `${package.name}`,
-        productName: `${app.productName}`,
-      },
-    },
+    // {
+    //   name: "@electron-forge/maker-rpm",
+    //   config: {
+    //     homepage: `${package.repository.url}`,
+    //     icon: path.join(__dirname, "/build/icon.png"),
+    //     name: `${package.name}`,
+    //     productName: `${app.productName}`,
+    //   },
+    // },
     {
       name: "electron-forge-maker-appimage",
       platforms: ["linux"],
@@ -82,6 +82,7 @@ module.exports = {
       config: {
         name: `${package.name}-${package.version}-x64`,
         format: "ULFO",
+        icon: path.join(__dirname, "/build/icon.icns"),
       },
     },
   ],
