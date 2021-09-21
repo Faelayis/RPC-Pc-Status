@@ -227,7 +227,7 @@ function autoupdata(B) {
       interval = setInterval(() => {
         silent = true;
         autoUpdater.checkForUpdates();
-      }, 3000); // 5 * 60 * 1000
+      }, 15 * 60 * 1000); // 5 * 60 * 1000
       break;
   }
 }
