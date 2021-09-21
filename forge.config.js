@@ -79,9 +79,9 @@ module.exports = {
     },
     {
       name: "@electron-forge/maker-dmg",
+      platforms: ["darwin"],
       config: {
         format: "ULFO",
-        platforms: ["darwin"],
         name: `${package.name}-${package.version}-x64`,
         icon: path.join(__dirname, "/build/icon.icns"),
       },
