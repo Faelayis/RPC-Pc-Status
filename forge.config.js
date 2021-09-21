@@ -4,11 +4,10 @@ const package = require("./package.json");
 module.exports = {
   packagerConfig: {
     name: `${package.name}`,
-    productName: `${package.productName}`,
     appId: `${package.name}`,
+    productName: `${package.productName}`,
     CompanyName: `${package.author.name}`,
     asar: true,
-    executableName: `${package.productName}`,
     icon: path.join(__dirname, "/build/icon.ico"),
     ignore: [
       ".eslintrc",
