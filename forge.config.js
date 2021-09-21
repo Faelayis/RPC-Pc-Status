@@ -6,9 +6,9 @@ const app = {
 
 module.exports = {
   packagerConfig: {
-    name: `${package.name}`,
+    // name: `${package.name}`,
+    // ProductName: `${app.productName}`,
     appId: `${package.name}`,
-    productName: `${app.productName}`,
     CompanyName: `${package.author.name}`,
     asar: true,
     icon: path.join(__dirname, "/build/icon.ico"),
@@ -28,9 +28,9 @@ module.exports = {
       "dev-app-update.yml",
       "README.md",
     ],
-    win32metadata: {
-      ProductName: `${app.productName}`,
-    },
+    // win32metadata: {
+    //   ProductName: `${app.productName}`,
+    // },
   },
   makers: [
     {
@@ -42,7 +42,6 @@ module.exports = {
         setupIcon: path.join(__dirname, "/build/icon.ico"),
         setupExe: `${package.name}-${package.version}.Setup.exe`,
         title: `${app.productName}`,
-        ProductName: `${app.productName}`,
       },
     },
     {
@@ -56,7 +55,6 @@ module.exports = {
         homepage: `${package.repository.url}`,
         icon: path.join(__dirname, "/build/icon.png"),
         name: `${package.name}`,
-        productName: `${app.productName}`,
       },
     },
     {
@@ -65,7 +63,6 @@ module.exports = {
         homepage: `${package.repository.url}`,
         icon: path.join(__dirname, "/build/icon.png"),
         name: `${package.name}`,
-        productName: `${app.productName}`,
       },
     },
     {
@@ -73,7 +70,6 @@ module.exports = {
       platforms: ["linux"],
       config: {
         name: `${package.name}`,
-        productName: `${app.productName}`,
       },
     },
     {
@@ -82,6 +78,7 @@ module.exports = {
       config: {
         name: `${package.name}-${package.version}-x64`,
         format: "ULFO",
+        icon: path.join(__dirname, "/build/icon.icns"),
       },
     },
   ],
