@@ -52,6 +52,7 @@ module.exports = {
     },
     {
       name: "@electron-forge/maker-deb",
+      platforms: ["linux"],
       config: {
         homepage: `${package.repository.url}`,
         icon: path.join(__dirname, "/build/icon.png"),
@@ -78,10 +79,11 @@ module.exports = {
     },
     {
       name: "@electron-forge/maker-dmg",
-      platforms: ["darwin"],
       config: {
-        name: `${package.name}-${package.version}-x64`,
         format: "ULFO",
+        platforms: ["darwin"],
+        name: `${package.name}-${package.version}-x64`,
+        icon: path.join(__dirname, "/build/icon.icns"),
       },
     },
   ],
