@@ -176,7 +176,7 @@ exports.checkupdates = async (arg) => {
           });
       }
     } else {
-      if (!isDev) {
+      if (isDev) {
         log.warn(`Updata: not support Running in development`);
         if (silent) {
           allow = true;
