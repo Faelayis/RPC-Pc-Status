@@ -25,9 +25,8 @@ if (process.platform === "darwin" || process.platform === "win32") {
     os.platform(),
     os.arch()
   );
-  var feedURL = `https://update.electronjs.org/${
-    package.author.name
-  }/RPC-Pc-Status/${process.platform}-${process.arch}/${app.getVersion()}`;
+  var feedURL = `https://update.electronjs.org/${package.author.name
+    }/RPC-Pc-Status/${process.platform}-${process.arch}/${app.getVersion()}`;
   var requestHeaders = { "User-Agent": userAgent };
   autoUpdater.setFeedURL(feedURL, requestHeaders);
   updateon();
@@ -49,18 +48,15 @@ async function updateon() {
   autoUpdater.logger.transports.file.level = "info";
   autoUpdater.setFeedURL(feedURL, requestHeaders);
   autoUpdater.on("checking-for-update", () => {
-    if (silent) {
-      null;
-    } else if (!silent) {
+    if (!silent) {
       log.info(`Checking for update...`);
     }
   });
   autoUpdater.on("update-available", () => {
     log.info("Update available.");
-    !autoupdatarun ? autoupdata(true) : null;
-    if (silent) {
-      null;
-    } else if (!silent) {
+    autoupdatarun ? autoupdata(false) : null;
+    allow = false;
+    if (!silent) {
       new Notification({
         title: "Update available",
         body: `Found New version download automatically \ncomplete you will be notified.`,
@@ -68,18 +64,15 @@ async function updateon() {
     }
   });
   autoUpdater.on("update-not-available", () => {
-    if (silent) {
-      !autoupdatarun ? autoupdata(true) : null;
-      allow = true;
-    } else if (!silent) {
+    if (!silent) {
       log.info("Update not available.");
       new Notification({
         title: "Update not available",
         body: `You are now using ${app.getVersion()} the latest version.`,
       }).show();
-      !autoupdatarun ? autoupdata(true) : null;
-      allow = true;
     }
+    !autoupdatarun ? autoupdata(true) : null;
+    allow = true;
   });
   autoUpdater.on("error", (message) => {
     log.error(`Update ${message}`);
@@ -93,7 +86,7 @@ async function updateon() {
       dialog
         .showMessageBox({
           type: "error",
-          buttons: ["ok"],
+          buttons: ["Pause AutoUpdata", "ok"],
           title: `${package.apptitle} Update Error`,
           message: "There was a problem updating the application",
           detail: `${message}`,
@@ -101,6 +94,9 @@ async function updateon() {
         })
         .then((returnValue) => {
           if (returnValue.response === 0) {
+            autoupdata(false);
+            allow = true;
+          } else if (returnValue.response === 1) {
             !autoupdatarun ? autoupdata(true) : null;
             allow = true;
           }
@@ -136,7 +132,7 @@ async function updateon() {
               autoUpdater.quitAndInstall();
               app.exit(0);
             } else if (returnValue.response === 1) {
-              !autoupdatarun ? autoupdata(true) : null;
+              autoupdatarun ? autoupdata(false) : null;
               reqrestart = true;
               allow = true;
             }
@@ -146,10 +142,10 @@ async function updateon() {
   );
 }
 
-exports.checkupdates = (arg) => {
-  if (allow === true) {
+exports.checkupdates = async (arg) => {
+  if (allow) {
     allow = false;
-    autoupdatarun === true ? autoupdata(false) : null;
+    await autoupdata(false);
     silent = arg;
     if (
       typeof process !== "undefined" &&
@@ -173,47 +169,49 @@ exports.checkupdates = (arg) => {
           })
           .then((returnValue) => {
             if (returnValue.response === 0) {
-              allow = true;
-            }
-          });
-      }
-    }
-    if (isDev) {
-      log.warn(`Updata: not support Running in development`);
-      if (silent) {
-        allow = true;
-      } else if (!silent) {
-        dialog
-          .showMessageBox({
-            type: "error",
-            buttons: ["ok"],
-            title: `${package.apptitle} Update Error`,
-            message: "There was a problem updating the application",
-            detail: `Updater not support Running in development`,
-            noLink: true,
-          })
-          .then((returnValue) => {
-            if (returnValue.response === 0) {
+              autoupdatarun ? autoupdata(false) : null;
               allow = true;
             }
           });
       }
     } else {
-      if (reqrestart) {
-        autoUpdater.quitAndInstall();
-        app.exit(0);
+      if (!isDev) {
+        log.warn(`Updata: not support Running in development`);
+        if (silent) {
+          allow = true;
+        } else if (!silent) {
+          dialog
+            .showMessageBox({
+              type: "error",
+              buttons: ["ok"],
+              title: `${package.apptitle} Update Error`,
+              message: "There was a problem updating the application",
+              detail: `Updater not support Running in development`,
+              noLink: true,
+            })
+            .then((returnValue) => {
+              if (returnValue.response === 0) {
+                allow = true;
+              }
+            });
+        }
       } else {
-        autoUpdater.checkForUpdates();
+        if (reqrestart) {
+          autoUpdater.quitAndInstall();
+          app.exit(0);
+        } else {
+          autoUpdater.checkForUpdates();
+        }
       }
     }
   } else {
     silent
       ? log.info(`Update: is working now!`)
       : new Notification({
-          title: "Update is working now!",
-          body: null,
-        }).show();
-    allow ? (allow = true) : log.warn(`Update: is working now!`);
+        title: "Update is working now!",
+        body: null,
+      }).show();
+    allow ? null : log.warn(`Update: is working now!`);
   }
 };
 
@@ -228,7 +226,7 @@ function autoupdata(B) {
       interval = setInterval(() => {
         silent = true;
         autoUpdater.checkForUpdates();
-      }, 15 * 60 * 1000); // 5 * 60 * 1000
+      }, 3000); // 5 * 60 * 1000
       break;
   }
 }
