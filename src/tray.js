@@ -144,7 +144,7 @@ exports.tupdata = (allow, user) => {
         },
       },
       { type: "separator" },
-      { label: "Quit Pc Status", type: "normal", click: () => app.exit(0) },
+      { label: "Exit", type: "normal", click: () => app.exit(0) },
     ])
   );
 };
