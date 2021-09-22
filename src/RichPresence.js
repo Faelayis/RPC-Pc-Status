@@ -105,6 +105,8 @@ async function setActivity() {
   if (!store.status || !Presenceready || !Presence) {
     if (!Presenceready || !Presence) {
       clearInterval(Interval);
+    } else if (!store.status) {
+      Presence.clearActivity();
     }
     return;
   }
@@ -142,6 +144,7 @@ async function setActivity() {
 tupdata(false, undefined);
 async function connectDiscord() {
   if (Presence) {
+    Presence.clearActivity();
     Presence.destroy();
     Presence = new RPC.Client({
       transport: "ipc",
