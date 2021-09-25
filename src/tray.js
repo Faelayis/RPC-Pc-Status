@@ -40,8 +40,8 @@ exports.tupdata = (allow, user) => {
         label: `${!status ? "Enable" : "Disable"}`,
         type: "normal",
         enabled: true,
-        click: () => {
-          setstatus();
+        click: async () => {
+          await setstatus();
           this.tupdata(allow, user);
         },
       },
