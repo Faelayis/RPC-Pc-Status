@@ -37,15 +37,6 @@ exports.tupdata = (allow, user) => {
   tray.setContextMenu(
     Menu.buildFromTemplate([
       {
-        label: `${!status ? "Enable" : "Disable"}`,
-        type: "normal",
-        enabled: true,
-        click: async () => {
-          await setstatus();
-          this.tupdata(allow, user);
-        },
-      },
-      {
         label: `Status : ${user ? "Connected" : "Not connected"}`,
         type: "normal",
         enabled: false,
@@ -61,6 +52,15 @@ exports.tupdata = (allow, user) => {
         enabled: false,
       },
       { type: "separator" },
+      {
+        label: `${!status ? "Enable" : "Disable"}`,
+        type: "normal",
+        enabled: true,
+        click: async () => {
+          await setstatus();
+          this.tupdata(allow, user);
+        },
+      },
       {
         label: "Theme",
         enabled: allow,
