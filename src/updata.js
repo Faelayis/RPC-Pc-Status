@@ -18,16 +18,14 @@ let allow = true,
 var supportedPlatforms = ["darwin", "win32", "linux"];
 if (process.platform === "darwin" || process.platform === "win32") {
   var { autoUpdater } = require("electron");
-  var userAgent = format(
+  const userAgent = format(
     "%s/%s (% s: %s)",
     package.name,
     package.version,
     os.platform(),
     os.arch()
   );
-  var feedURL = `https://update.electronjs.org/${
-    package.author.name
-  }/RPC-Pc-Status/${process.platform}-${process.arch}/${app.getVersion()}`;
+  var feedURL = `https://update.electronjs.org/${package.author.name}/RPC-Pc-Status/${process.platform}-${process.arch}/${app.getVersion()}`;
   var requestHeaders = { "User-Agent": userAgent };
   autoUpdater.setFeedURL(feedURL, requestHeaders);
   updateon();
@@ -38,6 +36,8 @@ if (process.platform === "darwin" || process.platform === "win32") {
     owner: `${package.author.name}`,
     repo: "RPC-Pc-Status",
   };
+  // eslint-disable-next-line no-redeclare
+  var feedURL = `AppImageUpdater`;
   autoUpdater = new AppImageUpdater(options);
   updateon();
 }
@@ -197,11 +197,14 @@ exports.checkupdates = async (arg) => {
             });
         }
       } else {
-        if (reqrestart) {
-          autoUpdater.quitAndInstall();
-          app.exit(0);
-        } else {
-          autoUpdater.checkForUpdates();
+        switch (reqrestart) {
+          case true:
+            autoUpdater.quitAndInstall();
+            app.exit(0);
+            break;
+          default:
+            autoUpdater.checkForUpdates();
+            break;
         }
       }
     }
@@ -209,10 +212,12 @@ exports.checkupdates = async (arg) => {
     silent
       ? log.info(`Update: is working now!`)
       : new Notification({
-          title: "Update is working now!",
-          body: null,
-        }).show();
-    allow ? null : log.warn(`Update: is working now!`);
+        title: "Update is working now!",
+        body: null,
+      }).show();
+    allow
+      ? null
+      : log.warn(`Update: is working now!`);
   }
 };
 
@@ -227,7 +232,7 @@ function autoupdata(B) {
       interval = setInterval(() => {
         silent = true;
         autoUpdater.checkForUpdates();
-      }, 15 * 60 * 1000); // 5 * 60 * 1000
+      }, 15 * 60 * 1000);
       break;
   }
 }
