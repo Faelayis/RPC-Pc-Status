@@ -4,7 +4,6 @@ const log = require("electron-log");
 require("./log");
 const isDev = require("electron-is-dev");
 const AutoLaunch = require("auto-launch");
-const { platform } = require("os");
 const package = require("../package.json");
 const RPC = new AutoLaunch({
   name: "RPC-Pc-Status",
@@ -33,7 +32,7 @@ if (isDev) {
     });
 }
 
-switch (platform()) {
+switch (process.platform) {
   case "win32":
     app.setAppUserModelId(package.apptitle);
     break;
@@ -90,14 +89,13 @@ function handleSquirrelEvent() {
   const squirrelEvent = process.argv[1];
   switch (squirrelEvent) {
     case "--squirrel-install":
-      spawnUpdate(["--createShortcut", exeName]);
-    // eslint-disable-next-line no-fallthrough
+      spawnUpdate(["--createShortcut", exeName], app.quit);
+      return true;
     case "--squirrel-updated":
-      setTimeout(app.quit, 1000);
+      app.quit();
       return true;
     case "--squirrel-uninstall":
-      spawnUpdate(["--removeShortcut", exeName]);
-      setTimeout(app.quit, 1000);
+      spawnUpdate(["--removeShortcut", exeName], app.quit);
       return true;
     case "--squirrel-obsolete":
       app.quit();
