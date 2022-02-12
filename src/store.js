@@ -19,10 +19,10 @@ const schema = {
   buttonslabelCustom: {
     type: String,
   },
-  buttonsurlCustom: {
-    type: String,
-    format: "url",
-  },
+  // buttonsurlCustom: {
+  //   type: String,
+  //   format: "url",
+  // },
 };
 const store = new Store(schema);
 

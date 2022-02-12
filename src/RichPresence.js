@@ -112,7 +112,7 @@ async function setActivity() {
   }
   Presence.details = `CPU ${this.cpuload}`;
   Presence.state = `RAM ${this.ramusage} / ${this.ram}`;
-  Presence.largeImageKey = `${store.largeImageKeyCustom}`;
+  Presence.largeImageKey = `${store.largeImageKeyCustom ? store.largeImageKeyCustom : "icon_white"}`;
   Presence.largeImageText = `${this.cpu}`;
   Presence.smallImageKey = `${this.oslogo}`;
   Presence.smallImageText = `${this.SImageText}`;

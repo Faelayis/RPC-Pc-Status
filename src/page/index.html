@@ -1,178 +1,99 @@
-<!DOCTYPE html>
-<script type="text/JavaScript">
-  function disableselect(e) {
-    return false
-  }
-  function reEnable() {
-    return false
-  }
-  document.onselectstart = new Function ("return false")
-  if (window.sidebar) {
-    document.onmousedown = disableselect
-    document.onclick = reEnable
-}
-</script>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- Bootstrap CSS -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" href="style.css">
-    <title>RPC Pc Status</title>
-  </head>
-  <body style="background-color: #36393f">
-    <div class="container">
-      <main>
-        <div class="py-5 text-center">
-          <img
+<html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- <link href="http://fonts.cdnfonts.com/css/whitney-2" rel="stylesheet" /> -->
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <title>RPC Pc Status</title>
+</head>
+<body>
+  <div class="card-container">
+    <div class="card">
+      <div class="card-header">
+        <div class="banner"></div>
+        <div class="infos">
+          <div class="profil-logo">
+            <img
             draggable="false"
-            class="d-block mx-auto mb-4 rounded-circle"
             src="https://cdn.discordapp.com/embed/avatars/0.png?size=1024"
             alt=""
             width="125"
             height="125"
-            id="imgprox"
-            style="border: 4px solid #FFF;"
+            id="profilelogo"
           />
-          <h2 class="mb-2 bg-gradient-dark text-white" id="namex" style="cursor: context-menu;">Not connected</h2>
+          </div>
+          <div class="badges-container">
+            <!-- <div class="badge-item">
+              <img src="./assets/img/badges/team.webp" alt="">
+              <div class="tooltip tooltip-up">Tooltip</div>
+            </div>
+            <div class="badge-item">
+              <img src="./assets/img/badges/partner.webp" alt="">
+              <div class="tooltip tooltip-up">Tooltip</div>
+            </div>
+            <div class="badge-item">
+              <img src="./assets/img/badges/megabughunter.webp" alt="">
+              <div class="tooltip tooltip-up">Tooltip</div>
+            </div>
+            <div class="badge-item">
+              <img src="./assets/img/badges/eventcreator.webp" alt="">
+              <div class="tooltip tooltip-up">Tooltip</div>
+            </div>
+            <div class="badge-item">
+              <img src="./assets/img/badges/bravery.webp" alt="">
+              <div class="tooltip tooltip-up">Tooltip</div>
+            </div>
+            <div class="badge-item">
+              <img src="./assets/img/badges/moderator.webp" alt="">
+              <div class="tooltip tooltip-up">Tooltip</div>
+            </div>
+            <div class="badge-item">
+              <img src="./assets/img/badges/firsttimenitro.webp" alt="">
+              <div class="tooltip tooltip-up">Tooltip</div>
+            </div>
+            <div class="badge-item">
+              <img src="./assets/img/badges/nitro.webp" alt="">
+              <div class="tooltip tooltip-up">Tooltip</div>
+            </div>
+            <div class="badge-item">
+              <img src="./assets/img/badges/boost.webp" alt="">
+              <div class="tooltip tooltip-up">Tooltip</div>
+            </div> -->
+          </div>
+          <div id ="username" class="username">Not connected<span id ="nametag">#0000</span> </div>
+          <hr>
         </div>
-        <div class="d-flex justify-content-center">
-          <div class="col-md-7 col-lg-8">
-            <h4 class="mb-2 bg-gradient-secondary text-white" style="cursor: context-menu;">Custom</h4>
-            <form class="needs-validation" novalidate>
-              <div class="row g-3">
-                <!-- <div class="col-sm-6">
-                  <label
-                    for="Details"
-                    class="mb-2 bg-gradient-secondary text-white"
-                    >Details</label
-                  >
-                <input 
-                    style="background-color: #40444b; color: #FFF;"
-                    type="text"
-                    class="form-control"
-                    id="details"
-                    placeholder=""
-                    value=""
-                    required
-                  />
-                </div>
-
-                <div class="col-sm-6">
-                  <label
-                    for="State"
-                    class="mb-2 bg-gradient-secondary text-white"
-                    >State</label
-                  >
-                <input 
-                    style="background-color: #40444b; color: #FFF;"
-                    type="text"
-                    class="form-control"
-                    id="state"
-                    placeholder=""
-                    value=""
-                    required
-                  />
-                </div> -->
-
-                <div class="col-12">
-                    <label
-                      for="Button-label-1"
-                      class="mb-2 bg-gradient-secondary text-white"
-                      >Button Details</label
-                    >
-                  <input 
-                      style="background-color: #40444b; color: #FFF;"
-                      type="text"
-                      class="form-control"
-                      id="button-label-1"
-                      placeholder="Hello World"
-                      value=""
-                      maxlength="31"
-                      required
-                    />
-                  </div>
-
-                <div class="col-12">
-                  <label
-                    for="button-url-1"
-                    class="mb-2 bg-gradient-secondary text-white"
-                    >Button url<span class="text-muted"> (Optional)</span></label
-                  >
-                <input 
-                    style="background-color: #40444b; color: #FFF;"
-                    type="text"
-                    class="form-control"
-                    id="button-url-1"
-                    placeholder="https://example.com"
-                    value=""
-                  />
-                </div>
-
-                <div class="col-12">
-                    <label
-                      for="Button-label-2"
-                      class="mb-2 bg-gradient-secondary text-white"
-                      >Button State</label
-                    >
-                  <input 
-                      style="background-color: #40444b; color: #FFF;"
-                      type="text"
-                      class="form-control"
-                      id="button-label-2"
-                      placeholder="Hello World"
-                      value=""
-                      maxlength="31"
-                      required
-                    />
-                  </div>
-
-                <div class="col-12">
-                  <label
-                    for="button-url-2"
-                    class="mb-2 bg-gradient-secondary text-white"
-                    >Button url<span class="text-muted"> (Optional)</span></label
-                  >
-                <input 
-                    style="background-color: #40444b; color: #FFF;"
-                    type="text"
-                    class="form-control"
-                    id="button-url-2"
-                    placeholder="https://example.com"
-                    value=""
-                  />
-                </div>
-                <br>
-                <button type="button" class="btn d-grid gap-2 col-8 mx-auto" style="background-color: #5865f2; color: #FFF;" onclick="getInputValue()">Save</button>
-                <footer class="my-5 pt-5 text-muted text-center text-small">
-        <!-- <p class="mb-1">&copy; RPC-Pc-Status</p> -->
-      </footer>
+      </div>
+      <div class="card-content">
+        <div class="about-me">
+          <!-- <div class="category-title">About Me</div>
+          <p>Your about me description.</p> -->
+        </div>
+        <div class="category-title">Playing a game</div>
+      </div>
+      <!-- <div class="card-playing">
+        <input type="text" placeholder="Null"/>
+      </div> -->
+      <div class="card-buttons">
+        <input type="text" id="custom-image" placeholder="Custom image (example www.image.png)"/>
+      </div>
+        <div class="card-buttons">
+          <input type="text" id="button-label-1" placeholder="Button 1 * www.google.com"/>
+        </div>
+        <div class="card-buttons">
+          <input type="text" id="button-label-2" placeholder="Button 2 * www.google.com"/>
+          <div class="wrapper-buttons">
+            <button  onclick="getInputValue()" class="blue-button" >Apply</button>
+          </div>
+        </div>
+        </div>
+      </div>
+      </div>
     </div>
-    <!-- Optional JavaScript; choose one of the two! -->
-    <script type="text/javascript" src="script.js"></script>
-    <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
-      crossorigin="anonymous"
-    ></script>
-    <!-- Option 2: Separate Popper and Bootstrap JS -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
-      integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js"
-      integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/"
-      crossorigin="anonymous"
-    ></script>
-  </body>
-</html>
+  </div>
+  <script type="text/javascript" src="script.js"></script>
+  <!-- <script src="script.js"></script>
+  <script src="./assets/js/jquery.js"></script>
+  <script src="./assets/js/main.js"></script>
+  <script src="https://sybraxdesign.fr/api/github/main.js"></script> -->
+</body></html>
