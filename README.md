@@ -8,7 +8,7 @@
 - [Download](https://github.com/Faelayis/RPC-Pc-Status/releases/latest)
 
 ## Plugin
-- [BetterDiscord](https://github.com/Faelayis/RPC-Pc-Status-BetterDiscord)
+- [BetterDiscord](https://github.com/Faelayis/RPC-Pc-Status-BetterDiscord#readme)
 <!--
 ### Download for Windows <br>
  [![](https://img.shields.io/badge/Stable-success?logo=SemanticWeb&style=for-the-badge)](https://github.com/Faelayis/RPC-Pc-Status/raw/install/Release/RPC%20Pc%20Status%20Setup%20Stable.exe)
