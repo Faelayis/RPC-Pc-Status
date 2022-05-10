@@ -2,10 +2,13 @@
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FFaelayis%2FRPC-Pc-Status.svg?type=small)](https://app.fossa.com/projects/git%2Bgithub.com%2FFaelayis%2FRPC-Pc-Status?ref=badge_small)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/Faelayis/RPC-Pc-Status/Publish?label=Publish)
 <br>
-Rich Presence Pc Status for your discord<br>
+**Rich Presence Pc Status for your discord**<br>
 <!-- ![Previews](docs/img/Previews.gif) -->
 ## Manual Installation
-### [Download](https://github.com/Faelayis/RPC-Pc-Status/releases/latest)
+- [Download](https://github.com/Faelayis/RPC-Pc-Status/releases/latest)
+
+## Plugin
+- [BetterDiscord](https://github.com/Faelayis/RPC-Pc-Status-BetterDiscord)
 <!--
 ### Download for Windows <br>
  [![](https://img.shields.io/badge/Stable-success?logo=SemanticWeb&style=for-the-badge)](https://github.com/Faelayis/RPC-Pc-Status/raw/install/Release/RPC%20Pc%20Status%20Setup%20Stable.exe)
