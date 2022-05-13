@@ -4,20 +4,14 @@ const open = require("open");
 const path = require("path");
 const package = require("../package.json");
 const { mainWindowshow } = require("./BrowserWindow");
-const { seticonlargeImageKey, setstatus } = require("./store");
+const { getvalue, setvalue } = require("./store");
 const { checkupdates } = require("./updata");
 
 log.info("Tray Start");
-let tray = null;
-if (tray) {
-  tray.setImage(
-    nativeImage.createFromPath(path.join(__dirname, "icon/notconnected.png"))
-  );
-} else {
-  tray = new Tray(
-    nativeImage.createFromPath(path.join(__dirname, "icon/notconnected.png"))
-  );
-}
+var tray = null;
+tray = new Tray(
+  nativeImage.createFromPath(path.join(__dirname, "icon/notconnected.png"))
+);
 tray.setTitle("Pc Status");
 tray.setToolTip("Pc Status");
 tray.setIgnoreDoubleClickEvents(true);
@@ -27,13 +21,10 @@ tray.on("click", () => {
 checkupdates(true);
 
 exports.tupdata = (allow, user) => {
-  const { status } = require("./store");
-  log.info(`Tray Updata: ${status} ${allow} ${user}`);
-  if (tray) {
-    const iconPath =
-      user === undefined ? "icon/notconnected.png" : "icon/connected.png";
-    tray.setImage(nativeImage.createFromPath(path.join(__dirname, iconPath)));
-  }
+  // log.info(`Tray Updata: ${status} ${allow} ${user}`);
+  const iconPath =
+    user === undefined ? "icon/notconnected.png" : "icon/connected.png";
+  tray.setImage(nativeImage.createFromPath(path.join(__dirname, iconPath)));
   tray.setContextMenu(
     Menu.buildFromTemplate([
       {
@@ -53,17 +44,26 @@ exports.tupdata = (allow, user) => {
       },
       { type: "separator" },
       {
-        label: `${!status ? "Enable" : "Disable"}`,
+        label: `${getvalue("status") ? "Disable" : "Enable"}`,
         type: "normal",
         enabled: true,
         click: async () => {
-          await setstatus();
+          setvalue("status", null, "switch");
+          this.tupdata(allow, user);
+        },
+      },
+      {
+        label: `${getvalue("onlytext") ? "Onlytext on" : "Onlytext off"}`,
+        type: "normal",
+        enabled: true,
+        click: async () => {
+          setvalue("onlytext", null, "switch");
           this.tupdata(allow, user);
         },
       },
       {
         label: "Theme",
-        enabled: allow,
+        enabled: getvalue("onlytext") ? false : allow,
         submenu: [
           {
             label: "large Image",
@@ -72,56 +72,56 @@ exports.tupdata = (allow, user) => {
                 label: "Dark",
                 type: "normal",
                 click: () => {
-                  seticonlargeImageKey("icon_dark");
+                  setvalue("largeImageKeyCustom", "icon_dark");
                 },
               },
               {
                 label: "White",
                 type: "normal",
                 click: () => {
-                  seticonlargeImageKey("icon_white");
+                  setvalue("largeImageKeyCustom", "icon_white");
                 },
               },
               {
                 label: "Red",
                 type: "normal",
                 click: () => {
-                  seticonlargeImageKey("icon_red");
+                  setvalue("largeImageKeyCustom", "icon_red");
                 },
               },
               {
                 label: "Yellow",
                 type: "normal",
                 click: () => {
-                  seticonlargeImageKey("icon_yellow");
+                  setvalue("largeImageKeyCustom", "icon_yellow");
                 },
               },
               {
                 label: "Lime",
                 type: "normal",
                 click: () => {
-                  seticonlargeImageKey("icon_lime");
+                  setvalue("largeImageKeyCustom", "icon_lime");
                 },
               },
               {
                 label: "Aqua",
                 type: "normal",
                 click: () => {
-                  seticonlargeImageKey("icon_aqua");
+                  setvalue("largeImageKeyCustom", "icon_aqua");
                 },
               },
               {
                 label: "Blue",
                 type: "normal",
                 click: () => {
-                  seticonlargeImageKey("icon_blue");
+                  setvalue("largeImageKeyCustom", "icon_blue");
                 },
               },
               {
                 label: "Orange",
                 type: "normal",
                 click: () => {
-                  seticonlargeImageKey("icon_orange");
+                  setvalue("largeImageKeyCustom", "icon_orange");
                 },
               },
             ],

@@ -16,6 +16,9 @@ const schema = {
   status: {
     type: Boolean,
   },
+  onlytext: {
+    type: Boolean,
+  },
   buttonslabelCustom: {
     type: String,
   },
@@ -35,39 +38,35 @@ if (store.get("buttonsCustom") === undefined) {
 if (store.get("status") === undefined) {
   store.set("status", true);
 }
+if (store.get("onlytext") === undefined) {
+  store.set("onlytext", false);
+}
 
-function setstatus() {
-  switch (store.get("status")) {
-    case true:
-      store.set(`status`, false);
-      log.info(`Set status: ` + false);
-      break;
-    case false:
-      store.set(`status`, true);
-      log.info(`Set status: ` + true);
-      break;
+function getvalue(_store) {
+  return store.get(`${_store}`);
+}
+
+function setvalue(_store, val, type) {
+  if (type === "switch") {
+    switch (store.get(_store)) {
+      case true:
+        store.set(_store, false);
+        log.info(`Set ${_store}: false`);
+        break;
+      case false:
+        store.set(_store, true);
+        log.info(`Set ${_store}: true`);
+        break;
+    }
+  } else {
+    log.info(`Set ${_store}: ${val}`);
+    store.set(_store, val);
   }
-  module.exports.status = store.get("status");
-}
-
-function seticonlargeImageKey(icon) {
-  log.info(`Set largeImageKeyCustom: ` + icon);
-  store.set("largeImageKeyCustom", icon);
-  module.exports.largeImageKeyCustom = store.get("largeImageKeyCustom");
-}
-
-function setbutton(arg1, arg2, arg3, arg4) {
-  log.info(`Set buttonsCustom: ` + [arg1, arg2, arg3, arg4]);
-  store.set(`buttonsCustom`, [arg1, arg2, arg3, arg4]);
-  module.exports.buttonsCustom = store.get("buttonsCustom");
+  return store.get(_store);
 }
 
 module.exports = {
-  seticonlargeImageKey,
-  setbutton,
-  setstatus,
+  setvalue,
+  getvalue,
 };
-module.exports.largeImageKeyCustom = store.get("largeImageKeyCustom");
-module.exports.buttonsCustom = store.get("buttonsCustom");
-module.exports.status = store.get("status");
 log.info(`Store Ready`);

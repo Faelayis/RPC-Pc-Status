@@ -2,7 +2,6 @@ const process = require("process");
 const RPC = require("discord-rpc");
 const os = require("os");
 const si = require("systeminformation");
-const store = require("./store");
 const log = require("electron-log");
 const { tupdata } = require("./tray");
 const { wupdate } = require("./BrowserWindow");
@@ -102,39 +101,52 @@ function formatBytes(freemem, totalmem, decimals = 0) {
   )} ${sizes[i]}`;
 }
 async function setActivity() {
-  if (!store.status || !Presenceready || !Presence) {
+  const { getvalue } = require("./store");
+  if (!getvalue("status") || !Presenceready || !Presence) {
     if (!Presenceready || !Presence) {
       clearInterval(Interval);
-    } else if (!store.status) {
+    } else if (!getvalue("status")) {
       Presence.clearActivity();
     }
     return;
   }
   Presence.details = `CPU ${this.cpuload}`;
   Presence.state = `RAM ${this.ramusage} / ${this.ram}`;
-  Presence.largeImageKey = `${
-    store.largeImageKeyCustom ? store.largeImageKeyCustom : "icon_white"
-  }`;
+  if (!getvalue("onlytext")) {
+    Presence.largeImageKey = `${
+      getvalue("largeImageKeyCustom")
+        ? getvalue("largeImageKeyCustom")
+        : "icon_white"
+    }`;
+    Presence.smallImageKey = `${this.oslogo}`;
+  } else {
+    delete Presence.largeImageKey;
+    delete Presence.smallImageKey;
+  }
   Presence.largeImageText = `${this.cpu}`;
-  Presence.smallImageKey = `${this.oslogo}`;
   Presence.smallImageText = `${this.SImageText}`;
   Presence.instance = false;
-  if (store.buttonsCustom[(2, 3)] && store.buttonsCustom[(0, 1)]) {
+  if (
+    getvalue("buttonsCustom")[2] &&
+    getvalue("buttonsCustom")[3] &&
+    getvalue("buttonsCustom")[0] &&
+    getvalue("buttonsCustom")[1]
+  ) {
     Presence.buttons = [
       {
-        label: `${store.buttonsCustom[0]}`,
-        url: `${store.buttonsCustom[1]}`,
+        label: `${getvalue("buttonsCustom")[0]}`,
+        url: `${getvalue("buttonsCustom")[1]}`,
       },
       {
-        label: `${store.buttonsCustom[2]}`,
-        url: `${store.buttonsCustom[3]}`,
+        label: `${getvalue("buttonsCustom")[2]}`,
+        url: `${getvalue("buttonsCustom")[3]}`,
       },
     ];
-  } else if (store.buttonsCustom[0] && store.buttonsCustom[1]) {
+  } else if (getvalue("buttonsCustom")[0] && getvalue("buttonsCustom")[1]) {
     Presence.buttons = [
       {
-        label: `${store.buttonsCustom[0]}`,
-        url: `${store.buttonsCustom[1]}`,
+        label: `${getvalue("buttonsCustom")[0]}`,
+        url: `${getvalue("buttonsCustom")[1]}`,
       },
     ];
   } else {
@@ -146,11 +158,14 @@ async function setActivity() {
 tupdata(false, undefined);
 async function connectDiscord() {
   if (Presence) {
-    Presence.clearActivity();
-    Presence.destroy();
-    Presence = new RPC.Client({
-      transport: "ipc",
-    });
+    try {
+      Presence = new RPC.Client({
+        transport: "ipc",
+      });
+    } catch (error) {
+      // Presence.clearActivity();
+      // Presence.destroy();
+    }
   }
   Presence.once("disconnected", async () => {
     Presenceready = false;

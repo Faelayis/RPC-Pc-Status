@@ -3,7 +3,7 @@ const isDev = require("electron-is-dev");
 const log = require("electron-log");
 const path = require("path");
 const package = require("../package.json");
-const { setbutton, seticonlargeImageKey } = require("./store");
+const { getvalue, setvalue } = require("./store");
 
 this.isready = false;
 this.isminimize = false;
@@ -38,10 +38,10 @@ mainWindow.once("ready-to-show", () => {
     });
   }
   ipcMain.on("asynchronous-buttonsinput", (event, arg) => {
-    setbutton(arg[0], arg[1], arg[2], arg[3]);
+    setvalue("buttonsCustom", [arg[0], arg[1], arg[2], arg[3]]);
   });
   ipcMain.on("asynchronous-largeImageKey", (event, arg) => {
-    seticonlargeImageKey(arg);
+    setvalue("largeImageKeyCustom", arg);
   });
   this.isready = true;
 });

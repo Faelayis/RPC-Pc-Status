@@ -1,5 +1,5 @@
 const { ipcRenderer } = require("electron");
-const { buttonsCustom, largeImageKeyCustom } = require("../store");
+const { getvalue } = require("../store");
 const log = require("electron-log");
 
 ipcRenderer.on("synchronous-userinfo", function (e, userinfo) {
@@ -8,26 +8,25 @@ ipcRenderer.on("synchronous-userinfo", function (e, userinfo) {
   document.getElementById("username").innerHTML = `${userinfo[0]}`;
 });
 
-document.getElementById("button-label-1").value = `${
-  buttonsCustom[0] ? buttonsCustom[0] : ""
-}${buttonsCustom[0] && buttonsCustom[1] ? " * " : ""}${
-  buttonsCustom[1] ? buttonsCustom[1] : ""
-}`;
-document.getElementById("button-label-2").value = `${
-  buttonsCustom[2] ? buttonsCustom[0] : ""
-}${buttonsCustom[2] && buttonsCustom[3] ? " * " : ""}${
-  buttonsCustom[3] ? buttonsCustom[3] : ""
-}`;
-document.getElementById("custom-image").value = `${largeImageKeyCustom}`;
+(async function () {
+  let val = await getvalue("buttonsCustom");
+  document.getElementById("button-label-1").value = `${val[0]}`;
+  document.getElementById("button-url-1").value = `${val[1]}`;
+  document.getElementById("button-label-2").value = `${val[2]}`;
+  document.getElementById("button-url-2").value = `${val[3]}`;
+  document.getElementById("custom-image").value = `${await getvalue(
+    "largeImageKeyCustom"
+  )}`;
+})();
 
 // eslint-disable-next-line no-unused-vars
 function getInputValue() {
-  let input = document.getElementById("button-label-1").value,
-    input2 = document.getElementById("button-label-2").value;
-  input = input.split(" * ");
-  input2 = input2.split(" * ");
-  let inputValbutton = [input[1], input2[0], input2[1]];
-  ipcRenderer.send("asynchronous-buttonsinput", inputValbutton);
+  ipcRenderer.send("asynchronous-buttonsinput", [
+    document.getElementById("button-label-1").value,
+    document.getElementById("button-url-1").value,
+    document.getElementById("button-label-2").value,
+    document.getElementById("button-url-2").value,
+  ]);
   ipcRenderer.send(
     "asynchronous-largeImageKey",
     document.getElementById("custom-image").value
